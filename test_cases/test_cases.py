@@ -10,40 +10,61 @@ class TestCase(BaseModel):
 initial_actions=[
     {'open_tab': {'url': 'https://www.google.com'}}
 ]
-        
-
+      
 COMMON_CASE_STEPS=[
-'IMPORTANT INSTRUCTIONS: I am a UI Automation tester. My goal is only to complete the test steps below. If any modals or popups appear, I will immediately close them by clicking the X/close button and continue with the test. I will not click on any advertisements, promotions, or other irrelevant links. I will only interact with elements directly related to completing the test steps. I will wait for pages to fully load before performing actions. If I encounter elements that are not immediately visible, I will scroll to find them rather than clicking elsewhere.'    
+    """IMPORTANT INSTRUCTIONS: As a human user interacting with the website, I will:
+    1) Perform each action as naturally as possible, mimicking real user behavior
+    2) If a modal or popup appears, handle every modal
+    3) Ignore any advertisements or promotional content
+    4) Wait for pages to fully load before taking any action
+    5) Use scrolling to find elements that are not immediately visible
+    6) Interact with elements exactly as a human would:
+       - If I need to type, first click on the input field
+       - If a button is not immediately clickable, move the mouse over it, then click
+       - Use tab navigation if needed
+       - Scroll smoothly before interacting with elements
+    7) Take actions deliberately and carefully
+    8) Pause briefly between actions to simulate human timing
+    9) Always verify my actions have the expected result before proceeding"""
+
 ]    
+
 TRENDYOL_TEST_CASES = [
+#     TestCase(
+#         name="Login Test",
+#         description="Verifies user login with valid credentials",
+#         steps= COMMON_CASE_STEPS + [
+#             'Close the gender selection modal if present.',
+#             'If on any other page, navigate to the main page.',
+#             'Look for the "Giriş Yap" link in the top navigation and click it. Try multiple selectors including: ".link.account-user > p.link-text", "[data-testid=\'login-button\']", or any element containing "Giriş".',
+#             'Verify the URL contains "giris" to confirm navigation to the login page.',
+#             'Enter "testest23451@gmail.com" in the email field and "Testest23451" in the password field.',
+#             'Click the login/submit button.',
+#             'Verify login success by checking if the "Hesabım" text is visible in the navigation area.'
+#         ],
+#         url="https://www.trendyol.com/",
+#         expected_result="Successfully logged in and verified 'Hesabım' is visible"
+#     ),
+# 
+
     TestCase(
-        name="Login Test",
-        description="Verifies user login with valid credentials",
-        steps= COMMON_CASE_STEPS+ [
-            'Click the giriş yap from navbar '
-            'Verify you navigated to the login page'
-            'Login with testest23451@gmail.com username and Testest23451 password. '
-            'Check if hesabım section is visible on the top navbar. It indicates a succesfull login.'
-        ],
-        url="https://www.trendyol.com/",
-        expected_result="I succesfully logged in"
-    ),
-    TestCase(
-        name="Add to Cart Test",
-        description="Adds items to cart and verifies checkout flow",
-        steps= COMMON_CASE_STEPS+[
-            "Search for a product. ",
-            
-            "Verify items are listed. "
-            "Select a size if available, Also there might be  both color and size selection. Select all of them. ",
-            "Click 'Add to Cart'. Make sure you added to item to the cart. ",
-            "Proceed to checkout. ",
-            "Verify total amount. "
-        ],
-        url="https://www.trendyol.com/",
-        expected_result="I succesfully search some products and add them to the cart"
-    )
-]  
+    name="Add to Cart Test",
+    description="Adds items to cart and verifies checkout flow",
+    steps=COMMON_CASE_STEPS+[
+        "Close the gender selection modal if present by clicking the X button or using ESC key. Modal do not present every time only in initial executions. If there is no modal proceed the next step.",
+        "Search for 'tshirt' by typing in the search box and pressing Enter.",
+        "Verify search results appear by confirming product listings are visible.",
+        "Select a product by clicking on any item from the search results.",
+        "If a size selection is presented, select an available size. If there are color options as well, select both color and size options that are available.",
+        "Click the 'Sepete Ekle' (Add to Cart) button and wait for confirmation.",
+        "Verify the item was successfully added by checking for a success message or cart count indicator.",
+        "Click on the cart icon or 'Sepetim' button to proceed to checkout.",
+        "On the cart page, verify the product details and total amount are displayed correctly."
+    ],
+    url="https://www.trendyol.com/",
+    expected_result="Successfully searched for products, selected available options, added items to cart, and verified cart details"
+)]
+
 GOOGLE_TEST_CASES=[
     TestCase(
     name="Google Search Test",
@@ -59,20 +80,21 @@ GOOGLE_TEST_CASES=[
     expected_result="Search results for 'automation testing' are displayed"
 ),
 
-TestCase(
-    name="Google Image Search Test",
-    description="Verifies image search functionality",
-    steps=COMMON_CASE_STEPS + [
-        'Open Google homepage. '
-        'Click on "Images" link in the navigation. '
-        'Verify you are on the Google Images page. '
-        'Type "mountain landscape" in the search box. '
-        'Press Enter or click the search button. '
-        'Verify image results titles are relevant '
-    ],
-    url="https://www.google.com/",
-    expected_result="Image search results for 'mountain landscape' are displayed"
-),
+# TestCase(
+#     name="Google Image Search Test",
+#     description="Verifies image search functionality",
+#     steps=COMMON_CASE_STEPS + [
+#         'Open Google homepage. '
+#         'Click on "Images" link in the navigation. '
+#         'Verify you are on the Google Images page. '
+#         'Type "mountain landscape" in the search box. '
+#         'Press Enter or click the search button. '
+#         'Verify image results titles are relevant. '
+#         'Consider the first images that presents on the google search doesnt have a content on their alt tag. They are just category indicators.'
+#     ],
+#     url="https://www.google.com/",
+#     expected_result="Image search results for 'mountain landscape' are displayed"
+# ),
 
 # TestCase(
 #     name="Google Maps Test", 
@@ -91,7 +113,7 @@ TestCase(
 # ),
 
 # TestCase(
-#     name="Google Account Sign-in Test",
+#     name="Google Account Signin Test",
 #     description="Verifies sign-in functionality",
 #     steps=COMMON_CASE_STEPS + [
 #         'Open Google homepage. '

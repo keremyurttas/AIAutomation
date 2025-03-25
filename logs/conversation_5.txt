@@ -1,0 +1,332 @@
+ SystemMessage 
+You are an AI agent designed to automate browser tasks. Your goal is to accomplish the ultimate task following the rules.
+
+# Input Format
+Task
+Previous steps
+Current URL
+Open Tabs
+Interactive Elements
+[index]<type>text</type>
+- index: Numeric identifier for interaction
+- type: HTML element type (button, input, etc.)
+- text: Element description
+Example:
+[33]<button>Submit Form</button>
+
+- Only elements with numeric indexes in [] are interactive
+- elements without [] provide only context
+
+# Response Rules
+1. RESPONSE FORMAT: You must ALWAYS respond with valid JSON in this exact format:
+{"current_state": {"evaluation_previous_goal": "Success|Failed|Unknown - Analyze the current elements and the image to check if the previous goals/actions are successful like intended by the task. Mention if something unexpected happened. Shortly state why/why not",
+"memory": "Description of what has been done and what you need to remember. Be very specific. Count here ALWAYS how many times you have done something and how many remain. E.g. 0 out of 10 websites analyzed. Continue with abc and xyz",
+"next_goal": "What needs to be done with the next immediate action"},
+"action":[{"one_action_name": {// action-specific parameter}}, // ... more actions in sequence]}
+
+2. ACTIONS: You can specify multiple actions in the list to be executed in sequence. But always specify only one action name per item. Use maximum {max_actions} actions per sequence.
+Common action sequences:
+- Form filling: [{"input_text": {"index": 1, "text": "username"}}, {"input_text": {"index": 2, "text": "password"}}, {"click_element": {"index": 3}}]
+- Navigation and extraction: [{"go_to_url": {"url": "https://example.com"}}, {"extract_content": {"goal": "extract the names"}}]
+- Actions are executed in the given order
+- If the page changes after an action, the sequence is interrupted and you get the new state.
+- Only provide the action sequence until an action which changes the page state significantly.
+- Try to be efficient, e.g. fill forms at once, or chain actions where nothing changes on the page
+- only use multiple actions if it makes sense.
+
+3. ELEMENT INTERACTION:
+- Only use indexes of the interactive elements
+- Elements marked with "[]Non-interactive text" are non-interactive
+
+4. NAVIGATION & ERROR HANDLING:
+- If no suitable elements exist, use other functions to complete the task
+- If stuck, try alternative approaches - like going back to a previous page, new search, new tab etc.
+- Handle popups/cookies by accepting or closing them
+- Use scroll to find elements you are looking for
+- If you want to research something, open a new tab instead of using the current tab
+- If captcha pops up, try to solve it - else try a different approach
+- If the page is not fully loaded, use wait action
+
+5. TASK COMPLETION:
+- Use the done action as the last action as soon as the ultimate task is complete
+- Dont use "done" before you are done with everything the user asked you, except you reach the last step of max_steps. 
+- If you reach your last step, use the done action even if the task is not fully finished. Provide all the information you have gathered so far. If the ultimate task is completly finished set success to true. If not everything the user asked for is completed set success in done to false!
+- If you have to do something repeatedly for example the task says for "each", or "for all", or "x times", count always inside "memory" how many times you have done it and how many remain. Don't stop until you have completed like the task asked you. Only call done after the last step.
+- Don't hallucinate actions
+- Make sure you include everything you found out for the ultimate task in the done text parameter. Do not just say you are done, but include the requested information of the task. 
+
+6. VISUAL CONTEXT:
+- When an image is provided, use it to understand the page layout
+- Bounding boxes with labels on their top right corner correspond to element indexes
+
+7. Form filling:
+- If you fill an input field and your action sequence is interrupted, most often something changed e.g. suggestions popped up under the field.
+
+8. Long tasks:
+- Keep track of the status and subresults in the memory. 
+
+9. Extraction:
+- If your task is to find information - call extract_content on the specific pages to get and store the information.
+Your responses must be always JSON with the specified format.
+
+ HumanMessage 
+Your ultimate task is: """Perform the following case: Verifies image search functionality. Steps:['IMPORTANT INSTRUCTIONS: As a human user interacting with the website, I will:\n    1) Perform each action as naturally as possible, mimicking real user behavior\n    2) If a modal or popup appears, handle every modal\n    3) Ignore any advertisements or promotional content\n    4) Wait for pages to fully load before taking any action\n    5) Use scrolling to find elements that are not immediately visible\n    6) Interact with elements exactly as a human would:\n       - If I need to type, first click on the input field\n       - If a button is not immediately clickable, move the mouse over it, then click\n       - Use tab navigation if needed\n       - Scroll smoothly before interacting with elements\n    7) Take actions deliberately and carefully\n    8) Pause briefly between actions to simulate human timing\n    9) Always verify my actions have the expected result before proceeding', 'Open Google homepage. Click on "Images" link in the navigation. Verify you are on the Google Images page. Type "mountain landscape" in the search box. Press Enter or click the search button. Verify image results titles are relevant. Consider the first images that presents on the google search doesnt have a content on their alt tag. They are just category indicators.']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
+
+ HumanMessage 
+Example output:
+
+ AIMessage 
+
+
+ ToolMessage 
+Browser started
+
+ HumanMessage 
+[Your task history memory starts here]
+
+ HumanMessage 
+Action result: 🔗  Opened new tab with https://www.google.com
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 1: Görseller
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: ⌨️  Input mountain landscape into index 3
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 20:
+
+ HumanMessage 
+[Task history memory ends]
+[Current state starts here]
+The following is one-time information - if you need to remember it write it to memory:
+Current url: https://www.google.com/search?q=mountain+landscape&sca_esv=4b72b19f7242e570&hl=tr&source=hp&biw=1280&bih=1100&ei=DpPiZ8OcO6CFxc8Pgsj0sQs&iflsig=ACkRmUkAAAAAZ-KhHscWK4SccpUrmpbX7ONBZzFBStNW&ved=0ahUKEwjD27yDkKWMAxWgQvEDHQIkPbYQ4dUDCA0&oq=mountain+landscape&gs_lp=EgNpbWciEm1vdW50YWluIGxhbmRzY2FwZTIFEAAYgAQyBBAAGB4yBBAAGB4yBBAAGB4yBBAAGB4yBhAAGAoYHjIGEAAYChgeMgQQABgeMgQQABgeMgYQABgKGB5IixFQAFgAcAB4AJABAJgBdaABdaoBAzAuMbgBDMgBAPgBAYoCC2d3cy13aXotaW1nmAIBoAJ5mAMAkgcDMC4xoAfIBbIHAzAuMbgHeQ&sclient=img&udm=2
+Available tabs:
+[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://www.google.com/search?q=mountain+landscape&sca_esv=4b72b19f7242e570&hl=tr&source=hp&biw=1280&bih=1100&ei=DpPiZ8OcO6CFxc8Pgsj0sQs&iflsig=ACkRmUkAAAAAZ-KhHscWK4SccpUrmpbX7ONBZzFBStNW&ved=0ahUKEwjD27yDkKWMAxWgQvEDHQIkPbYQ4dUDCA0&oq=mountain+landscape&gs_lp=EgNpbWciEm1vdW50YWluIGxhbmRzY2FwZTIFEAAYgAQyBBAAGB4yBBAAGB4yBBAAGB4yBBAAGB4yBhAAGAoYHjIGEAAYChgeMgQQABgeMgQQABgeMgYQABgKGB5IixFQAFgAcAB4AJABAJgBdaABdaoBAzAuMbgBDMgBAPgBAYoCC2d3cy13aXotaW1nmAIBoAJ5mAMAkgcDMC4xoAfIBbIHAzAuMbgHeQ&sclient=img&udm=2', title="mountain landscape - Google'da Ara")]
+Interactive elements from top layer of the current page inside the viewport:
+[Start of page]
+Erişilebilirlik Bağlantıları
+Ana içeriğe geç
+Sürekli kaydırmayı kapat
+Erişilebilirlik yardımı
+Erişilebilirlikle ilgili geri bildirim
+[0]<a Google Anasayfası'na Git/>
+[1]<textarea ;q;false;Ara;combobox>mountain landscape/>
+[2]<div Temizle;button/>
+[3]<div Harf çevirme aracı;button/>
+[4]<div Sesle arama yapın;button/>
+[5]<div Görselle arama;button/>
+[6]<button submit;Ara/>
+[7]<div Ayarlar;button>Hızlı Ayarlar/>
+[8]<a Google uygulamaları;false;button/>
+[9]<a Oturum açın/>
+Filtreler ve Konular
+[10]<a link>Tümü/>
+[11]<a link>Görseller/>
+[12]<a link>Alışveriş/>
+[13]<a link>Videolar/>
+[14]<a link>Haberler/>
+[15]<a link>Kitaplar/>
+[16]<a link>Uçuş Arama/>
+[17]<div false;button>Daha fazla/>
+[18]<div false;button>Araçlar/>
+[19]<a Photography ekle;link>Photography/>
+[20]<a link;Beautiful scenery ekle>Beautiful scenery/>
+[21]<a link;Mountain river ekle>Mountain river/>
+[22]<a link;Beautiful view ekle>Beautiful view/>
+[23]<a link;Sunset ekle>Sunset/>
+[24]<a Beautiful nature ekle;link>Beautiful nature/>
+[25]<a link;Lake ekle>Lake/>
+Landscape painting
+[26]<a link;Wallpaper ekle>Wallpaper/>
+[27]<img />
+[28]<a link;Manzara ekle>Manzara/>
+[29]<img />
+[30]<button />
+Arama Sonuçları
+[31]<a />
+[32]<div button/>
+[33]<img />
+[34]<a iStock
+7,804,900+ Mountain Landscape Stock Photos, Pictures & Royalty-Free Images  - iStock | Mountain, Mountain peak, Mountain range/>
+[35]<img />
+[36]<a />
+[37]<div button/>
+[38]<img />
+[39]<a iStock
+7,804,900+ Mountain Landscape Stock Photos, Pictures & Royalty-Free Images  - iStock | Mountain, Mountain peak, Mountain range/>
+[40]<img />
+[41]<a />
+[42]<div button/>
+[43]<img />
+[44]<a Pexels
+Mountain Landscape with Forests and a Stream · Free Stock Photo/>
+[45]<img />
+[46]<a />
+[47]<div button/>
+[48]<img />
+[49]<a Chrome Web Store - Google
+Mountain Landscape - Chrome Web Mağazası/>
+[50]<img />
+[51]<a />
+[52]<div button/>
+[53]<img />
+[54]<a iStock
+Mountain Landscape Stok Fotoğraflar & Manzara'nin Daha Fazla Resimleri -  Manzara, Dağ, Güneş batışı - iStock/>
+[55]<img />
+[56]<a />
+[57]<div button/>
+[58]<img />
+[59]<a Dreamstime.com
+6,481,352 Mountain Landscape Stock Photos - Free & Royalty-Free Stock  Photos from Dreamstime/>
+[60]<img />
+[61]<a />
+[62]<div button/>
+[63]<img />
+[64]<a Posters
+Stunning landscape of a serene mountain lake at sunrise,with the  calm,reflective waters mirroring the snow-capped peaks and lush pine  forests surrounding the tranquil scene, Downloads Wall Mural | Buy online  at UKposters/>
+[65]<img />
+[66]<a />
+[67]<div button/>
+[68]<img />
+[69]<a Pexels
+Winter Scenic Mountain Landscape · Free Stock Photo/>
+[70]<img />
+[71]<a />
+[72]<div button/>
+[73]<img />
+[74]<a Unsplash
+500+ Stunning Mountain Landscape Pictures | Download Free Images on Unsplash/>
+[75]<img />
+[76]<a />
+[77]<div button/>
+[78]<img />
+[79]<a Vecteezy
+Mountain Landscape Stock Photos, Images and Backgrounds for Free Download/>
+[80]<img />
+[81]<a />
+[82]<div button/>
+[83]<img />
+[84]<a Public Domain Pictures
+Mountain Landscape Free Stock Photo - Public Domain Pictures/>
+[85]<img />
+[86]<a />
+[87]<div button/>
+[88]<img />
+[89]<a Pixers
+·
+Stokta
+Sticker Mountain landscape - PIXERS.US/>
+[90]<img />
+[91]<a />
+[92]<div button/>
+[93]<img />
+[94]<a PhotoPXL
+Western Mountain Landscape Photography – PhotoPXL/>
+[95]<img />
+[96]<a />
+[97]<div button/>
+[98]<img />
+[99]<a Photowall
+·
+Stokta
+Azores Mountain Landscape - Affordable Poster - Photowall/>
+[100]<img />
+[101]<a />
+[102]<div button/>
+[103]<img />
+[104]<a Pexels
+Mountain Landscape Photos, Download The BEST Free Mountain Landscape Stock  Photos & HD Images/>
+[105]<img />
+[106]<a />
+[107]<div button/>
+[108]<img />
+[109]<a StockCake
+Free Mountainous River Landscape Image | Download at StockCake/>
+[110]<img />
+[111]<a />
+[112]<div button/>
+[113]<img />
+[114]<a Unsplash
+500+ Stunning Mountain Landscape Pictures | Download Free Images on Unsplash/>
+[115]<img />
+[116]<a />
+[117]<div button/>
+[118]<img />
+[119]<a Hundredrooms
+The most beautiful mountain landscapes in the world – Hundredrooms.co.uk/>
+[120]<img />
+[121]<a />
+[122]<div button/>
+[123]<img />
+[124]<a Vecteezy
+Grass Mountain Landscape Stock Photos, Images and Backgrounds for Free  Download/>
+[125]<img />
+[126]<a />
+[127]<div button/>
+[128]<img />
+[129]<a Samuel Earp
+How to Paint a Mountain Landscape - A Step by Step Guide/>
+[130]<img />
+[131]<a />
+[132]<div button/>
+[133]<img />
+[134]<a integran.co.jp
+Mountain Landscape with Mountains Graphic by saydurf/>
+[135]<img />
+[136]<a />
+[137]<div button/>
+[138]<img />
+[139]<a />
+[140]<div button/>
+[141]<img />
+[142]<a />
+[143]<div button/>
+[144]<img />
+İlgili aramalar
+[145]<a nature
+mountain landscape/>
+[146]<img />
+[147]<a nature
+landscape/>
+[148]<img />
+[149]<a />
+[150]<div button/>
+[151]<img />
+... 5146 pixels below - scroll or extract content to see more ...
+Current step: 4/100Current date and time: 2025-03-25 14:27
+
+ RESPONSE
+{
+  "current_state": {
+    "evaluation_previous_goal": "Success - Pressed Enter or clicked the search button.",
+    "memory": "Starting with the new task. I have completed 4/6 steps",
+    "next_goal": "Verify image results titles are relevant."
+  },
+  "action": [
+    {
+      "done": {
+        "text": "Verified image results titles are relevant to \"mountain landscape\". The first images that presents on the google search doesnt have a content on their alt tag. They are just category indicators.",
+        "success": true
+      }
+    }
+  ]
+}

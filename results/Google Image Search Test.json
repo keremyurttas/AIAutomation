@@ -1,0 +1,28 @@
+[
+    {
+        "click_element": {
+            "index": 1
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='a', xpath='html/body/div/div/div/div/div/div/div/div/div[2]/a', highlight_index=1, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'a'], attributes={'class': 'gb_X', 'aria-label': 'Görsellerde arama yapın ', 'data-pid': '2', 'href': 'https://www.google.com/imghp?hl=tr&ogbl', 'target': '_top'}, shadow_root=False, css_selector='html > body > div > div > div > div > div > div > div > div > div:nth-of-type(2) > a.gb_X[aria-label=\"Görsellerde arama yapın \"][href=\"https://www.google.com/imghp?hl=tr&ogbl\"][target=\"_top\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "input_text": {
+            "index": 3,
+            "text": "mountain landscape"
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='textarea', xpath='html/body/div/div[3]/form/div/div/div/div/div[2]/textarea', highlight_index=3, entire_parent_branch_path=['div', 'div', 'form', 'div', 'div', 'div', 'div', 'div', 'textarea'], attributes={'class': 'gLFyf', 'aria-controls': 'Alh6id', 'aria-owns': 'Alh6id', 'autofocus': '', 'title': 'Ara', 'value': '', 'aria-label': 'Ara', 'placeholder': '', 'aria-autocomplete': 'both', 'aria-expanded': 'false', 'aria-haspopup': 'false', 'autocapitalize': 'off', 'autocomplete': 'off', 'autocorrect': 'off', 'id': 'APjFqb', 'maxlength': '2048', 'name': 'q', 'role': 'combobox', 'rows': '1', 'spellcheck': 'false', 'jsaction': 'paste:puy29d', 'data-ved': '0ahUKEwjD27yDkKWMAxWgQvEDHQIkPbYQ39UDCAM'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(3) > form > div > div > div > div > div:nth-of-type(2) > textarea.gLFyf[title=\"Ara\"][aria-label=\"Ara\"][placeholder][autocomplete=\"off\"][id=\"APjFqb\"][name=\"q\"][role=\"combobox\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 20
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='input', xpath='html/body/div/div[3]/form/div/div/div[2]/div[4]/div[6]/center/input', highlight_index=20, entire_parent_branch_path=['div', 'div', 'form', 'div', 'div', 'div', 'div', 'div', 'center', 'input'], attributes={'class': 'gNO89b', 'value': \"Google'da Ara\", 'aria-label': \"Google'da Ara\", 'name': 'btnK', 'role': 'button', 'tabindex': '0', 'type': 'submit', 'data-ved': '0ahUKEwjD27yDkKWMAxWgQvEDHQIkPbYQ4dUDCA0', 'style': ''}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(3) > form > div > div > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(6) > center > input.gNO89b[aria-label*=\"Google\\'da Ara\"][name=\"btnK\"][role=\"button\"][type=\"submit\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "done": {
+            "text": "Verified image results titles are relevant to \"mountain landscape\". The first images that presents on the google search doesnt have a content on their alt tag. They are just category indicators.",
+            "success": true
+        },
+        "interacted_element": null
+    }
+]

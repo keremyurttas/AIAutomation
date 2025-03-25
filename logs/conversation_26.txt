@@ -1,0 +1,1613 @@
+ SystemMessage 
+You are an AI agent designed to automate browser tasks. Your goal is to accomplish the ultimate task following the rules.
+
+# Input Format
+Task
+Previous steps
+Current URL
+Open Tabs
+Interactive Elements
+[index]<type>text</type>
+- index: Numeric identifier for interaction
+- type: HTML element type (button, input, etc.)
+- text: Element description
+Example:
+[33]<button>Submit Form</button>
+
+- Only elements with numeric indexes in [] are interactive
+- elements without [] provide only context
+
+# Response Rules
+1. RESPONSE FORMAT: You must ALWAYS respond with valid JSON in this exact format:
+{"current_state": {"evaluation_previous_goal": "Success|Failed|Unknown - Analyze the current elements and the image to check if the previous goals/actions are successful like intended by the task. Mention if something unexpected happened. Shortly state why/why not",
+"memory": "Description of what has been done and what you need to remember. Be very specific. Count here ALWAYS how many times you have done something and how many remain. E.g. 0 out of 10 websites analyzed. Continue with abc and xyz",
+"next_goal": "What needs to be done with the next immediate action"},
+"action":[{"one_action_name": {// action-specific parameter}}, // ... more actions in sequence]}
+
+2. ACTIONS: You can specify multiple actions in the list to be executed in sequence. But always specify only one action name per item. Use maximum {max_actions} actions per sequence.
+Common action sequences:
+- Form filling: [{"input_text": {"index": 1, "text": "username"}}, {"input_text": {"index": 2, "text": "password"}}, {"click_element": {"index": 3}}]
+- Navigation and extraction: [{"go_to_url": {"url": "https://example.com"}}, {"extract_content": {"goal": "extract the names"}}]
+- Actions are executed in the given order
+- If the page changes after an action, the sequence is interrupted and you get the new state.
+- Only provide the action sequence until an action which changes the page state significantly.
+- Try to be efficient, e.g. fill forms at once, or chain actions where nothing changes on the page
+- only use multiple actions if it makes sense.
+
+3. ELEMENT INTERACTION:
+- Only use indexes of the interactive elements
+- Elements marked with "[]Non-interactive text" are non-interactive
+
+4. NAVIGATION & ERROR HANDLING:
+- If no suitable elements exist, use other functions to complete the task
+- If stuck, try alternative approaches - like going back to a previous page, new search, new tab etc.
+- Handle popups/cookies by accepting or closing them
+- Use scroll to find elements you are looking for
+- If you want to research something, open a new tab instead of using the current tab
+- If captcha pops up, try to solve it - else try a different approach
+- If the page is not fully loaded, use wait action
+
+5. TASK COMPLETION:
+- Use the done action as the last action as soon as the ultimate task is complete
+- Dont use "done" before you are done with everything the user asked you, except you reach the last step of max_steps. 
+- If you reach your last step, use the done action even if the task is not fully finished. Provide all the information you have gathered so far. If the ultimate task is completly finished set success to true. If not everything the user asked for is completed set success in done to false!
+- If you have to do something repeatedly for example the task says for "each", or "for all", or "x times", count always inside "memory" how many times you have done it and how many remain. Don't stop until you have completed like the task asked you. Only call done after the last step.
+- Don't hallucinate actions
+- Make sure you include everything you found out for the ultimate task in the done text parameter. Do not just say you are done, but include the requested information of the task. 
+
+6. VISUAL CONTEXT:
+- When an image is provided, use it to understand the page layout
+- Bounding boxes with labels on their top right corner correspond to element indexes
+
+7. Form filling:
+- If you fill an input field and your action sequence is interrupted, most often something changed e.g. suggestions popped up under the field.
+
+8. Long tasks:
+- Keep track of the status and subresults in the memory. 
+
+9. Extraction:
+- If your task is to find information - call extract_content on the specific pages to get and store the information.
+Your responses must be always JSON with the specified format.
+
+ HumanMessage 
+Your ultimate task is: """Perform the following case: Adds items to cart and verifies checkout flow. Steps:['IMPORTANT INSTRUCTIONS: As a human user interacting with the website, I will:\n    1) Perform each action as naturally as possible, mimicking real user behavior\n    2) If a modal or popup appears, find and click the close button intuitively\n    3) Ignore any advertisements or promotional content\n    4) Wait for pages to fully load before taking any action\n    5) Use scrolling to find elements that are not immediately visible\n    6) Interact with elements exactly as a human would:\n       - If I need to type, first click on the input field\n       - If a button is not immediately clickable, move the mouse over it, then click\n       - Use tab navigation if needed\n       - Scroll smoothly before interacting with elements\n    7) Take actions deliberately and carefully\n    8) Pause briefly between actions to simulate human timing\n    9) Always verify my actions have the expected result before proceeding', 'Close the gender selection modal if present by clicking the X button or using ESC key. Modal do not present every time only in initial executions. If there is no modal proceed the next step.', "Click one time to search bar and search for 'tshirt' by typing in the search box and pressing Enter.", 'Verify search results appear by confirming product listings are visible.', 'Select a product by clicking on any item from the search results.', 'If a size selection is presented, select an available size. If there are color options as well, select both color and size options that are available.', "Click the 'Sepete Ekle' (Add to Cart) button and wait for confirmation.", 'Verify the item was successfully added by checking for a success message or cart count indicator.', "Click on the cart icon or 'Sepetim' button to proceed to checkout.", 'On the cart page, verify the product details and total amount are displayed correctly.']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
+
+ HumanMessage 
+Example output:
+
+ AIMessage 
+
+
+ ToolMessage 
+Browser started
+
+ HumanMessage 
+[Your task history memory starts here]
+
+ HumanMessage 
+Action result: 🔗  Opened new tab with https://www.trendyol.com
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 21:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: ⌨️  Input tshirt into index 7
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: ⌨️  Sent keys:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 📄  Extracted from page
+: ```json
+{
+  "search_results_verification": "The page displays search results for \"tshirt\", indicating that product listings are visible. The page also lists various brands, sizes, and other filters related to t-shirts, further confirming the presence of product listings.",
+  "number_of_results": "100.000+",
+  "related_searches": [
+    "Büyük Beden T-shirt",
+    "Spor T-shirt",
+    "Hamile T-Shirt",
+    "Tesettür T-Shirt"
+  ],
+  "top_brands": [
+    "Mavi",
+    "Pull & Bear",
+    "Bershka",
+    "Defacto",
+    "Koton",
+    "H&M",
+    "U.S. Polo Assn.",
+    "Stradivarius",
+    "MANGO",
+    "Jack & Jones",
+    "LC Waikiki",
+    "adidas",
+    "Lufian",
+    "Avva",
+    "Calvin Klein",
+    "Nike",
+    "Tommy Hilfiger",
+    "Puma",
+    "Levi's",
+    "Lacoste",
+    "Colin’s",
+    "Addax",
+    "Ltb",
+    "AC&Co / Altınyıldız Classics",
+    "hummel",
+    "Z zepplin",
+    "Angemiel",
+    "Pisa Art",
+    "Lord T-Shirt",
+    "Fizello",
+    "Presmono",
+    "BENROMA",
+    "fame-stoned",
+    "Alfa Tshirt",
+    "Darkia",
+    "FANBOX SHOP",
+    "Kio Tasarım",
+    "JDM",
+    "Tshirthane",
+    "Mounte Bianca",
+    "Toontoy",
+    "NEWSHİNE",
+    "remonz",
+    "ADABEBEK",
+    "Mayoral",
+    "uyguntarz",
+    "Madmext",
+    "Jose Clothing",
+    "MokaShopin",
+    "TOMMY LIFE",
+    "United Colors of Benetton",
+    "Bad Bear",
+    "Loft",
+    "karikatürstore",
+    "Guess",
+    "Modayakamoz",
+    "Under Armour",
+    "Lumberjack",
+    "AMMA",
+    "Machinist",
+    "Modexl",
+    "The North Face",
+    "Breeze",
+    "Köstebek",
+    "DAXİS Sportwear Company",
+    "Touz Moda",
+    "Cazador",
+    "Quiksilver",
+    "Pixxa",
+    "Viyamo",
+    "JANES",
+    "Paul&Shark",
+    "Columbia",
+    "Revasser",
+    "Dilvin",
+    "BOSS",
+    "BAREM BUTİK",
+    "Pierre Cardin",
+    "Lee Cooper",
+    "Sekizbiraltı",
+    "MOONBULL",
+    "NOMARC",
+    "Slazenger",
+    "GAP",
+    "Korefanzin",
+    "Dewberry",
+    "Touz",
+    "Mad&Calf",
+    "DEEPSENCE",
+    "Benetton",
+    "Nacar",
+    "MODAGEN",
+    "VASK",
+    "Pear Wear",
+    "Only",
+    "Gofeel",
+    "AFROGİYİM",
+    "DUBU BUTİK",
+    "Black Sokak",
+    "Lee",
+    "Emporio Armani",
+    "Trendiz",
+    "Deocept",
+    "CLAYES",
+    "MODARİCH",
+    "Vans",
+    "Let's Wear",
+    "Buratti",
+    "MANGO Kids",
+    "Kappa",
+    "Panço",
+    "Know",
+    "Usateamfans",
+    "Fullamoda",
+    "Trakya Bazaar",
+    "Fulla Moda",
+    "FEMELLE",
+    "Timberland",
+    "Civil Boys",
+    "Benisengiydir",
+    "Sementa",
+    "Şimal",
+    "Valens",
+    "caddekombin",
+    "Wrangler",
+    "raru",
+    "Futbolos",
+    "Mcr",
+    "Big Sam",
+    "Terapi Men",
+    "Trendseninle",
+    "Nk Kids",
+    "LOVETTI",
+    "Olalook",
+    "Lescon",
+    "Ellesse",
+    "The Champ Clothing",
+    "Relax family xf",
+    "to COSMOS",
+    "Helly Hansen",
+    "Cacharel",
+    "Marks & Spencer",
+    "Billabong",
+    "Blackspade",
+    "Superlife",
+    "FATELLA",
+    "Ef Butik",
+    "EFBUTİK",
+    "TOFİSA",
+    "Forever 21",
+    "ablukaonline",
+    "Galatasaray",
+    "Fenerbahçe",
+    "Cevval",
+    "Air Jones",
+    "Açık Garaj",
+    "bilcee",
+    "Desen Triko",
+    "Efendioğlu Design",
+    "Kinetix",
+    "YEACHY",
+    "BYBASICMAN",
+    "Overoz",
+    "Fabrika",
+    "Nautica",
+    "Karl Lagerfeld",
+    "İLKCET MODA",
+    "Carpe",
+    "HUGO",
+    "zepkids",
+    "Armani Exchange",
+    "Oksit",
+    "Only & Sons",
+    "New Balance",
+    "Bk Gift",
+    "Discovery Expedition",
+    "Quzu",
+    "VBSVİBES",
+    "Network",
+    "LİMON COMPANY",
+    "VEAVEN",
+    "ebebek Hello Baby",
+    "EA7",
+    "Jack Wolfskin",
+    "GRIMELANGE",
+    "Happiness İstanbul",
+    "SUNFREE",
+    "Decathlon",
+    "Giovane Gentile",
+    "Mythologie",
+    "MANGO Man",
+    "NewCabin",
+    "ROUTEFIELD",
+    "çikoby",
+    "MANGO Teen",
+    "hafkagiyim",
+    "Speedlife",
+    "SM Satranç Medya",
+    "Altınyıldız Classics",
+    "Pasage",
+    "TOP GLORY",
+    "Mudo",
+    "COMBİNE MİCHAİL",
+    "Lela",
+    "Reebok",
+    "ADA BEBEK ÇOCUK",
+    "Flaw Wear",
+    "NK",
+    "No Matter What",
+    "Fashion Friends",
+    "Tarz Cool",
+    "Dagi",
+    "Civil Girls",
+    "Joma",
+    "Trend Alaçatı Stili",
+    "Bianco Lucci",
+    "Seamoda",
+    "Antioch",
+    "Diadora",
+    "Dynamo",
+    "Trabzonspor",
+    "Sarar",
+    "FYK KİDS",
+    "Teenage Millionaire",
+    "SCSARVİN",
+    "trendgar",
+    "Eliş Şile Bezi",
+    "VERSACE JEANS COUTURE",
+    "DeepSea",
+    "GENIUS STORE",
+    "Faik Sönmez",
+    "Ghassy Co",
+    "GHASSY CO.",
+    "Massimo Dutti",
+    "Rich",
+    "COOL TARZ",
+    "Basmatik",
+    "Astranova",
+    "Slatra",
+    "Xint",
+    "GÜLSELİ",
+    "Umbro",
+    "VENA",
+    "Lotto",
+    "Salomon",
+    "Merrell",
+    "Rmg",
+    "AMAZING CRASH",
+    "WESTMARK LONDON",
+    "LePold",
+    "Galvanni",
+    "Jeep",
+    "Aeropostale",
+    "ayakuydur",
+    "Rodi",
+    "Gant",
+    "Tudors",
+    "trender",
+    "Kiğılı",
+    "Salvia Dione",
+    "Sisley",
+    "Penti",
+    "SÜVARİ",
+    "name it",
+    "Buğraterzimoda",
+    "uhlsport",
+    "Converse",
+    "MD trend",
+    "GIESTO",
+    "Tommy Jeans",
+    "MODADEER",
+    "BALİNS",
+    "Escetic",
+    "Almila",
+    "WEARTEX",
+    "Home Store",
+    "Little Star",
+    "Weyeze",
+    "MANGO Baby",
+    "Mondo",
+    "Spiderman",
+    "2AS",
+    "Shout",
+    "MARECASH",
+    "Adams",
+    "Serbella",
+    "viperkombin",
+    "BESSA",
+    "Alpinist",
+    "WWF Market",
+    "Doreanse",
+    "Rocqerx",
+    "Mack",
+    "KAFT",
+    "GIZIA",
+    "Rey Polo",
+    "comstar",
+    "Avrile",
+    "Ramsey",
+    "Kip",
+    "Oysho",
+    "Hatemoğlu",
+    "Ecko Unltd",
+    "JJXX",
+    "king brich",
+    "Just Cavalli",
+    "Diesel",
+    "Hanna's",
+    "Ozzy",
+    "Ceylen",
+    "Edelle",
+    "XHAN",
+    "Malabadi",
+    "ESPİNA",
+    "MIZUNO",
+    "Mizuno",
+    "Napapijri",
+    "Tena",
+    "Lovelyİstanbul",
+    "CAN",
+    "Carter's",
+    "Uniquetex",
+    "fsm1453",
+    "Oakley",
+    "Twist",
+    "Asics",
+    "TRENDKOLİK",
+    "Orijin Tekstil",
+    "Bluence",
+    "Champion",
+    "Chicco",
+    "Barbie",
+    "Efor",
+    "SUPERDRY",
+    "Pepe Jeans",
+    "Cappmoda",
+    "urban focus",
+    "Josette",
+    "Zeyland",
+    "MİNİKO KİDS",
+    "Cotton Candy",
+    "PINK",
+    "SLIPSTOP",
+    "TF The Fancy For You",
+    "Friday Offset",
+    "Mavipink",
+    "Chiccy",
+    "DPARİS",
+    "Bisse",
+    "Boboli",
+    "GMG FIRENZE",
+    "Danger",
+    "Frappoli",
+    "Arma Life",
+    "İmza",
+    "Nebbati",
+    "No Fear",
+    "Tony Montana",
+    "Eazy Co",
+    "pachie",
+    "W Collection",
+    "Fiori",
+    "Pattaya",
+    "Collezione",
+    "Elzem",
+    "Beşiktaş",
+    "United4",
+    "Andy Wawa",
+    "Moda Bu",
+    "incity",
+    "Miss Murem",
+    "Ayça",
+    "Roman",
+    "Miss Poem",
+    "Dkny",
+    "OshKosh",
+    "Jakamen",
+    "Stamati’s",
+    "VAGGON",
+    "King Brothers",
+    "Askı Nişantaşı",
+    "Valiberta",
+    "Hero",
+    "Hemington",
+    "Berrak",
+    "TRYON",
+    "Jimmy Key",
+    "Riders by Lee",
+    "The Crow",
+    "Skechers",
+    "Arena",
+    "THE RULE",
+    "Kom",
+    "Sportive",
+    "Çizgi Triko",
+    "Cengiz İnler",
+    "Atlantis",
+    "Bytrendyman",
+    "Ruck & Maul",
+    "Çiggo Kids",
+    "Bebepan",
+    "Naramaxx",
+    "Cansın Mini",
+    "Bases",
+    "Hitch Outdoor",
+    "Store",
+    "Replay",
+    "G-STAR RAW",
+    "D'S Damat",
+    "bermini",
+    "Barbour",
+    "5in1Canpolat",
+    "Metal Giyim",
+    "Beverly Hills Polo Club",
+    "C City",
+    "Dockers",
+    "American Vintage",
+    "Camp David",
+    "Funky Rocks",
+    "Dembu",
+    "Kadir Büyükkaya",
+    "rg kidsstore",
+    "Trespass",
+    "De Carte",
+    "IVART",
+    "FG KONNİCHİWA",
+    "CHUBA",
+    "Vedi",
+    "Sevim",
+    "Civil Baby",
+    "Minecraft",
+    "Bikkembergs",
+    "makiteks",
+    "Özen",
+    "Tyess",
+    "BROOKS BROTHERS",
+    "BARRELS AND OIL",
+    "Slam",
+    "Tchibo",
+    "Rwb",
+    "Ucla",
+    "Sparco",
+    "Morven",
+    "Nors",
+    "Noa Noa",
+    "İnce Topuk",
+    "TWN",
+    "Black One",
+    "Vakko",
+    "DSquared2",
+    "John Richmond",
+    "Diandor",
+    "Solo",
+    "Ncs",
+    "Swist",
+    "odelon",
+    "MASTIFF",
+    "Exuma",
+    "nalu",
+    "Manuka",
+    "Domoda",
+    "fasardi",
+    "Ranadan",
+    "OXVİN",
+    "Millet",
+    "Twister Jeans",
+    "Darkzone",
+    "Panthzer",
+    "Regatta",
+    "CANDEL",
+    "Stil Diva",
+    "CottonLand",
+    "Myline",
+    "Türen",
+    "figo",
+    "WATCHOFROYAL",
+    "Sanctum",
+    "DİSNEY",
+    "Şans",
+    "VAV WEAR",
+    "Chakra",
+    "Büyük Moda",
+    "Kuzgunshop",
+    "ESRAHELVACI",
+    "Palm Angels",
+    "Jiber",
+    "Hmd",
+    "yerumoni",
+    "Escada",
+    "Batman",
+    "Retro",
+    "Musto",
+    "Catch",
+    "Rodi Jeans",
+    "COTENCONCEPT",
+    "Syah",
+    "Dafron",
+    "Colorinas",
+    "HOLEACADEMIE",
+    "Haribo",
+    "Glocal",
+    "People By Fabrika",
+    "lismina",
+    "Nehir",
+    "Rivus",
+    "MioFit",
+    "Chandraswear",
+    "Anıt",
+    "No Future",
+    "Parfois",
+    "Şahinler",
+    "DobaKids",
+    "Disa",
+    "NEED LİFE",
+    "LTC Jeans",
+    "Ayma Active",
+    "NACAR STORE",
+    "Renkli Store",
+    "Amiri",
+    "Black Fashion",
+    "KLY",
+    "SİNGLE SWORD",
+    "Sekiz Numara",
+    "best kids",
+    "John Frank",
+    "Roxy",
+    "Everlast",
+    "Bigdart",
+    "FURKAN EXCLUSIVE",
+    "Millionaire",
+    "TamSeninTarzin",
+    "THERECOLOR",
+    "Ralph Lauren",
+    "Kübra Tekin",
+    "Volcom",
+    "Stilkombin",
+    "adL",
+    "Dark Forest",
+    "Tuffy Kids",
+    "Cotton Mood",
+    "Hays",
+    "Biggdesign",
+    "Tiffany Tomato",
+    "Eros",
+    "Dahlia Bianca",
+    "Havoş",
+    "ETHIQUET",
+    "Miorre",
+    "Miniworld",
+    "mylove",
+    "mirach",
+    "Seda Yalçın Atelier",
+    "DENİKK",
+    "Maccali",
+    "Kids",
+    "Huğlu",
+    "Cerruti 1881",
+    "NİCE",
+    "ADVANTE",
+    "Le Mabelle",
+    "Deus Ex Machina",
+    "Combat Tactical",
+    "HNsport",
+    "Soho Mood",
+    "Liu Jo",
+    "Modanisa",
+    "ERDEM İÇ GİYİM",
+    "Fila",
+    "Penyelux",
+    "Tutku Elit",
+    "PUNKY CAT",
+    "RAVANELLI",
+    "Balenbi",
+    "TerziAdemAltun",
+    "Hackett",
+    "Nurteks",
+    "Jepublic",
+    "Keep Out",
+    "Setre",
+    "Nocturne",
+    "Crozwise",
+    "Jerf",
+    "HABBE UNİSEX",
+    "UNV COLLECTION",
+    "Pulli Collection",
+    "Vogel",
+    "Yerli",
+    "İpekyol",
+    "Gymwolves",
+    "Next Baby",
+    "MANTA",
+    "VentiSette",
+    "THIMOON",
+    "Evolite",
+    "Yaprak Hediyelik",
+    "Port Royale",
+    "Superstacy",
+    "Lamia Giyim",
+    "Lilabio",
+    "Moda Değirmeni",
+    "MONSTER HIGH",
+    "Sude",
+    "Basic Co",
+    "DoReMi",
+    "Cigit",
+    "Kozmik Tapestry",
+    "Gang",
+    "Betimoda",
+    "Tween",
+    "Karaca",
+    "Iceberg",
+    "Baby Mom",
+    "MUSCLECLOTH",
+    "Antebies",
+    "Katia & Bony",
+    "Zechka",
+    "Benin",
+    "Silyon Askeri Giyim",
+    "DOSXX",
+    "kingspearl",
+    "DIGERUI",
+    "Black on Black",
+    "IAMNOTBASIC",
+    "Do-Minik",
+    "Bidi Badu",
+    "Unique",
+    "whiteface",
+    "Oasis",
+    "Mickey Mouse",
+    "VAPUR TEKSTİL",
+    "SERTUĞ",
+    "NEW WORLD POLO",
+    "Alme",
+    "White By Nature",
+    "Perspective",
+    "Love My Body",
+    "CHIARA FERRAGNI",
+    "Dufy",
+    "Miniso",
+    "Miapiashop",
+    "EDSA",
+    "OFFSIDE CLOTHES",
+    "Northlight",
+    "Exve Exclusive",
+    "Harry Potter",
+    "MARKAPIA",
+    "Wilson",
+    "Touche Prive",
+    "Purple By Banu",
+    "Store 55",
+    "SSEINSE",
+    "TAMPAP",
+    "yexech",
+    "ARESMODA",
+    "HEQA",
+    "AKUT",
+    "MAİ COLLECTİON",
+    "Palo Santo",
+    "hazelin",
+    "QualiTee",
+    "LOSAN",
+    "Suud Collection",
+    "HAKKE",
+    "Tuba Butik",
+    "Bubus",
+    "PANİO KİDS",
+    "Tufinger",
+    "Sonic",
+    "Mustang",
+    "Beymen Collection",
+    "Hannah",
+    "Çift Kaplan",
+    "BE BLUE",
+    "DE PLEIN",
+    "Redline",
+    "GeBe",
+    "Brango",
+    "Yonex",
+    "nosewear",
+    "Açelya Okcu",
+    "Beta Kids",
+    "ANTHONY JACKSON",
+    "Vero Moda",
+    "Jack & Jones Plus",
+    "Zomers",
+    "Abdullah Kiğılı",
+    "Superman",
+    "Space",
+    "BABOLAT",
+    "Manche",
+    "Jument",
+    "Mammaramma",
+    "Woolnat",
+    "Gizce",
+    "Bestenur",
+    "Campione",
+    "Atabay Kids",
+    "Ghetto off limits",
+    "QUO",
+    "Dare 2B",
+    "Scubapro",
+    "Carrera",
+    "Motherway",
+    "Unicorn",
+    "The Socks Company",
+    "Haba",
+    "LES BENJAMINS",
+    "Woof Gym",
+    "Siyezen",
+    "Oshkosh B’gosh",
+    "Yogabu",
+    "Uniprom",
+    "CNR TEKSTİL",
+    "Divonette",
+    "DONEX",
+    "GRAB",
+    "Dünyadan Hediyeler",
+    "Happyfox",
+    "MADZEYMODA",
+    "LEONE",
+    "Dogo",
+    "SEÇİL",
+    "Foremia",
+    "Etnies",
+    "Exquise",
+    "Mountain Hardwear",
+    "citycenterfashion",
+    "Wear Three Points",
+    "NUR TEKSTİL",
+    "Kiwe",
+    "ZEKİ ÖZER",
+    "Utopeak Outdoor",
+    "PEPPER MİNT LONDON",
+    "Messy Weekend",
+    "ÖYKÜ KİDS",
+    "Eldemir",
+    "Dickies",
+    "Gusto",
+    "Ekol",
+    "Head",
+    "Eren",
+    "Love Moschino",
+    "MONTANA",
+    "Elif",
+    "Lolliboomkids",
+    "SWATSKY",
+    "Next",
+    "LOS OJOS",
+    "MODASEÇ",
+    "Akıncılar Outdoor",
+    "köstebek kadıköy",
+    "Momsbrand",
+    "Peak Performance",
+    "Whitefin",
+    "LA GULER",
+    "Pobudo",
+    "PİNKO",
+    "Svm",
+    "Brunello Cucinelli",
+    "Tutku",
+    "Varetta",
+    "Karol",
+    "TSHIRT35",
+    "la & vetta",
+    "Deerhunter",
+    "KEMAL EKİNCİ",
+    "Mambo",
+    "Fujin",
+    "Gaus",
+    "lilseb",
+    "Sam and Sam",
+    "Melike Tatar",
+    "AGUSTİNİ",
+    "Org Marka Store",
+    "Qu Style",
+    "Hediyesepeti",
+    "George Henry",
+    "Look",
+    "İDİL BABY",
+    "Rue",
+    "CROSS JEANS",
+    "HOLLY LOLLY",
+    "Planet Butik",
+    "Lmtd",
+    "BlackHorn",
+    "e-çocuk",
+    "ASWEL",
+    "Baldinini",
+    "K-Way",
+    "Pollito",
+    "Ritnice",
+    "Alberto",
+    "Hedef",
+    "Superfly",
+    "Lafuma",
+    "Lamy",
+    "Ferraro",
+    "HYPERS",
+    "Silvermoon",
+    "VATKALI",
+    "Equpe Studio",
+    "Mia",
+    "Mirage",
+    "sogo",
+    "BUSEM",
+    "plenty",
+    "Edwards",
+    "Endless",
+    "Laluvia",
+    "Urban Beat",
+    "Hugo Boss",
+    "Sarev",
+    "Dkny Jeans",
+    "Minions",
+    "Civil",
+    "Norfolk",
+    "Salewa",
+    "Bebe Plus",
+    "Ottomoda",
+    "VERDA",
+    "5.11 Tactical",
+    "EKZMODA",
+    "aymens",
+    "Craghoppers",
+    "HNS",
+    "pueril",
+    "ŞEBNEM GÜNAY",
+    "XONIX",
+    "Brooks",
+    "Denokids",
+    "BALMAIN",
+    "ÖZKAN underwear",
+    "BSM",
+    "Delpino",
+    "BOSHETTI",
+    "More",
+    "Moi Noi",
+    "YSF",
+    "Little Gusto",
+    "Arma Yıldız",
+    "İkmal",
+    "CMP",
+    "Elegant Design",
+    "Two Mail",
+    "cichlid",
+    "JEUSS",
+    "MECANIK",
+    "Dragora",
+    "koza iç giyim",
+    "Tiffany",
+    "Yeni İnci",
+    "Penye Mood",
+    "Puane",
+    "Allyco",
+    "StyleArt",
+    "Cute Crazy",
+    "Bando",
+    "Valeria Fratta",
+    "Safari",
+    "Miny Center",
+    "Skygo",
+    "iplay",
+    "Curly",
+    "its basic",
+    "cracpot",
+    "Albayrak Spor",
+    "Bold & Young",
+    "CurcunaShop",
+    "HAWKKİNG",
+    "Armağan",
+    "EVRA",
+    "Mixray",
+    "Versace",
+    "NEW ERA",
+    "Thermoform",
+    "Five Pocket",
+    "Ayhan",
+    "Climbolic",
+    "Eda Erdoğan",
+    "Beauty Omelette",
+    "Riccotarz",
+    "Select Moda",
+    "Coco & Bamboo",
+    "Vienfit",
+    "Rue Studio",
+    "PULLIMM",
+    "Gülşah Evecen",
+    "BRC Collection",
+    "Felix Butik",
+    "ALDOS",
+    "ALMİNA",
+    "marrakech",
+    "Tuğra",
+    "JUSTEVER",
+    "macharel jeans"
+  ]
+}
+```
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 49:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 49:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 49:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 49:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 49:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 49:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 49:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 49:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 49:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 49:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 49:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 49:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🔍  Scrolled down the page by 1000 pixels
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 49:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 45: S
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 46:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 4: Sepete Eklendi
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 9: Ürün Değerlendirmeleri
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 6:
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🔙  Navigated back
+
+ HumanMessage 
+[Task history memory ends]
+[Current state starts here]
+The following is one-time information - if you need to remember it write it to memory:
+Current url: https://www.trendyol.com/clayes/leisure-future-parcali-suprem-t-shirt-lacivert-beyaz-oversize-bisiklet-yaka-kisa-kol-tisort-p-839617056?merchantId=477103&boutiqueId=61&v=s
+Available tabs:
+[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://www.trendyol.com/sr?q=tshirt&qt=tshirt&st=tshirt&os=1', title='tshirt Modelleri, Fiyatları - Trendyol'), TabInfo(page_id=2, url='https://www.trendyol.com/clayes/leisure-future-parcali-suprem-t-shirt-lacivert-beyaz-oversize-bisiklet-yaka-kisa-kol-tisort-p-839617056?merchantId=477103&boutiqueId=61&v=s', title='CLAYES Leisure Future Parçalı Süprem T-Shirt - Lacivert Beyaz Oversize Bisiklet Yaka Kısa Kol Tişört - Fiyatı, Yorumları')]
+Interactive elements from top layer of the current page inside the viewport:
+... 2276.800048828125 pixels above - scroll or extract content to see more ...
+[0]<img />
+CLAYES
+Leisure Future Parçalı Süprem T-Shirt - Lacivert Beyaz Oversize Bisiklet Yaka Kısa Kol Tişört
+169,10 TL
+[1]<img />
+Acele et! Son 3 günde
+1500+ adet
+ürün satıldı!!
+16904 kişinin
+sepetinde, tükenmeden al!
+Sevilen ürün!
+102186 kişi
+favoriledi!
+Popüler ürün! Son 24 saatte
+12588 kişi
+görüntüledi!
+Acele et! Son 3 günde
+1500+ adet
+ürün satıldı!!
+[2]<div S/>
+[3]<a Şimdi Al/>
+[4]<button Sepete Ekle
+Sepete Eklendi/>
+[5]<div Favorilere Ekle/>
+[6]<button />
+[7]<div BENZER ÜRÜNLER/>
+[8]<div Bu Ürünü Alanlar Bunları da Aldı/>
+[9]<div Ürün Değerlendirmeleri/>
+[10]<div Ürün Bilgileri/>
+Kupon Fırsatı!
+[11]<button Kazan/>
+[12]<div />
+[13]<div />
+[14]<a Leisure Future Parçalı Süprem T-Shirt - Beyaz Siyah  Oversize Bisiklet Yaka Kısa Kol Tişört/>
+[15]<img />
+[16]<a CLAYES
+Thousand Süprem T-Shirt - Nefti Yeşil Baskılı Oversize Bisiklet Yaka Kısa Kol Tişört
+4.0
+(951)
+149,90 TL/>
+[17]<img />
+[18]<a WRANGLER
+Regular Fit Normal Kesim Sıfır Yaka %100 Pamuk Logolu Tişört
+4.6
+(91)
+428,99 TL/>
+[19]<img />
+[20]<a Sweetline
+Fantastıc Süprem T-Shirt - Lacivert Baskılı Oversize Bisiklet Yaka Tişört
+4.3
+(849)
+149,90 TL/>
+[21]<img />
+[22]<a COMBİNE MİCHAİL
+Erkek Siyah Beyaz Haki Gri Lacivert %100 Pamuklu 5 Li T-shirt Paketi
+4.4
+(2797)
+699,90 TL
+139,98 TL
+/
+adet/>
+[23]<img />
+[24]<a DUBU BUTİK
+Vocation Parçalı Süprem T-Shirt - Beyaz Siyah Baskılı Oversize Bisiklet Yaka Kısa Kol Tişört
+3.9
+(818)
+Son 14 Günün En Düşük Fiyatı!
+149,90 TL/>
+[25]<img />
+[26]<a Eldemir
+Unisex Pamuk Siyah Bisiklet Yaka Oversize Boyfriend T-shirt
+3.6
+(2810)
+90 TL/>
+[27]<img />
+[28]<a Avva
+Erkek Siyah Soft Touch Bisiklet Yaka Baskılı T-shirt A41y1327
+5.0
+(3)
+841,99 TL/>
+[29]<img />
+[30]<a CLAYES
+Leisure Future Parçalı Süprem T-Shirt - Beyaz Siyah  Oversize Bisiklet Yaka Kısa Kol Tişört
+3.9
+(421)
+149,90 TL/>
+[31]<img />
+[32]<a CLAYES
+Thousand Süprem T-Shirt - Nefti Yeşil Baskılı Oversize Bisiklet Yaka Kısa Kol Tişört
+4.0
+(951)
+149,90 TL/>
+[33]<img />
+[34]<a WRANGLER
+Regular Fit Normal Kesim Sıfır Yaka %100 Pamuk Logolu Tişört
+4.6
+(91)
+428,99 TL/>
+[35]<img />
+[36]<div />
+Bu Ürünü Alanlar Bunları da Aldı
+[37]<button />
+[38]<a Kadın Siyah Baggy Bol Kesim Esnek Rahat Kumaş Eşofman Altı ŞAH MODA/>
+[39]<img />
+[40]<button />
+[41]<a Kupon Fırsatı
+pandy
+Siyah Çift Şeritli Kadın Bol Paça Eşofman Altı
+3.6
+(647)
+249,96 TL/>
+[42]<img />
+[43]<img />
+[44]<button />
+[45]<a Kupon Fırsatı
+macharel jeans
+Kadın Lacivert Yüksek Bel Toparlayıcı Ispanyol Paça Palazzo Pantolon
+4.7
+(5971)
+394 TL/>
+[46]<img />
+[47]<img />
+[48]<img />
+[49]<button />
+[50]<img />
+Kupon Fırsatı
+Genel Markalar
+Büyük Beden Özel Üretim Love Me Pooh Baskılı %100 Pamuk Oversize Kadın T-shırt
+3.8
+(86)
+135 TL
+[51]<button />
+[52]<img />
+[53]<img />
+[54]<img />
+Kupon Fırsatı
+The Ceel
+Tüy İnceltici ve Nemlendirici Süt Isırgan Otu & Hyaluronik Asit Özlü 60 ml
+4.3
+(15859)
+265,97 TL
+4,43 TL
+/
+ml
+[55]<button />
+[56]<img />
+20 TL Kupon
+Köstebek
+Lacivert Ince Kumaş Raglan Kollu Adventure College Beyaz (UNİSEX) Uzun Kollu
+4.0
+(139)
+499,90 TL
+[57]<button />
+[58]<img />
+Kupon Fırsatı
+pandy
+Harajuku Zip Detail Black Oversize Şeritli Eşofman Altı
+3.7
+(66)
+329 TL
+[59]<button />
+[60]<img />
+[61]<img />
+[62]<img />
+Hızlı Teslimat
+Happiness İstanbul
+Kadın İndigo Mavi Desenli Dökümlü Viskon Palazzo Pantolon EN00606
+4.7
+(82)
+199,99 TL
+[63]<button />
+[64]<img />
+Kupon Fırsatı
+CAONNES
+Kadın Siyah Baggy Bol Kesim Esnek Rahat Kumaş Eşofman Altı ŞAH MODA
+3.3
+(48)
+199 TL
+[65]<button />
+[66]<a Kupon Fırsatı
+pandy
+Siyah Çift Şeritli Kadın Bol Paça Eşofman Altı
+3.6
+(647)
+249,96 TL/>
+[67]<img />
+[68]<img />
+[69]<button />
+[70]<a Kupon Fırsatı
+macharel jeans
+Kadın Lacivert Yüksek Bel Toparlayıcı Ispanyol Paça Palazzo Pantolon
+4.7
+(5971)
+394 TL/>
+[71]<img />
+[72]<img />
+[73]<img />
+[74]<button />
+[75]<button />
+Ürün Değerlendirmeleri
+[76]<p tooltip>4.1/>
+859 Değerlendirme
+538 Yorum
+[77]<img />
+Kullanıcılar beden bilgisi hakkında olumlu yorum yaptı
+Kullanıcıların çoğu kendi bedeninizi almanızı öneriyor.
+[78]<div K** ö**
+18 Mart 2025
+kalitesi güzel. ben bol istediğimden bi beden büyük aldım.
+Boy
+:
+155
+Kilo
+:
+53
+Beden
+:
+L
+CLAYES
+satıcısından alındı.
+**** ****
+22 Ekim 2024
+M beden aldım gayet rahat, günlük kullanım için ideal, kargo hızlı ve özenliydi teşekkürler.
+size
+:
+M
+CLAYES
+satıcısından alındı.
+E** K**
+08 Eylül 2024
+Güzel tam beden
+Boy
+:
+165
+Kilo
+:
+85
+Beden
+:
+S
+CLAYES
+satıcısından alındı.
+**** ****
+07 Eylül 2024
+Ürün fiyatına göre çok güzel ve kendi bedenimi aldım tam istediğim gibi oldu.
+Beden
+:
+S
+CLAYES
+satıcısından alındı.
+D** k**
+07 Eylül 2024
+bir beden büyük alınabilir
+Beden
+:
+M
+CLAYES
+satıcısından alındı.
+S** m**
+gozeldir 1.63.48 kq m beden sifaris verdik salas dursn deye gundelik heyatd aisdfde ede bileceymiz tisortdur rahat
+Beden
+:
+M
+CLAYES
+satıcısından alındı./>
+[79]<button (
+1
+)/>
+[80]<button />
+[81]<button (
+4
+)/>
+[82]<button />
+[83]<button (
+0
+)/>
+[84]<button />
+[85]<button (
+1
+)/>
+[86]<button />
+[87]<button (
+1
+)/>
+[88]<button />
+[89]<div />
+[90]<button />
+[91]<button TÜM YORUMLARI GÖSTER/>
+Ürün Soru ve Cevapları
+[92]<a tümü
+(
+298
+)/>
+[93]<a beden
+(
+131
+)/>
+[94]<a materyal tipi
+(
+7
+)/>
+[95]<a boyut ve ölçü
+(
+5
+)/>
+[96]<a renk
+(
+4
+)/>
+[97]<a stok
+(
+1
+)/>
+[98]<div PTT mevcutmu
+s** b**
+-
+26 Temmuz 2024
+CLAYES
+satıcısının cevabı
+7 saat içinde cevaplandı.
+Merhabalar Öncelikle Bizi Tercih ettiğiniz için teşekkür ederiz.MAALESEF EFENDİM.
+unisexmi .....
+**** ****
+-
+16 Ağustos 2024
+CLAYES
+satıcısının cevabı
+19 saat içinde cevaplandı.
+Merhabalar Öncelikle Bizi Tercih ettiğiniz için teşekkür ederiz. evet efendim
+kızlar icinmi
+**** ****
+-
+26 Ağustos 2024
+CLAYES
+satıcısının cevabı
+14 saat içinde cevaplandı.
+UNİSEX EFENDİM.
+1.57 boy 38 kilo
+**** ****
+-
+27 Ağustos 2024
+CLAYES
+satıcısının cevabı
+3 saat içinde cevaplandı.
+Merhabalar efendim öncelikle iyi günler dilerim. S beden uygundur/>
+[99]<img />
+[100]<img />
+[101]<img />
+[102]<img />
+[103]<div />
+[104]<button />
+[105]<button TÜM SORULARI GÖSTER/>
+Ürün Bilgileri
+[106]<img />
+CLAYES
+Leisure Future Parçalı Süprem T-Shirt - Lacivert Beyaz Oversize Bisiklet Yaka Kısa Kol Tişört
+[107]<div Geri Bildirim Ver/>
+Bu ürün
+CLAYES
+tarafından gönderilecektir.
+Kampanya fiyatından satılmak üzere 100 adetten fazla stok sunulmuştur.
+İncelemiş olduğunuz ürünün satış fiyatını satıcı belirlemektedir.
+Bir ürün, birden fazla satıcı tarafından satılabilir. Birden fazla satıcı tarafından satışa sunulan ürünlerin satıcıları ürün için belirledikleri fiyata, satıcı puanlarına, teslimat statülerine, ürünlerdeki promosyonlara, kargonun bedava olup olmamasına ve ürünlerin hızlı teslimat ile teslim edilip edilememesine, ürünlerin stok ve kategorileri bilgilerine göre sıralanmaktadır.
+Bu üründen en fazla 10 adet sipariş verilebilir. 10 adedin üzerindeki siparişleri Trendyol iptal etme hakkını saklı tutar. Belirlenen bu limit kurumsal siparişlerde geçerli olmayıp, kurumsal siparişler için farklı limitler belirlenebilmektedir.
+15 gün içinde ücretsiz iade.
+Detaylı bilgi için
+[108]<a tıklayın/>
+.
+Stilinizi yansıtmak ve tarzınıza özgü bir dokunuş katmak için CLAYES'in özel koleksiyonundaki baskılı oversize bisiklet yaka tişörtlerine göz atın. Orta ölçekli bir marka olarak, tasarımlarımızda özenle seçilmiş canlı renkleri ve şık baskıları bir araya getirerek size özgün bir stil sunuyoruz.
+CLAYES markasıyla bulabileceğiniz bu tişörtler, hem rahatlığı hem de tarzı bir arada sunuyor. Kısa kol detayıyla yaz aylarında ferahlık sağlarken, oversize kesimiyle trendleri takip etmenizi sağlıyor.
+Hemen CLAYES'in baskılı oversize bisiklet yaka tişörtlerini keşfedin ve gardırobunuza yeni bir soluk getirin. Sınırlı stoklarla, şimdi alışveriş yaparak tarzınızı tamamlayın ve özgün bir görünüm elde edin.
+Ürün Özellikleri
+... 4691.199951171875 pixels below - scroll or extract content to see more ...
+Current step: 25/100Current date and time: 2025-03-25 11:01
+
+ RESPONSE
+{
+  "current_state": {
+    "evaluation_previous_goal": "I went back to the product page.",
+    "memory": "Starting with the new task. I have completed 7/10 steps",
+    "next_goal": "Click on the size S again."
+  },
+  "action": [
+    {
+      "click_element": {
+        "index": 45
+      }
+    }
+  ]
+}

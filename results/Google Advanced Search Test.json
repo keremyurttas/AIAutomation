@@ -1,0 +1,146 @@
+[
+    {
+        "click_element": {
+            "index": 23
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=23, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'false', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 24
+        },
+        "interacted_element": null
+    },
+    {
+        "click_element": {
+            "index": 24
+        },
+        "interacted_element": null
+    },
+    {
+        "click_element": {
+            "index": 23
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=23, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'true', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 24
+        },
+        "interacted_element": null
+    },
+    {
+        "click_element": {
+            "index": 23
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=23, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'false', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 24
+        },
+        "interacted_element": null
+    },
+    {
+        "click_element": {
+            "index": 23
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=23, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'true', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 23
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=23, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'false', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 23
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=23, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'true', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 23
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=23, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'false', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 23
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=23, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'true', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 23
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=23, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'false', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 23
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=23, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'true', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 23
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=23, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'false', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 23
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=23, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'true', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 23
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=23, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'false', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 23
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=23, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'true', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "go_to_url": {
+            "url": "https://www.google.com/"
+        },
+        "interacted_element": null
+    },
+    {
+        "click_element": {
+            "index": 20
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=20, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'false', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 21
+        },
+        "interacted_element": null
+    },
+    {
+        "click_element": {
+            "index": 20
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=20, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'true', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 20
+        },
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/div/div[2]/div[3]/span/span/g-popup/div', highlight_index=20, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'span', 'span', 'g-popup', 'div'], attributes={'jsname': 'oYxtQd', 'class': 'CcNe6e', 'aria-expanded': 'false', 'aria-haspopup': 'true', 'role': 'button', 'tabindex': '0', 'jsaction': 'WFrRFb;keydown:uYT2Vb'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > span > g-popup > div.CcNe6e[role=\"button\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+    },
+    {
+        "click_element": {
+            "index": 21
+        },
+        "interacted_element": null
+    }
+]
