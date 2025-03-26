@@ -70,7 +70,7 @@ Common action sequences:
 Your responses must be always JSON with the specified format.
 
  HumanMessage 
-Your ultimate task is: """Perform the following case: Adds items to cart and verifies checkout flow. Steps:['IMPORTANT INSTRUCTIONS: As a human user interacting with the website, I will:\n    1) Perform each action as naturally as possible, mimicking real user behavior\n    2) If a modal or popup appears, handle every modal\n    3) Ignore any advertisements or promotional content\n    4) Wait for pages to fully load before taking any action\n    5) Use scrolling to find elements that are not immediately visible\n    6) Interact with elements exactly as a human would:\n       - If I need to type, first click on the input field\n       - If a button is not immediately clickable, move the mouse over it, then click\n       - Use tab navigation if needed\n       - Scroll smoothly before interacting with elements\n    7) Take actions deliberately and carefully\n    8) Pause briefly between actions to simulate human timing\n    9) Always verify my actions have the expected result before proceeding', 'Close the gender selection modal if present by clicking the X button or using ESC key. Modal do not present every time only in initial executions. If there is no modal proceed the next step.', "Search for 'tshirt' by typing in the search box and pressing Enter.", 'Verify search results appear by confirming product listings are visible.', 'Select a product by clicking on any item from the search results.', 'If a size selection is presented, select an available size. If there are color options as well, select both color and size options that are available.', "Click the 'Sepete Ekle' (Add to Cart) button and wait for confirmation.", 'Verify the item was successfully added by checking for a success message or cart count indicator.', "Click on the cart icon or 'Sepetim' button to proceed to checkout.", 'On the cart page, verify the product details and total amount are displayed correctly.']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
+Your ultimate task is: """Perform the following case: Verifies basic search functionality works correctly. Steps:['IMPORTANT INSTRUCTIONS: As a human user interacting with the website, I will:\n    1) Perform each action as naturally as possible, mimicking real user behavior\n    2) If a modal or popup appears, handle every modal\n    3) Ignore any advertisements or promotional content\n    4) Wait for pages to fully load before taking any action\n    5) Use scrolling to find elements that are not immediately visible\n    6) Interact with elements exactly as a human would:\n       - If I need to type, first click on the input field\n       - If a button is not immediately clickable, move the mouse over it, then click\n       - Use tab navigation if needed\n       - Scroll smoothly before interacting with elements\n    7) Take actions deliberately and carefully\n    8) Pause briefly between actions to simulate human timing\n    9) Always verify my actions have the expected result before proceeding', 'Open Google homepage. Verify the search input field is visible. Type "automation testing" in the search box. Press Enter or click the search button. Verify search results are displayed with relevant links. ']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
 
  HumanMessage 
 Example output:
@@ -85,291 +85,60 @@ Browser started
 [Your task history memory starts here]
 
  HumanMessage 
-Action result: 🔗  Opened new tab with https://www.trendyol.com
+Action result: 🔗  Opened new tab with https://www.google.com
 
  HumanMessage 
 [Task history memory ends]
 [Current state starts here]
 The following is one-time information - if you need to remember it write it to memory:
-Current url: https://www.trendyol.com/
+Current url: https://www.google.com/
 Available tabs:
-[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://www.trendyol.com/', title="En Trend Ürünler Türkiye'nin Online Alışveriş Sitesi Trendyol'da")]
+[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://www.google.com/', title='Google')]
 Interactive elements from top layer of the current page inside the viewport:
 [Start of page]
-İndirim Kuponlarım
-Trendyol'da Satış Yap
-Hakkımızda
-Yardım & Destek
-Giriş Yap
-Favorilerim
-Sepetim
-TÜM KATEGORİLER
-Kadın
-Erkek
-Anne & Çocuk
-Ev & Yaşam
-Süpermarket
-Kozmetik
-Ayakkabı & Çanta
-Elektronik
-Çok Satanlar
-Flaş Ürünler
-İyi Fiyatlı Ürünler
-Sen De Al!
-Avantajlı Ürünler
-İndirim Kuponlarım
-Krediler
-Kredi Kartı
-Yeni Gelen Ürünler
-Popüler Ürünler
-Tümünü Gör
-KARGO BEDAVA
-Tinypeople
-Kız Çocuk Fiyonk Detaylı Etekli Alt Üst Takım Kız Çocuk Takım Etek Sweat Takım
-4.1
-(
-82
-)
-420
-TL
-KARGO BEDAVA
-JAWEL
-Kadın Etnik Desen Soft Şal Prusa 152.04.0003
-4.7
-(
-48
-)
-408
-TL
-HIZLI TESLİMAT
-KARGO BEDAVA
-En Çok Favorilenen 2. Ürün
-ALPİDS
-4 Lü Kız Takım
-4.7
-(
-6766
-)
-599,99
-TL
-20 TL
-Kupon
-HIZLI TESLİMAT
-KARGO BEDAVA
-NOMİNATİON
-Kişiselleştirilebilir Dekoratif Linkli Klasik Paslanmaz Çelik Bileklik - Kabartma Kalp
-4.8
-(
-12
-)
-1.500
-TL
-200 TL
-Kupon
-KARGO BEDAVA
-Bilge Trend
-Kız Bebek Çocuk, Robadan Fırfırlı Beyaz Dantel Elbise, Doğum Günü, Düğün, Bayramlık, Parti Elbisesi
-4.8
-(
-104
-)
-679,90
-TL
-HIZLI TESLİMAT
-SHERLOCK HOME
-Kuromi Baskılı Alt Üst T-Shirt Şort Takım
-3.7
-(
-1085
-)
-243
-TL
-[0]<i />
-[1]<a la & vetta Siyah Keten Karışımlı Bol Kesim Pantolon ürün detay sayfası>KARGO BEDAVA
-la & vetta
-Siyah Keten Karışımlı Bol Kesim Pantolon
-4.2
-(
-175
-)
-549,99
-TL
-Kupon Fırsatı/>
-[2]<img />
-[3]<img />
+[0]<a Gmail >Gmail/>
+[1]<a Görsellerde arama yapın >Görseller/>
+[2]<a Google uygulamaları;false;button/>
+[3]<a Oturum açın/>
 [4]<img />
-[5]<i />
-[6]<a moda armanc Bomber Kolej Ceket ürün detay sayfası>HIZLI TESLİMAT
-KARGO BEDAVA
-moda armanc
-Bomber Kolej Ceket
-4.3
-(
-930
-)
-399
-TL
-20 TL
-Kupon/>
+Google'da oturum açın
+Google hesabınızdan en iyi şekilde yararlanın
+[5]<button Oturum açma/>
+[6]<a Oturum aç (yeni bir sekme açar)>Oturum aç/>
 [7]<img />
-[8]<img />
-[9]<img />
-[10]<img />
-[11]<div Flaş Ürünler
-01
-:
-30
-:
-40/>
-[12]<img />
-[13]<a Tüm Ürünler/>
-[14]<div />
-[15]<button />
-[16]<a Embeauty Kolajen Ve Keratin Saç Dökülmesine Karşı Hızlı Sac Uzatan Dolgunlaştırıcı Onarıcı Besleyici Şampuan ürün detay sayfası>HIZLI TESLİMAT
-KARGO BEDAVA
-455
-adet satıldı
-Embeauty
-Kolajen Ve Keratin Saç Dökülmesine Karşı Hızlı Sac Uzatan Dolgunlaştırıcı Onarıcı Besleyici Şampuan
-4.3
-(
-28309
-)
-311,36
-TL
-2. Ürün 1 TL/>
-[17]<img />
-[18]<img />
-[19]<img />
+[8]<textarea Ara;q;combobox;false/>
+[9]<div button;Harf çevirme aracı/>
+[10]<div Sesle arama yapın;button/>
+[11]<div button;Görselle arama/>
+[12]<input Google'da Ara;btnK;button;submit/>
+[13]<input btnI;Kendimi Şanslı Hissediyorum;submit/>
+Google'ı kullanabileceğiniz diğer diller:
+[14]<a English/>
+Türkiye
+[15]<a Hakkında/>
+[16]<a Reklam/>
+[17]<a İşletme/>
+[18]<a Arama nasıl çalışır?/>
+[19]<a İklimle ilgili çalışmalarımızın üçüncü on yılı/>
 [20]<img />
-[21]<i />
-[22]<a Vita Ceel Cilt Vitamini Çiğnenebilir Vegan Gummy, Hyaluronic Acid, Vitamin C, Glutatyon, Q10, Ala, Biotin ürün detay sayfası>KARGO BEDAVA
-Vita Ceel
-Cilt Vitamini Çiğnenebilir Vegan Gummy, Hyaluronic Acid, Vitamin C, Glutatyon, Q10, Ala, Biotin
-4.2
-(
-10875
-)
-359,90
-TL/>
-[23]<img />
-[24]<img />
-[25]<img />
-[26]<i />
-[27]<a The Ceel Cilt Beyazlatıcı Aydınlatıcı Glutatyonlu Leke Karşıtı Krem Kolajen, Niacinamide & Kojik Asitli 50 ml ürün detay sayfası>The Ceel
-Cilt Beyazlatıcı Aydınlatıcı Glutatyonlu Leke Karşıtı Krem Kolajen, Niacinamide & Kojik Asitli 50 ml
-4.0
-(
-19375
-)
-219,90
-TL
-Kupon Fırsatı
-3 Al 2 Öde/>
-[28]<img />
-[29]<img />
-[30]<img />
-[31]<img />
-[32]<img />
-[33]<i />
-[34]<a ORNATE Karınca Yumurtası Tüy Azaltıcı Ve Tüy Inceltici Serum 30ml %0.5 Formic Acid %10 Aloe Vera ürün detay sayfası>ORNATE
-Karınca Yumurtası Tüy Azaltıcı Ve Tüy Inceltici Serum 30ml %0.5 Formic Acid %10 Aloe Vera
-4.4
-(
-12060
-)
-239,99
-TL
-3 Al 2 Öde/>
-[35]<img />
-[36]<img />
-[37]<img />
-[38]<img />
-[39]<i />
-[40]<a LOVECRA Body Scrub El Bakım Ve Ölü Derilerden Arındırıcı Onarıcı Vucüt Peelingi 290gr ürün detay sayfası>HIZLI TESLİMAT
-LOVECRA
-Body Scrub El Bakım Ve Ölü Derilerden Arındırıcı Onarıcı Vucüt Peelingi 290gr
-4.6
-(
-224
-)
-121,68
-TL
-5 Al 4 Öde/>
-[41]<img />
-[42]<img />
-[43]<img />
-[44]<img />
-[45]<img />
-[46]<i />
-[47]<a GELLO Gözenek Sıkılaştırıcı Yumurta Akı Maskesi - Egg White Pore Mask ürün detay sayfası>34
-adet satıldı
-GELLO
-Gözenek Sıkılaştırıcı Yumurta Akı Maskesi - Egg White Pore Mask
-4.4
-(
-23073
-)
-200,29
-TL
-3 Al 2 Öde/>
-[48]<img />
-[49]<img />
-[50]<img />
-[51]<img />
-[52]<i />
-[53]<a The Purest Solutions C Vit Aydınlatıcı Ve Ton Eşitleyici Bakım Serumu 30 ml %10 Ascorbic Acid & Ferulic Acid %0,5 ürün detay sayfası>HIZLI TESLİMAT
-KARGO BEDAVA
-23
-adet satıldı
-The Purest Solutions
-C Vit Aydınlatıcı Ve Ton Eşitleyici Bakım Serumu 30 ml %10 Ascorbic Acid & Ferulic Acid %0,5
-4.6
-(
-34780
-)
-314
-TL
-Kupon Fırsatı/>
-[54]<img />
-[55]<img />
-[56]<img />
-[57]<img />
-[58]<i />
-[59]<a ZAROZA Retinol Serum | Onarıcı, Kırışıklık Ve Sarkma Karşıtı - 30 ml (RETİNOL, D-PANTHENOL, NİACİNAMİDE) ürün detay sayfası>HIZLI TESLİMAT
-ZAROZA
-Retinol Serum | Onarıcı, Kırışıklık Ve Sarkma Karşıtı - 30 ml (RETİNOL, D-PANTHENOL, NİACİNAMİDE)
-4.9
-(
-202
-)
-Son
-30
-Günün En Düşük Fiyatı!
-250
-TL
-245,16
-TL
-Kupon Fırsatı/>
-[60]<img />
-[61]<img />
-[62]<img />
-[63]<img />
-[64]<img />
+[21]<a Gizlilik/>
+[22]<a Şartlar/>
+[23]<div false;button>Ayarlar/>
 [End of page]
-Current step: 1/100Current date and time: 2025-03-26 10:29
+Current step: 1/100Current date and time: 2025-03-26 14:23
 
  RESPONSE
 {
   "current_state": {
-    "evaluation_previous_goal": "Success - Opened the website",
-    "memory": "Starting with the new task. I have completed 0/10 steps",
-    "next_goal": "Close the gender selection modal if present by clicking the X button or using ESC key."
+    "evaluation_previous_goal": "Success - Opened Google homepage and verified the search input field is visible.",
+    "memory": "Starting with the new task. I have completed 0/1 steps",
+    "next_goal": "Type \"automation testing\" in the search box."
   },
   "action": [
     {
-      "click_element": {
-        "index": 0
+      "input_text": {
+        "index": 8,
+        "text": "automation testing"
       }
     }
   ]

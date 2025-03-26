@@ -70,7 +70,7 @@ Common action sequences:
 Your responses must be always JSON with the specified format.
 
  HumanMessage 
-Your ultimate task is: """Perform the following case: Adds items to cart and verifies checkout flow. Steps:['IMPORTANT INSTRUCTIONS: As a human user interacting with the website, I will:\n    1) Perform each action as naturally as possible, mimicking real user behavior\n    2) If a modal or popup appears, handle every modal\n    3) Ignore any advertisements or promotional content\n    4) Wait for pages to fully load before taking any action\n    5) Use scrolling to find elements that are not immediately visible\n    6) Interact with elements exactly as a human would:\n       - If I need to type, first click on the input field\n       - If a button is not immediately clickable, move the mouse over it, then click\n       - Use tab navigation if needed\n       - Scroll smoothly before interacting with elements\n    7) Take actions deliberately and carefully\n    8) Pause briefly between actions to simulate human timing\n    9) Always verify my actions have the expected result before proceeding', 'Close the gender selection modal if present by clicking the X button or using ESC key. Modal do not present every time only in initial executions. If there is no modal proceed the next step.', "Search for 'tshirt' by typing in the search box and pressing Enter.", 'Verify search results appear by confirming product listings are visible.', 'Select a product by clicking on any item from the search results.', 'If a size selection is presented, select an available size. If there are color options as well, select both color and size options that are available.', "Click the 'Sepete Ekle' (Add to Cart) button and wait for confirmation.", 'Verify the item was successfully added by checking for a success message or cart count indicator.', "Click on the cart icon or 'Sepetim' button to proceed to checkout.", 'On the cart page, verify the product details and total amount are displayed correctly.']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
+Your ultimate task is: """Perform the following case: Verifies basic search functionality works correctly. Steps:['IMPORTANT INSTRUCTIONS: As a human user interacting with the website, I will:\n    1) Perform each action as naturally as possible, mimicking real user behavior\n    2) If a modal or popup appears, handle every modal\n    3) Ignore any advertisements or promotional content\n    4) Wait for pages to fully load before taking any action\n    5) Use scrolling to find elements that are not immediately visible\n    6) Interact with elements exactly as a human would:\n       - If I need to type, first click on the input field\n       - If a button is not immediately clickable, move the mouse over it, then click\n       - Use tab navigation if needed\n       - Scroll smoothly before interacting with elements\n    7) Take actions deliberately and carefully\n    8) Pause briefly between actions to simulate human timing\n    9) Always verify my actions have the expected result before proceeding', 'Open Google homepage. Verify the search input field is visible. Type "automation testing" in the search box. Press Enter or click the search button. Verify search results are displayed with relevant links. ']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
 
  HumanMessage 
 Example output:
@@ -85,7 +85,7 @@ Browser started
 [Your task history memory starts here]
 
  HumanMessage 
-Action result: 🔗  Opened new tab with https://www.trendyol.com
+Action result: 🔗  Opened new tab with https://www.google.com
 
  AIMessage 
 
@@ -94,7 +94,7 @@ Action result: 🔗  Opened new tab with https://www.trendyol.com
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 0:
+Action result: ⌨️  Input automation testing into index 8
 
  AIMessage 
 
@@ -103,158 +103,161 @@ Action result: 🖱️  Clicked button with index 0:
 
 
  HumanMessage 
-Action result: ⌨️  Input tshirt into index 7
+Action result: 🖱️  Clicked button with index 24:
 
  HumanMessage 
 [Task history memory ends]
 [Current state starts here]
 The following is one-time information - if you need to remember it write it to memory:
-Current url: https://www.trendyol.com/giris?cb=https%3A%2F%2Fwww.trendyol.com%2F
+Current url: https://www.google.com/search?q=automation+testing&sca_esv=0f75ce2b0e7a8d3f&source=hp&ei=mePjZ8TdH5rPxc8PwaHowAo&iflsig=ACkRmUkAAAAAZ-PxqfNA1_IxoTWfFO-UtLD2GU1z6l9r&ved=0ahUKEwiEjpX90KeMAxWaZ_EDHcEQGqgQ4dUDCA4&oq=automation+testing&gs_lp=Egdnd3Mtd2l6IhJhdXRvbWF0aW9uIHRlc3RpbmcyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBNInhdQAFgAcAB4AJABAJgBmgGgAZoBqgEDMC4xuAEMyAEA-AEBmAIBoAKfAZgDAJIHAzAuMaAH8wWyBwMwLjG4B58B&sclient=gws-wiz&sei=oePjZ520FbiCxc8PrKDNkQY
 Available tabs:
-[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://www.trendyol.com/giris?cb=https%3A%2F%2Fwww.trendyol.com%2F', title='')]
+[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://www.google.com/search?q=automation+testing&sca_esv=0f75ce2b0e7a8d3f&source=hp&ei=mePjZ8TdH5rPxc8PwaHowAo&iflsig=ACkRmUkAAAAAZ-PxqfNA1_IxoTWfFO-UtLD2GU1z6l9r&ved=0ahUKEwiEjpX90KeMAxWaZ_EDHcEQGqgQ4dUDCA4&oq=automation+testing&gs_lp=Egdnd3Mtd2l6IhJhdXRvbWF0aW9uIHRlc3RpbmcyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBMyBxAAGIAEGBNInhdQAFgAcAB4AJABAJgBmgGgAZoBqgEDMC4xuAEMyAEA-AEBmAIBoAKfAZgDAJIHAzAuMaAH8wWyBwMwLjG4B58B&sclient=gws-wiz&sei=oePjZ520FbiCxc8PrKDNkQY', title="automation testing - Google'da Ara")]
 Interactive elements from top layer of the current page inside the viewport:
 [Start of page]
-[0]<a İndirim Kuponlarım/>
-[1]<a Trendyol'da Satış Yap/>
-[2]<a Hakkımızda/>
-[3]<a Yardım & Destek/>
-[4]<a trendyol/>
-[5]<img />
-[6]<div "tshirt" Araması için Kalıp Önerileri
-İlgili Sonuçlar/>
-[7]<input text;Aradığınız ürün, kategori veya markayı yazınız/>
-[8]<i />
-[9]<span Belirtilmemiş/>
-[10]<span Bol/>
-[11]<span Comfort/>
-[12]<span Oversize/>
-[13]<span Regular/>
-[14]<span Relaxed/>
-[15]<span Slim/>
-[16]<span Slim Fit/>
-[17]<a tshirt/>
-[18]<a T-Shirt
-Kategori/>
-[19]<a erkek t-shirt/>
-[20]<a kadın t-shirt/>
-[21]<a defacto t-shirt/>
-[22]<a u.s. polo assn. t-shirt/>
-[23]<a Polo Yaka T-shirt
-Kategori/>
-[24]<a koton t-shirt/>
-[25]<a pull & bear t-shirt/>
-[26]<a Tshirt
-hane
-Mağaza/>
-[27]<img />
-[28]<img />
-[29]<a Lord
-Tshirt
-Mağaza/>
-[30]<img />
-[31]<div Giriş Yap/>
-[32]<a Favorilerim/>
-[33]<a Sepetim
-0/>
-[34]<div TÜM KATEGORİLER
-Yeni/>
-Kadın
-Erkek
-Anne & Çocuk
-Ev & Yaşam
-Süpermarket
-Kozmetik
-Ayakkabı & Çanta
-[35]<a Elektronik/>
-[36]<a Çok Satanlar
-Yeni/>
-[37]<a Flaş Ürünler
-Yeni/>
-Merhaba
-,
-Trendyol’a giriş yap veya hesap oluştur, indirimleri kaçırma!
-Giriş Yap
-Üye Ol
-E-Posta
-Şifre
-Şifremi Unuttum
-Giriş Yap
-facebook
-ile giriş yap
-google
-ile giriş yap
-Üye olmadan verilen siparişlerin takibi için
-tıklayınız
-.
-[38]<a Trendyol/>
-[39]<a Biz Kimiz/>
-[40]<a Kariyer/>
-[41]<a Sürdürülebilirlik/>
-[42]<a İletişim/>
-[43]<a Trendyol'da Güvenlik/>
-[44]<a Kampanyalar/>
-[45]<a Kampanyalar/>
-[46]<a Alışveriş Kredisi/>
-[47]<a Elit Üyelik/>
-[48]<a Hediye Fikirleri/>
-[49]<a Satıcı/>
-[50]<a Trendyol'da Satış Yap/>
-[51]<a Temel Kavramlar/>
-[52]<a Trendyol Akademi/>
-[53]<a Yardım/>
-[54]<a Sıkça Sorulan Sorular/>
-[55]<a Canlı Yardım / Asistan/>
-[56]<a Nasıl İade Edebilirim/>
-[57]<a İşlem Rehberi/>
-Ülke Değiştir
-[58]<button Ülke Seç/>
-Sosyal Medya
-[59]<a Trendyol Facebook sayfasına git/>
+Erişilebilirlik Bağlantıları
+Ana içeriğe geç
+Erişilebilirlik yardımı
+Erişilebilirlikle ilgili geri bildirim
+[0]<a Google Anasayfası'na Git/>
+[1]<textarea ;Ara;q;combobox;false>automation testing/>
+[2]<div Temizle;button/>
+[3]<div button;Harf çevirme aracı/>
+[4]<div Sesle arama yapın;button/>
+[5]<div button;Görselle arama/>
+[6]<button Ara;submit/>
+[7]<div Ayarlar;button>Hızlı Ayarlar/>
+[8]<a Google uygulamaları;false;button/>
+[9]<a Oturum açın/>
+Filtreler ve Konular
+[10]<a link>Tümü/>
+[11]<a link>Görseller/>
+[12]<a link>Videolar/>
+[13]<a link>Kısa videolar/>
+[14]<a link>Haberler/>
+[15]<a link>Web/>
+[16]<a link>Kitaplar/>
+[17]<div false;button>Daha fazla/>
+[18]<div false;button>Araçlar/>
+Looking for results in English?
+[19]<a />
+[20]<a Change to English/>
+[21]<a Türkçe
+kullanmaya devam et/>
+[22]<a Dil ayarları/>
+Arama Sonuçları
+Web'den öne çıkan snippet
+[23]<div button/>
+[24]<img />
+Automation testing, or test automation,
+uses specialized software tools and frameworks to execute predefined test cases on software applications
+. It automates repetitive and time-consuming manual testing tasks, enhancing efficiency and reliability in software testing.
+[25]<a What is Automation Testing? - Everything You Need To Know
+Global App Testing
+https://www.globalapptesting.com
+› blog › what-is-auto.../>
+[26]<img />
+[27]<div About this result;button/>
+[28]<a />
+[29]<a Öne çıkan snippet'ler hakkında/>
+•
+[30]<div button>Geri bildirim/>
+Diğer sorular
+[31]<div Bu sonuç hakkında;button/>
+[32]<div false;button>Can I learn automation in 2 months?/>
+[33]<div false;button>What are the skills required for automation testing?/>
+[34]<div false;button>What is an example of test automation?/>
+[35]<div false;button>What is QA in automation testing?/>
+[36]<div button>Geri bildirim/>
+What is Automated Testing? Guide on Types and Best ...
+[37]<img />
+Functionize
+https://www.functionize.com
+› ...
+·
+[38]<a Bu sayfanın çevirisini yap/>
+[39]<div Bu sonuç hakkında;button/>
+Automated testing
+allows faster and more accurate testing than manual testing does, through special automated tools that run the test case suits.
+Test automation
+[40]<img />
+Wikipedia
+https://en.wikipedia.org
+› ...
+·
+[41]<a Bu sayfanın çevirisini yap/>
+[42]<div Bu sonuç hakkında;button/>
+Test automation
+is the use of software separate from the software being tested to control the execution of
+tests
+and the comparison of actual outcomes with ...
+Automation Testing - Software Testing
+[43]<img />
+GeeksforGeeks
+https://www.geeksforgeeks.org
+› ...
+·
+[44]<a Bu sayfanın çevirisini yap/>
+[45]<div Bu sonuç hakkında;button/>
+26 Eyl 2024
+—
+Automated Testing means
+using special software for tasks that people usually do
+when checking and testing a software product.
+[46]<a Automation Testing Roadmap/>
+[47]<a Stages of Automation Testing.../>
+[48]<a Automation Tools/>
+Videolar
+[49]<div Bu sonuç hakkında;button/>
+[50]<a 6 Steps to Master in Test Automation in 2025, yükleyen: Naveen AutomationLabs, platform: YouTube. Google'da oynat. 44:40. 16 Kas 2024;button>44:40/>
+[51]<img />
+[52]<a 6 Steps to Master in Test Automation in 2025, yükleyen: Naveen AutomationLabs, platform: YouTube. YouTube platformunda oynat. 44:40. 16 Kas 2024>6 Steps to Master in Test Automation in 2025
+YouTube
+·
+Naveen AutomationLabs
+16 Kas 2024/>
+[53]<div false;button>10
+önemli anlar
+bu videoda/>
+[54]<a button;When to Automate & When not? | Test Automation Done Right, yükleyen: Software Testing by Daniel Knott, platform: YouTube. Google'da oynat. 18:11. 12 Ağu 2024>18:11/>
+[55]<img />
+[56]<a When to Automate & When not? | Test Automation Done Right, yükleyen: Software Testing by Daniel Knott, platform: YouTube. YouTube platformunda oynat. 18:11. 12 Ağu 2024>When to Automate & When not? | Test Automation Done Right
+YouTube
+·
+Software Testing by Daniel Knott
+12 Ağu 2024/>
+[57]<div false;button>10
+önemli anlar
+bu videoda/>
+Test otomasyon (Test automation)
+[58]<div false;button/>
+[59]<div button/>
 [60]<img />
-[61]<a Trendyol Instagram sayfasına git/>
+[61]<div button/>
 [62]<img />
-[63]<a Trendyol YouTube kanalına git/>
+[63]<div button/>
 [64]<img />
-[65]<a Trendyol X sayfasına git/>
+[65]<div button/>
 [66]<img />
-Güvenlik Sertifikası
-[67]<a ETBİS sertifikası/>
-[68]<img />
-[69]<a Güven Damgası/>
-[70]<img />
-[71]<img />
-[72]<img />
-Güvenli Alışveriş
-[73]<img />
-[74]<img />
-[75]<img />
-[76]<img />
-Mobil Uygulamalar
-[77]<a Trendyol uygulamasını App Store’dan indir/>
-[78]<img />
-[79]<a Trendyol uygulamasını Google Play’den indir/>
-[80]<img />
-[81]<a Trendyol uygulamasını AppGallery’den indir/>
-[82]<img />
-©2025 DSM Grup Danışmanlık İletişim ve Satış Tic. A.Ş. Her Hakkı Saklıdır.
-[83]<button Çerez Tercihleri/>
-[84]<a KVKK ve Gizlilik Politikası/>
-[85]<a DSM Grup/>
-[86]<a Kullanım Koşulları/>
-... 186 pixels below - scroll or extract content to see more ...
-Current step: 3/100Current date and time: 2025-03-26 10:29
+[67]<a />
+Yazılım test etmede, test otomasyonu önceden tahmin edilen sonuçlarla gerçek sonuçların karşılaştırılması ve testlerin koşulmasını kontrol etmek için belirli yazılımın kullanılmasıdır.
+Source:
+[68]<a Vikipedi/>
+[69]<div button>Geri bildirim/>
+... 1950 pixels below - scroll or extract content to see more ...
+Current step: 3/100Current date and time: 2025-03-26 14:23
 
  RESPONSE
 {
   "current_state": {
-    "evaluation_previous_goal": "Success - Input tshirt into search box",
-    "memory": "Starting with the new task. I have completed 2/10 steps",
-    "next_goal": "Search for 'tshirt' by typing in the search box and pressing Enter."
+    "evaluation_previous_goal": "Success - Pressed Enter or clicked the search button and verified search results are displayed with relevant links.",
+    "memory": "Completed the task.",
+    "next_goal": "Complete the task."
   },
   "action": [
     {
-      "send_keys": {
-        "keys": "\n"
+      "done": {
+        "text": "Successfully opened Google, typed \"automation testing\" in the search box, and verified that search results are displayed with relevant links.",
+        "success": true
       }
     }
   ]

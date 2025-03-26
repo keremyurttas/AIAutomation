@@ -1,0 +1,6 @@
+.env
+__pycache__/
+results/
+logs/
+generated_codes/
+case_actions/

@@ -18,7 +18,7 @@ async def run_test_and_generate_code(test_case):
     print(actual_result.action_names())
 
     # Ensure the "results" folder exists
-    results_dir = "results"
+    results_dir = "case_actions"
     os.makedirs(results_dir, exist_ok=True)
     
     json_file_path = os.path.join(results_dir, f"{test_case.name}.json")

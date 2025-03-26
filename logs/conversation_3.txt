@@ -70,7 +70,7 @@ Common action sequences:
 Your responses must be always JSON with the specified format.
 
  HumanMessage 
-Your ultimate task is: """Perform the following case: Adds items to cart and verifies checkout flow. Steps:['IMPORTANT INSTRUCTIONS: As a human user interacting with the website, I will:\n    1) Perform each action as naturally as possible, mimicking real user behavior\n    2) If a modal or popup appears, handle every modal\n    3) Ignore any advertisements or promotional content\n    4) Wait for pages to fully load before taking any action\n    5) Use scrolling to find elements that are not immediately visible\n    6) Interact with elements exactly as a human would:\n       - If I need to type, first click on the input field\n       - If a button is not immediately clickable, move the mouse over it, then click\n       - Use tab navigation if needed\n       - Scroll smoothly before interacting with elements\n    7) Take actions deliberately and carefully\n    8) Pause briefly between actions to simulate human timing\n    9) Always verify my actions have the expected result before proceeding', 'Close the gender selection modal if present by clicking the X button or using ESC key. Modal do not present every time only in initial executions. If there is no modal proceed the next step.', "Search for 'tshirt' by typing in the search box and pressing Enter.", 'Verify search results appear by confirming product listings are visible.', 'Select a product by clicking on any item from the search results.', 'If a size selection is presented, select an available size. If there are color options as well, select both color and size options that are available.', "Click the 'Sepete Ekle' (Add to Cart) button and wait for confirmation.", 'Verify the item was successfully added by checking for a success message or cart count indicator.', "Click on the cart icon or 'Sepetim' button to proceed to checkout.", 'On the cart page, verify the product details and total amount are displayed correctly.']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
+Your ultimate task is: """Perform the following case: Verifies basic search functionality works correctly. Steps:['IMPORTANT INSTRUCTIONS: As a human user interacting with the website, I will:\n    1) Perform each action as naturally as possible, mimicking real user behavior\n    2) If a modal or popup appears, handle every modal\n    3) Ignore any advertisements or promotional content\n    4) Wait for pages to fully load before taking any action\n    5) Use scrolling to find elements that are not immediately visible\n    6) Interact with elements exactly as a human would:\n       - If I need to type, first click on the input field\n       - If a button is not immediately clickable, move the mouse over it, then click\n       - Use tab navigation if needed\n       - Scroll smoothly before interacting with elements\n    7) Take actions deliberately and carefully\n    8) Pause briefly between actions to simulate human timing\n    9) Always verify my actions have the expected result before proceeding', 'Open Google homepage. Verify the search input field is visible. Type "automation testing" in the search box. Press Enter or click the search button. Verify search results are displayed with relevant links. ']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
 
  HumanMessage 
 Example output:
@@ -85,7 +85,7 @@ Browser started
 [Your task history memory starts here]
 
  HumanMessage 
-Action result: 🔗  Opened new tab with https://www.trendyol.com
+Action result: 🔗  Opened new tab with https://www.google.com
 
  AIMessage 
 
@@ -94,133 +94,100 @@ Action result: 🔗  Opened new tab with https://www.trendyol.com
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 0:
+Action result: ⌨️  Input automation testing into index 8
 
  HumanMessage 
 [Task history memory ends]
 [Current state starts here]
 The following is one-time information - if you need to remember it write it to memory:
-Current url: https://www.trendyol.com/giris?cb=https%3A%2F%2Fwww.trendyol.com%2F
+Current url: https://www.google.com/
 Available tabs:
-[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://www.trendyol.com/giris?cb=https%3A%2F%2Fwww.trendyol.com%2F', title='')]
+[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://www.google.com/', title='Google')]
 Interactive elements from top layer of the current page inside the viewport:
 [Start of page]
-[0]<a İndirim Kuponlarım/>
-[1]<a Trendyol'da Satış Yap/>
-[2]<a Hakkımızda/>
-[3]<a Yardım & Destek/>
-[4]<a trendyol/>
-[5]<img />
-[6]<div />
-[7]<input text;Aradığınız ürün, kategori veya markayı yazınız/>
-[8]<i />
-[9]<div Giriş Yap/>
-[10]<a Favorilerim/>
-[11]<a Sepetim
-0/>
-[12]<div TÜM KATEGORİLER
-Yeni/>
-[13]<a Kadın/>
-[14]<a Erkek/>
-[15]<a Anne & Çocuk/>
-[16]<a Ev & Yaşam/>
-[17]<a Süpermarket/>
-[18]<a Kozmetik/>
-[19]<a Ayakkabı & Çanta/>
-[20]<a Elektronik/>
-[21]<a Çok Satanlar
-Yeni/>
-[22]<a Flaş Ürünler
-Yeni/>
-Merhaba
-,
-Trendyol’a giriş yap veya hesap oluştur, indirimleri kaçırma!
-[23]<button Giriş Yap/>
-[24]<button Üye Ol/>
-E-Posta
-[25]<input text;login email/>
-Şifre
-[26]<input login-password;password/>
-[27]<i />
-[28]<a Şifremi Unuttum/>
-[29]<button submit>Giriş Yap/>
-[30]<div facebook
-ile giriş yap/>
-[31]<div google
-ile giriş yap/>
-Üye olmadan verilen siparişlerin takibi için
-[32]<span tıklayınız/>
-.
-[33]<a Trendyol/>
-[34]<a Biz Kimiz/>
-[35]<a Kariyer/>
-[36]<a Sürdürülebilirlik/>
-[37]<a İletişim/>
-[38]<a Trendyol'da Güvenlik/>
-[39]<a Kampanyalar/>
-[40]<a Kampanyalar/>
-[41]<a Alışveriş Kredisi/>
-[42]<a Elit Üyelik/>
-[43]<a Hediye Fikirleri/>
-[44]<a Satıcı/>
-[45]<a Trendyol'da Satış Yap/>
-[46]<a Temel Kavramlar/>
-[47]<a Trendyol Akademi/>
-[48]<a Yardım/>
-[49]<a Sıkça Sorulan Sorular/>
-[50]<a Canlı Yardım / Asistan/>
-[51]<a Nasıl İade Edebilirim/>
-[52]<a İşlem Rehberi/>
-Ülke Değiştir
-[53]<button Ülke Seç/>
-Sosyal Medya
-[54]<a Trendyol Facebook sayfasına git/>
-[55]<img />
-[56]<a Trendyol Instagram sayfasına git/>
-[57]<img />
-[58]<a Trendyol YouTube kanalına git/>
-[59]<img />
-[60]<a Trendyol X sayfasına git/>
-[61]<img />
-Güvenlik Sertifikası
-[62]<a ETBİS sertifikası/>
-[63]<img />
-[64]<a Güven Damgası/>
-[65]<img />
-[66]<img />
-[67]<img />
-Güvenli Alışveriş
-[68]<img />
-[69]<img />
-[70]<img />
-[71]<img />
-Mobil Uygulamalar
-[72]<a Trendyol uygulamasını App Store’dan indir/>
-[73]<img />
-[74]<a Trendyol uygulamasını Google Play’den indir/>
-[75]<img />
-[76]<a Trendyol uygulamasını AppGallery’den indir/>
-[77]<img />
-©2025 DSM Grup Danışmanlık İletişim ve Satış Tic. A.Ş. Her Hakkı Saklıdır.
-[78]<button Çerez Tercihleri/>
-[79]<a KVKK ve Gizlilik Politikası/>
-[80]<a DSM Grup/>
-[81]<a Kullanım Koşulları/>
-... 186 pixels below - scroll or extract content to see more ...
-Current step: 2/100Current date and time: 2025-03-26 10:29
+[0]<a Gmail >Gmail/>
+[1]<a Görsellerde arama yapın >Görseller/>
+[2]<a Google uygulamaları;false;button/>
+[3]<a Oturum açın/>
+[4]<img />
+Google'da oturum açın
+Google hesabınızdan en iyi şekilde yararlanın
+[5]<button Oturum açma/>
+[6]<a Oturum aç (yeni bir sekme açar)>Oturum aç/>
+[7]<img />
+[8]<textarea Ara;true;q;combobox/>
+[9]<div Temizle;button/>
+[10]<div button;Harf çevirme aracı/>
+[11]<div Sesle arama yapın;button/>
+[12]<div button;Görselle arama/>
+[13]<ul listbox>Daha fazla göster
+Sil
+Daha fazla göster
+Sil
+Daha fazla göster
+Sil
+Daha fazla göster
+Sil
+Daha fazla göster
+Sil
+Daha fazla göster
+Sil
+Daha fazla göster
+Sil
+Daha fazla göster
+Sil
+Daha fazla göster
+Sil
+Daha fazla göster
+Sil/>
+[14]<div option>automation testing/>
+[15]<div automation testing interview questions;option>automation testing
+interview questions/>
+[16]<div automation testing tools;option>automation testing
+tools/>
+[17]<div automation testing courses;option>automation testing
+courses/>
+[18]<div automation testing jobs;option>automation testing
+jobs/>
+[19]<div automation testing roadmap;option>automation testing
+roadmap/>
+[20]<div automation testing tools list;option>automation testing
+tools list/>
+[21]<div option;automation testing practice>automation testing
+practice/>
+[22]<div option;automation testing selenium>automation testing
+selenium/>
+[23]<div automation testing jobs in bangalore;option>automation testing
+jobs in bangalore/>
+[24]<input Google'da Ara;btnK;button;submit/>
+[25]<input btnI;Kendimi Şanslı Hissediyorum;submit/>
+[26]<div button>Uygunsuz tahminleri bildirin/>
+Google'ı kullanabileceğiniz diğer diller:
+English
+Türkiye
+[27]<a Hakkında/>
+[28]<a Reklam/>
+[29]<a İşletme/>
+[30]<a Arama nasıl çalışır?/>
+[31]<a İklimle ilgili çalışmalarımızın üçüncü on yılı/>
+[32]<img />
+[33]<a Gizlilik/>
+[34]<a Şartlar/>
+[35]<div false;button>Ayarlar/>
+[End of page]
+Current step: 2/100Current date and time: 2025-03-26 14:23
 
  RESPONSE
 {
   "current_state": {
-    "evaluation_previous_goal": "Success - Opened the website",
-    "memory": "Starting with the new task. I have completed 1/10 steps",
-    "next_goal": "Search for 'tshirt' by typing in the search box and pressing Enter."
+    "evaluation_previous_goal": "Success - Typed \"automation testing\" in the search box.",
+    "memory": "Starting with the new task. I have completed 1/1 steps",
+    "next_goal": "Press Enter or click the search button."
   },
   "action": [
     {
-      "input_text": {
-        "index": 7,
-        "text": "tshirt"
+      "click_element": {
+        "index": 24
       }
     }
   ]
