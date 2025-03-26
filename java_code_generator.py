@@ -99,47 +99,105 @@ class JavaCodeGenerator:
             else "GeneratedTest"
         )
         
-        # General prompt for any website testing
+        # Enhanced prompt with more detailed element handling and screenshot capture
         prompt = f"""
-        Generate a single complete Java file named `{formatted_class_name}.java` implementing a Selenium TestNG test based on this JSON test data:
+    Generate a single complete Java file named `{formatted_class_name}.java` implementing a Selenium TestNG test based on this JSON test data:
 
-        {json.dumps(test_data, indent=4, ensure_ascii=False)}
+    {json.dumps(test_data, indent=4, ensure_ascii=False)}
+    ## Important Instructions:
+    ### ⚠ Mandatory Usage of Utility Methods
+    Instead of 'element.click' always use clickWebElementForTpath(By locator)
+    Instead of 'element.sendKeys(value)' always use sendKeysElementTPath(By locator, boolean clearInput, String value)
+    
+    **⚠ DO NOT define `clickWebElementForTpath` and `sendKeysElementTPath`. These are already implemented in `SmaClickUtilities` and `SmaSendKeyUtilites`. Simply import and use them in the click and sendKey events!!.**  
+    If you redefine these methods, the implementation will be considered incorrect.
 
-        Requirements:
-        1. Include all necessary imports: Selenium, TestNG, WebDriverManager.
-        2. Use WebDriverManager for Chrome initialization and set the browser window size to 1920x1080 for consistency.
-        3. Clear cookies before each test to ensure independence.
-        4. Implement a custom findElement method that tries to locate elements using id, then css, then xpath, and throws a meaningful exception if not found.
-        5. For critical actions (like clicking important buttons), use multiple specific selectors in order, and fallback to JavaScript click if the element is not interactable.
-        6. Handle modals and overlays:
-        - Before interactions, check for and dismiss any modals or overlays that might block the action.
-        - After dismissing, wait a short period (e.g., 2 seconds) and verify that the modal or overlay is no longer present.
-        - If necessary, scroll to the relevant section after closing modals.
-        7. Use explicit waits with WebDriverWait and appropriate expected conditions (e.g., presence_of_element_located, visibility_of_element_located, element_to_be_clickable) with a reasonable timeout (e.g., 15 seconds).
-        8. Add resilience features:
-        - Use JavaScript executor fallbacks for failed interactions.
-        - Capture screenshots on failure using a TestNG listener.
-        - Implement TestNG retry analyzer for 3 attempts to handle flaky tests.
-        - Include comprehensive error handling and logging for debugging.
-        9. Handle language differences:
-        - Ensure all expected strings in assertions match the website's language as specified in the JSON data or by default.
-        - If the website supports multiple languages, set the language appropriately before testing.
-        10. Handle captcha validation:
-            - Check for the presence of a captcha element.
-            - If a captcha is detected, log a message, have a timeout, tester will solve it manually.
-        11. Utilize the Page Object Model:
-            - Create page classes for actions specified in the JSON data.
-            - Each method should use the custom findElement and appropriate waits.
-        12. Verify expected results after each action in the JSON data.
-        13. Ensure the code is complete and executable without modifications.
+    ### 🔹 Required Imports (Ensure this is in the file)
+    ```java
+    import static SmaClickUtilities.clickWebElementForTpath;
+    import static SmaSendKeyUtilites.sendKeysElementTPath;
+    
+    DO NOT use element.click() or element.sendKeys() directly. Instead, replace them with the corresponding method calls from SmaClickUtilities and SmaSendKeyUtilites.
 
-        The generated test should handle dynamic content and ensure reliable execution for any website.
-        The folowwings are test case steps:
-        """
+    Requirements:
+    1. Comprehensive Element Locator Methods:
+    - Create multiple specialized element locator methods:
+        a) findElementById(String id)
+        b) findElementByName(String name)
+        c) findElementByCssSelector(String cssSelector)
+        d) findElementByXpath(String xpath)
+        e) findElementByLinkText(String linkText)
+        f) findElementByPartialLinkText(String partialLinkText)
+
+    Each method should:
+    - Log the locator strategy being used
+    - Implement explicit waits with detailed logging
+    - Include error handling with specific exception messages
+    - Return the WebElement if found
+    - Throw a custom, informative exception if element not found
+
+    2. Screenshot Capture Methods:
+    - Create methods to capture screenshots at different stages:
+        a) captureScreenshotOnStep(String stepName)
+        b) captureScreenshotOnFailure(String methodName)
+        c) captureFullPageScreenshot()
+
+    Each screenshot method should:
+    - Generate unique filename with timestamp
+    - Include step or failure context in filename
+    - Log the screenshot location
+    - Create a screenshots directory if it doesn't exist
+
+    3. Enhanced Browser and Test Setup:
+    - Use WebDriverManager for Chrome initialization
+    - Set browser window size to 1920x1080
+    - Clear cookies before test
+    - Implement comprehensive logging
+    - Create a method to log each test step with timestamp
+
+    These methods should:
+    - Log the action being performed
+    - Use JavaScript click/scroll as fallback
+    - Handle StaleElementReferenceException
+    - Capture screenshot after successful interaction
+
+    5. Modal and Overlay Handling:
+    - Create comprehensive modal dismissal methods
+    - Log modal interaction details
+    - Capture screenshot after modal dismissal
+    - Implement multiple strategies for modal closure
+
+    6. Error Handling and Logging:
+    - Implement detailed logging for every action
+    - Use java.util.logging or SLF4J
+    - Log method entry, exit, and any exceptions
+    - Create a custom logger method that:
+        * Logs to console
+        * Optionally writes to a log file
+        * Includes timestamp and context
+
+    7. Retry and Resilience:
+    - Implement TestNG retry analyzer
+    - Add methods to handle dynamic content
+    - Create fallback strategies for element interactions
+
+    8. Page Object Model Integration:
+    - Organize methods into logical page classes
+    - Implement methods for each page/component
+    - Use consistent naming conventions
+
+    Additional Specific Instructions:
+    - Capture a screenshot after EVERY successful step
+    - Log detailed information about each interaction
+    - Provide meaningful error messages
+    - Ensure test is language and locale independent
+
+    Test Case Steps Implementation:
+    """
         
         # Add test steps if provided
         if test_case and hasattr(test_case, 'steps') and test_case.steps:
-            prompt += "\nImplement these specific steps:\n" + \
+            prompt += "\nImplement these specific steps with detailed logging and screenshot capture:\n" + \
                     "\n".join(f"- {step}" for step in test_case.steps)
         
         return prompt

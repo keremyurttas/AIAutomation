@@ -1,16 +1,16 @@
 [
     {
         "click_element": {
-            "index": 22
+            "index": 0
         },
-        "interacted_element": "DOMHistoryElement(tag_name='button', xpath='html/body/div/div[5]/div/div/div/div/div/div/article[10]/div/div/div[3]/div/button', highlight_index=22, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'article', 'div', 'div', 'div', 'div', 'button'], attributes={}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(5) > div > div > div > div > div > div > article:nth-of-type(10) > div > div > div:nth-of-type(3) > div > button', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+        "interacted_element": null
     },
     {
         "input_text": {
             "index": 7,
             "text": "tshirt"
         },
-        "interacted_element": "DOMHistoryElement(tag_name='input', xpath='html/body/div/div/div[2]/div[2]/div/div/div[2]/div/div/div/input', highlight_index=7, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'input'], attributes={'data-testid': 'suggestion', 'type': 'text', 'class': 'V8wbcUhU', 'tabindex': '1', 'autocomplete': 'off', 'maxlength': '50', 'placeholder': 'Aradığınız ürün, kategori veya markayı yazınız', 'value': '', 'style': ''}, shadow_root=False, css_selector='html > body > div > div > div:nth-of-type(2) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > div > input.V8wbcUhU[data-testid=\"suggestion\"][type=\"text\"][autocomplete=\"off\"][placeholder=\"Aradığınız ürün, kategori veya markayı yazınız\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+        "interacted_element": "DOMHistoryElement(tag_name='input', xpath='html/body/div/div/div/div[2]/div/div/div[2]/div/div/div/input', highlight_index=7, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'input'], attributes={'data-testid': 'suggestion', 'type': 'text', 'class': 'V8wbcUhU', 'tabindex': '1', 'autocomplete': 'off', 'maxlength': '50', 'placeholder': 'Aradığınız ürün, kategori veya markayı yazınız', 'value': ''}, shadow_root=False, css_selector='html > body > div > div > div > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > div > input.V8wbcUhU[data-testid=\"suggestion\"][type=\"text\"][autocomplete=\"off\"][placeholder=\"Aradığınız ürün, kategori veya markayı yazınız\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
     },
     {
         "send_keys": {
@@ -19,63 +19,50 @@
         "interacted_element": null
     },
     {
-        "scroll_down": {
-            "amount": 1000
+        "extract_content": {
+            "goal": "Verify search results appear by confirming product listings are visible."
         },
         "interacted_element": null
     },
     {
         "click_element": {
-            "index": 50
+            "index": 129
         },
-        "interacted_element": "DOMHistoryElement(tag_name='a', xpath='html/body/div/div[6]/div/div/div/div/div/div[2]/div[4]/div/div/div[2]/div/div/div/a', highlight_index=50, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'a'], attributes={'href': '/clayes/leisure-future-parcali-suprem-t-shirt-lacivert-beyaz-oversize-bisiklet-yaka-kisa-kol-tisort-p-839617056?boutiqueId=61&merchantId=477103'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div > div > div > div > div:nth-of-type(2) > div:nth-of-type(4) > div > div > div:nth-of-type(2) > div > div > div > a[href=\"/clayes/leisure-future-parcali-suprem-t-shirt-lacivert-beyaz-oversize-bisiklet-yaka-kisa-kol-tisort-p-839617056?boutiqueId=61&merchantId=477103\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
-    },
-    {
-        "select_dropdown_option": {
-            "index": 0,
-            "text": "S"
-        },
-        "interacted_element": null
+        "interacted_element": "DOMHistoryElement(tag_name='a', xpath='html/body/div/div[6]/div/div/div/div/div/div[2]/div[4]/div/div/div[2]/div/div/div/a', highlight_index=129, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'a'], attributes={'href': '/benisengiydir/kadin-beyaz-cift-kurdele-baskili-bisiklet-yaka-tshirt-p-899173230?boutiqueId=61&merchantId=445411'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > div > div > div > div > div > div:nth-of-type(2) > div:nth-of-type(4) > div > div > div:nth-of-type(2) > div > div > div > a[href=\"/benisengiydir/kadin-beyaz-cift-kurdele-baskili-bisiklet-yaka-tshirt-p-899173230?boutiqueId=61&merchantId=445411\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
     },
     {
         "click_element": {
-            "index": 1
+            "index": 53
         },
-        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[4]/div/div/div/div/div/div/div/div[3]/div', highlight_index=1, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div'], attributes={}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(4) > div > div > div > div > div > div > div > div:nth-of-type(3) > div', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+        "interacted_element": "DOMHistoryElement(tag_name='div', xpath='html/body/div/div[6]/main/div/div[2]/div/div[2]/div[2]/div/div/div[4]/div[2]/div/div/div/div[2]', highlight_index=53, entire_parent_branch_path=['div', 'div', 'main', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div'], attributes={}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > main > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > div > div > div:nth-of-type(4) > div:nth-of-type(2) > div > div > div > div:nth-of-type(2)', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
     },
     {
         "click_element": {
-            "index": 62
+            "index": 7
         },
-        "interacted_element": "DOMHistoryElement(tag_name='button', xpath='html/body/div/div[4]/div/div/div/div/div[3]/div/div/div[3]/div/div/div[2]/div[2]/div/button', highlight_index=62, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'button'], attributes={'class': 'reviews-onboarding-complete-button'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(4) > div > div > div > div > div:nth-of-type(3) > div > div > div:nth-of-type(3) > div > div > div:nth-of-type(2) > div:nth-of-type(2) > div > button.reviews-onboarding-complete-button', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+        "interacted_element": "DOMHistoryElement(tag_name='button', xpath='html/body/div/div[6]/main/div/div[2]/div/div[2]/div[2]/div/div/aside/div/div/div[2]/div/div[2]/div/div/button', highlight_index=7, entire_parent_branch_path=['div', 'div', 'main', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'aside', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'button'], attributes={'class': 'onboarding-popover__default-renderer-primary-button'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > main > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > div > div > aside > div > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div > div > button.onboarding-popover__default-renderer-primary-button', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
     },
     {
         "click_element": {
-            "index": 90
+            "index": 61
         },
-        "interacted_element": "DOMHistoryElement(tag_name='button', xpath='html/body/div/div[4]/div/div/div/div/div/div[2]/div/div/div[2]/div[3]/div[2]/button', highlight_index=90, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'button'], attributes={'class': 'pr-in-btn add-to-bs'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(4) > div > div > div > div > div > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > button.pr-in-btn.add-to-bs', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
+        "interacted_element": "DOMHistoryElement(tag_name='button', xpath='html/body/div/div[6]/main/div/div[2]/div/div[2]/div[2]/div/div/div[5]/button', highlight_index=61, entire_parent_branch_path=['div', 'div', 'main', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'button'], attributes={'component-id': '1', 'class': 'add-to-basket'}, shadow_root=False, css_selector='html > body > div > div:nth-of-type(6) > main > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > div > div > div:nth-of-type(5) > button.add-to-basket', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
     },
     {
         "click_element": {
             "index": 11
         },
-        "interacted_element": "DOMHistoryElement(tag_name='a', xpath='html/body/div/div/div/div[2]/div/div/div[3]/div/div/div/div[2]/a', highlight_index=11, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'a'], attributes={'class': 'link account-basket', 'href': '/sepet'}, shadow_root=False, css_selector='html > body > div > div > div > div:nth-of-type(2) > div > div > div:nth-of-type(3) > div > div > div > div:nth-of-type(2) > a.link.account-basket[href=\"/sepet\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
-    },
-    {
-        "go_to_url": {
-            "url": "https://www.trendyol.com/sepet"
-        },
-        "interacted_element": null
+        "interacted_element": "DOMHistoryElement(tag_name='a', xpath='html/body/div/div/div[2]/div[2]/div/div/div[3]/div/div/div/div[2]/a', highlight_index=11, entire_parent_branch_path=['div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'div', 'a'], attributes={'class': 'link account-basket', 'href': '/sepet'}, shadow_root=False, css_selector='html > body > div > div > div:nth-of-type(2) > div:nth-of-type(2) > div > div > div:nth-of-type(3) > div > div > div > div:nth-of-type(2) > a.link.account-basket[href=\"/sepet\"]', page_coordinates=None, viewport_coordinates=None, viewport_info=None)"
     },
     {
         "extract_content": {
-            "goal": "verify the product details and total amount are displayed correctly."
+            "goal": "On the cart page, verify the product details and total amount are displayed correctly."
         },
         "interacted_element": null
     },
     {
         "done": {
-            "text": "I have added a tshirt to the cart and verified the checkout flow. The product details and total amount are displayed correctly. The product name is CLAYES Leisure Future Parçalı Süprem T-Shirt - Lacivert Beyaz Oversize Bisiklet Yaka Kısa Kol Tişört, the price is 169,10 TL, the size is S, and the estimated delivery is 2 gün içinde. The order summary shows a product total of 169,10 TL, a shipping total of 44,99 TL, and a total of 214,09 TL.",
+            "text": "I have added a tshirt to the cart and verified the product details and total amount are displayed correctly on the cart page. The product is Benisengiydir Kadın Beyaz Çift Kurdele Baskılı Bisiklet Yaka Tshirt, the total amount is 258,19 TL.",
             "success": true
         },
         "interacted_element": null

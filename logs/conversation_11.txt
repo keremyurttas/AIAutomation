@@ -70,7 +70,7 @@ Common action sequences:
 Your responses must be always JSON with the specified format.
 
  HumanMessage 
-Your ultimate task is: """Perform the following case: Verifies advanced search options. Steps:['IMPORTANT INSTRUCTIONS: As a human user interacting with the website, I will:\n    1) Perform each action as naturally as possible, mimicking real user behavior\n    2) If a modal or popup appears, handle every modal\n    3) Ignore any advertisements or promotional content\n    4) Wait for pages to fully load before taking any action\n    5) Use scrolling to find elements that are not immediately visible\n    6) Interact with elements exactly as a human would:\n       - If I need to type, first click on the input field\n       - If a button is not immediately clickable, move the mouse over it, then click\n       - Use tab navigation if needed\n       - Scroll smoothly before interacting with elements\n    7) Take actions deliberately and carefully\n    8) Pause briefly between actions to simulate human timing\n    9) Always verify my actions have the expected result before proceeding', 'Open Google homepage. Click on Settings near the bottom-right. Click on "Advanced search" option. Verify advanced search page has loaded. Fill in "all these words" with "automation testing". Fill in "site or domain" with "github.com". Click the Advanced Search button. Verify search results are from github.com and contain "automation testing". ']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
+Your ultimate task is: """Perform the following case: Adds items to cart and verifies checkout flow. Steps:['IMPORTANT INSTRUCTIONS: As a human user interacting with the website, I will:\n    1) Perform each action as naturally as possible, mimicking real user behavior\n    2) If a modal or popup appears, handle every modal\n    3) Ignore any advertisements or promotional content\n    4) Wait for pages to fully load before taking any action\n    5) Use scrolling to find elements that are not immediately visible\n    6) Interact with elements exactly as a human would:\n       - If I need to type, first click on the input field\n       - If a button is not immediately clickable, move the mouse over it, then click\n       - Use tab navigation if needed\n       - Scroll smoothly before interacting with elements\n    7) Take actions deliberately and carefully\n    8) Pause briefly between actions to simulate human timing\n    9) Always verify my actions have the expected result before proceeding', 'Close the gender selection modal if present by clicking the X button or using ESC key. Modal do not present every time only in initial executions. If there is no modal proceed the next step.', "Search for 'tshirt' by typing in the search box and pressing Enter.", 'Verify search results appear by confirming product listings are visible.', 'Select a product by clicking on any item from the search results.', 'If a size selection is presented, select an available size. If there are color options as well, select both color and size options that are available.', "Click the 'Sepete Ekle' (Add to Cart) button and wait for confirmation.", 'Verify the item was successfully added by checking for a success message or cart count indicator.', "Click on the cart icon or 'Sepetim' button to proceed to checkout.", 'On the cart page, verify the product details and total amount are displayed correctly.']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
 
  HumanMessage 
 Example output:
@@ -85,7 +85,7 @@ Browser started
 [Your task history memory starts here]
 
  HumanMessage 
-Action result: 🔗  Opened new tab with https://www.google.com
+Action result: 🔗  Opened new tab with https://www.trendyol.com
 
  AIMessage 
 
@@ -94,7 +94,7 @@ Action result: 🔗  Opened new tab with https://www.google.com
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 23: Ayarlar
+Action result: 🖱️  Clicked button with index 0:
 
  AIMessage 
 
@@ -103,7 +103,7 @@ Action result: 🖱️  Clicked button with index 23: Ayarlar
 
 
  HumanMessage 
-Action error: Error executing action click_element: Element with index 24 does not exist - retry or use alternative actions
+Action result: ⌨️  Input tshirt into index 7
 
  AIMessage 
 
@@ -112,7 +112,7 @@ Action error: Error executing action click_element: Element with index 24 does n
 
 
  HumanMessage 
-Action error: Error executing action click_element: Element with index 24 does not exist - retry or use alternative actions
+Action result: ⌨️  Sent keys:
 
  AIMessage 
 
@@ -121,7 +121,12 @@ Action error: Error executing action click_element: Element with index 24 does n
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 23: Ayarlar
+Action result: 📄  Extracted from page
+: ```json
+{
+  "search_results_verification": "Search results for \"tshirt\" are displayed, with over 100,000 results listed. This confirms that product listings are visible after the search."
+}
+```
 
  AIMessage 
 
@@ -130,10 +135,7 @@ Action result: 🖱️  Clicked button with index 23: Ayarlar
 
 
  HumanMessage 
-Action error: Error executing action click_element: Element with index 24 does not exist - retry or use alternative actions
-
- HumanMessage 
-Action error: ]
+Action result: 🖱️  Clicked button with index 129:
 
  AIMessage 
 
@@ -142,7 +144,7 @@ Action error: ]
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 23: Ayarlar
+Action result: 🖱️  Clicked button with index 53: M
 
  AIMessage 
 
@@ -151,7 +153,7 @@ Action result: 🖱️  Clicked button with index 23: Ayarlar
 
 
  HumanMessage 
-Action error: Error executing action click_element: Element with index 24 does not exist - retry or use alternative actions
+Action result: 🖱️  Clicked button with index 7: Anladım
 
  AIMessage 
 
@@ -160,7 +162,8 @@ Action error: Error executing action click_element: Element with index 24 does n
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 23: Ayarlar
+Action result: 🖱️  Clicked button with index 61: Sepete Ekle
+Sepete Eklendi
 
  AIMessage 
 
@@ -169,59 +172,328 @@ Action result: 🖱️  Clicked button with index 23: Ayarlar
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 23: Ayarlar
+Action result: 🖱️  Clicked button with index 11: Sepetim
+1
 
  HumanMessage 
 [Task history memory ends]
 [Current state starts here]
 The following is one-time information - if you need to remember it write it to memory:
-Current url: https://www.google.com/
+Current url: https://www.trendyol.com/sepet
 Available tabs:
-[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://www.google.com/', title='Google')]
+[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://www.trendyol.com/sr?q=tshirt&qt=tshirt&st=tshirt&os=1', title='tshirt Modelleri, Fiyatları - Trendyol'), TabInfo(page_id=2, url='https://www.trendyol.com/sepet', title='Sepetim - Trendyol')]
 Interactive elements from top layer of the current page inside the viewport:
 [Start of page]
-[0]<a Gmail >Gmail/>
-[1]<a Görsellerde arama yapın >Görseller/>
-[2]<a Google uygulamaları;false;button/>
-[3]<a Oturum açın/>
-[4]<img />
-Google'da oturum açın
-Google hesabınızdan en iyi şekilde yararlanın
-[5]<button Oturum açma/>
-[6]<a Oturum aç (yeni bir sekme açar)>Oturum aç/>
+Giriş Yap
+Favorilerim
+Sepetim
+Sepetim (1 Ürün)
+Alışverişini daha hızlı tamamlamak için
+Giriş Yap
+[0]<div />
+[1]<div radiogroup/>
+[2]<p radio>Tüm Ürünler/>
+[3]<div radiogroup/>
+[4]<p radio>Kazançlı Ürünler/>
+[5]<i />
+Sepet Filtre Özelliğini Keşfet
+[6]<p Sepette filtreleme özelliği ile sepetindeki ürünleri hızlı bir şekilde düzenleyebilirsin./>
+Satıcı
+:
+Benisengiydir
+8.7
+550 TL'ye 50 TL İndirim
+Ürün Ekle
+Kargonuzun bedava olması için
+36,80 TL
+daha ürün ekleyin
+Benisengiydir
+Kadın Beyaz Çift Kurdele Baskılı Bisiklet Yaka Tshirt
+250+ tanesi satıldı
+Beden
+:
+M
+13 saat 31 dakika
+içinde sipariş verirsen
+en geç yarın kargoda!
+Sil
+Son 30 Günün En Düşük Fiyatı!
+213,20 TL
+Kazancın
+:
+46,60 TL
+En Çok Satanlar
+STOP Forte
+Derz Temizleyici
+3 günde
+5000+
+ürün
+satıldı!
+41.1B
+kişi
+favoriledi!
+24 saatte
+4626
+kişi
+inceledi!
+3 günde
+9855
+kişi
+ekledi!
+3 günde
+5000+
+ürün
+satıldı!
+(
+858
+)
+152,37 TL
+3 Al 2 Öde
+Glint
+1 Litre %100 Bitkisel Çok Amaçlı Temizleyici Vegan Leke Çıkarıcı - Yağ Çözücü
+3 günde
+10.000+
+ürün
+satıldı!
+777B
+kişi
+favoriledi!
+24 saatte
+32777
+kişi
+inceledi!
+3 günde
+130147
+kişi
+ekledi!
+3 günde
+10.000+
+ürün
+satıldı!
+(
+12663
+)
+199 TL
+150 TL
+3 Al 2 Öde
+HIZLI TESLİMAT
+KARGO BEDAVA
+kochler
+Yüksek Titreşimli Programlı Egzersiz Aleti ve Kondisyon Aleti
+3 günde
+100+
+ürün
+satıldı!
+57.7B
+kişi
+favoriledi!
+3 günde
+1932
+kişi
+ekledi!
+3 günde
+100+
+ürün
+satıldı!
+(
+2390
+)
+2.890 TL
+HIZLI TESLİMAT
+Powerhub
+Herbal Care For Man Premium Sprey 30ml
+3 günde
+1500+
+ürün
+satıldı!
+6026
+kişi
+favoriledi!
+3 günde
+2550
+kişi
+ekledi!
+3 günde
+1500+
+ürün
+satıldı!
+(
+1125
+)
+123,90 TL
+4 Al 3 Öde
+HIZLI TESLİMAT
+Janissary
+1 Çift Kırmızı Beyaz Ponpon - Amigo Gösteri Ponponu - 23 Nisan Ponpon
 [7]<img />
-[8]<textarea q;Ara;false;combobox/>
-[9]<div button;Harf çevirme aracı/>
-[10]<div button;Sesle arama yapın/>
-[11]<div Görselle arama;button/>
-[12]<input submit;btnK;button;Google'da Ara/>
-[13]<input submit;btnI;Kendimi Şanslı Hissediyorum/>
-Google'ı kullanabileceğiniz diğer diller:
-[14]<a English/>
-Türkiye
-[15]<a Hakkında/>
-[16]<a Reklam/>
-[17]<a İşletme/>
-[18]<a Arama nasıl çalışır?/>
-[19]<a İklimle ilgili çalışmalarımızın üçüncü on yılı/>
+3 günde
+500+
+ürün
+satıldı!
+[8]<img />
+530
+kişi
+favoriledi!
+[9]<img />
+3 günde
+836
+kişi
+ekledi!
+[10]<img />
+3 günde
+500+
+ürün
+satıldı!
+(
+6
+)
+89 TL
+KARGO BEDAVA
+Ph Lab
+Phlab Kojiso Kojic Asit Sabunu, Zerdeçal Ve Kojik Asit Etkisi Ile Leke Karşıtı Kojik Asit Sabunu
+[11]<img />
+3 günde
+1000+
+ürün
+satıldı!
+[12]<img />
+221B
+kişi
+favoriledi!
+[13]<img />
+24 saatte
+5445
+kişi
+inceledi!
+[14]<img />
+3 günde
+16375
+kişi
+ekledi!
+[15]<img />
+3 günde
+1000+
+ürün
+satıldı!
+(
+3413
+)
+419 TL
+3 Al 2 Öde
+KARGO BEDAVA
+EPİFY
+Epify Tüy Dökücü Krem
+[16]<img />
+3 günde
+2000+
+ürün
+satıldı!
+[17]<img />
+258B
+kişi
+favoriledi!
+[18]<img />
+24 saatte
+10101
+kişi
+inceledi!
+[19]<img />
+3 günde
+24778
+kişi
+ekledi!
 [20]<img />
-[21]<a Gizlilik/>
-[22]<a Şartlar/>
-[23]<div true;button>Ayarlar/>
-[End of page]
-Current step: 11/100Current date and time: 2025-03-25 11:26
+3 günde
+2000+
+ürün
+satıldı!
+(
+21562
+)
+439 TL
+3 Al 2 Öde
+STOP Forte
+Leke Çıkarıcı
+[21]<img />
+3 günde
+10.000+
+ürün
+satıldı!
+[22]<img />
+1.2M
+kişi
+favoriledi!
+[23]<img />
+24 saatte
+16101
+kişi
+inceledi!
+[24]<img />
+3 günde
+83924
+kişi
+ekledi!
+[25]<img />
+3 günde
+10.000+
+ürün
+satıldı!
+(
+57117
+)
+140,15 TL
+3 Al 2 Öde
+[26]<a HIZLI TESLİMAT/>
+[27]<img />
+[28]<img />
+[29]<a KARGO BEDAVA/>
+[30]<img />
+[31]<img />
+[32]<a HIZLI TESLİMAT/>
+[33]<img />
+[34]<img />
+[35]<a HIZLI TESLİMAT
+KARGO BEDAVA/>
+[36]<img />
+[37]<img />
+Sipariş Özeti
+Ürünün Toplamı
+259,80 TL
+Kargo Toplam
+44,99 TL
+Toplam Kazancın
+-
+46,60 TL
+Toplam
+258,19 TL
+Sepetindeki ürünler son
+3 günde
+250+
+adet satıldı!
+13 saat
+31 dakika
+içinde sipariş ver, ürünlerini
+hızlı teslim al!
+Sepetindeki ürünler son
+3 günde
+250+
+adet satıldı!
+İndirim Kodu Gir
+Sepeti Onayla
+... 2125 pixels below - scroll or extract content to see more ...
+Current step: 10/100Current date and time: 2025-03-26 10:30
 
  RESPONSE
 {
   "current_state": {
-    "evaluation_previous_goal": "Failed - Could not click on Settings because the element does not exist.",
-    "memory": "Completed 1/6 steps for verifying advanced search options. Need to click on Settings again.",
-    "next_goal": "Click on \"Advanced search\" option."
+    "evaluation_previous_goal": "Success - Clicked on cart icon",
+    "memory": "Starting with the new task. I have completed 8/10 steps",
+    "next_goal": "On the cart page, verify the product details and total amount are displayed correctly."
   },
   "action": [
     {
-      "click_element": {
-        "index": 23
+      "extract_content": {
+        "goal": "On the cart page, verify the product details and total amount are displayed correctly."
       }
     }
   ]

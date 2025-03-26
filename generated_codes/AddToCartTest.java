@@ -3,286 +3,336 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static SmaClickUtilities.clickWebElementForTpath;
+import static SmaSendKeyUtilites.sendKeysElementTPath;
 
 public class AddToCartTest {
 
     private WebDriver driver;
-    private Logger logger = Logger.getLogger(AddToCartTest.class.getName());
-    private String baseUrl = "https://www.trendyol.com";
+    private static final Logger LOGGER = Logger.getLogger(AddToCartTest.class.getName());
+    private String baseUrl = "https://www.trendyol.com/"; // Replace with your base URL
 
     @BeforeClass
-    public void setup() {
+    public void setUpClass() {
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        logger.setLevel(Level.INFO);
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class)
-    public void addToCartTest() {
+    @BeforeMethod
+    public void setUp() {
+        driver = new ChromeDriver();
+        driver.manage().window().setSize(new Dimension(1920, 1080));
+        driver.manage().deleteAllCookies();
+        driver.get(baseUrl);
+        log("Navigated to: " + baseUrl);
+    }
+
+    @Test
+    public void testAddToCart() {
         try {
-            driver.get(baseUrl);
-            handleGenderModal();
-            searchProduct("tshirt");
+            logStep("Starting AddToCart test");
+
+            // 1. Close the gender selection modal if present
+            handleGenderSelectionModal();
+            captureScreenshotOnStep("Gender Modal Handled");
+
+            // 2. Search for 'tshirt'
+            searchForProduct("tshirt");
+            captureScreenshotOnStep("Searched for tshirt");
+
+            // 3. Select a product from the search results
             selectProduct();
+            captureScreenshotOnStep("Selected a product");
+
+            // 4. Select size if presented
             selectSizeIfAvailable();
+            captureScreenshotOnStep("Selected size if available");
+
+            // 5. Add to cart
             addToCart();
+            captureScreenshotOnStep("Added to cart");
+
+            // 6. Go to cart
             goToCart();
+            captureScreenshotOnStep("Navigated to cart");
+
+            // 7. Verify product details and total amount
             verifyCartDetails();
+            captureScreenshotOnStep("Verified cart details");
+
+            logStep("AddToCart test completed successfully");
+
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Test failed: " + e.getMessage(), e);
-            captureScreenshot(driver, "addToCartTest_failure");
+            captureScreenshotOnFailure("testAddToCart");
+            LOGGER.log(Level.SEVERE, "Test failed: " + e.getMessage(), e);
             Assert.fail("Test failed: " + e.getMessage());
         }
     }
 
-    private void handleGenderModal() {
-        try {
-            Wait<WebDriver> wait = new FluentWait<>(driver)
-                    .withTimeout(Duration.ofSeconds(10))
-                    .pollingEvery(Duration.ofMillis(500))
-                    .ignoring(NoSuchElementException.class);
-
-            WebElement modalCloseButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.modal-close")));
-            modalCloseButton.click();
-            logger.info("Gender selection modal closed.");
-            Thread.sleep(2000); // Wait after closing modal
-        } catch (Exception e) {
-            logger.info("Gender selection modal not found or already closed.");
+    @AfterMethod
+    public void tearDown(ITestResult result) {
+        if (result.getStatus() == ITestResult.FAILURE) {
+            captureScreenshotOnFailure(result.getMethod().getMethodName());
+        }
+        if (driver != null) {
+            driver.quit();
+            log("Driver quit");
         }
     }
 
-    private void searchProduct(String productName) {
+    // Helper Methods
+
+    private void handleGenderSelectionModal() {
         try {
-            WebElement searchBox = findElement(By.id("search-input"), By.cssSelector("input[type='text'][placeholder='Aradığınız ürün, kategori veya markayı yazınız']"), By.xpath("//input[@type='text' and @placeholder='Aradığınız ürün, kategori veya markayı yazınız']"));
-            searchBox.click();
-            searchBox.sendKeys(productName);
-            searchBox.sendKeys(Keys.ENTER);
-            logger.info("Searched for product: " + productName);
+            By modalCloseButtonLocator = By.xpath("//div[@class='modal-content']/button[@class='close']");
+            WebElement closeButton = findElementByXpath("//div[@class='modal-content']/button[@class='close']");
 
-            // Verify search results appear
-            Wait<WebDriver> wait = new FluentWait<>(driver)
-                    .withTimeout(Duration.ofSeconds(35))
-                    .pollingEvery(Duration.ofMillis(500))
-                    .ignoring(NoSuchElementException.class);
-
-            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.prdct-cntnr-wrppr")));
-            logger.info("Search results loaded successfully.");
-
+            if (closeButton != null && closeButton.isDisplayed()) {
+                log("Gender selection modal found. Closing...");
+                clickWebElementForTpath(modalCloseButtonLocator);
+                log("Gender selection modal closed.");
+                captureScreenshotOnStep("Gender Modal Closed");
+            } else {
+                log("Gender selection modal not found.");
+            }
+        } catch (NoSuchElementException e) {
+            log("Gender selection modal not found.");
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to search for product: " + e.getMessage(), e);
-            captureScreenshot(driver, "searchProduct_failure");
-            Assert.fail("Failed to search for product: " + e.getMessage());
+            LOGGER.log(Level.WARNING, "Error handling gender selection modal: " + e.getMessage(), e);
+        }
+    }
+
+    private void searchForProduct(String productName) {
+        By searchBoxLocator = By.xpath("//input[@placeholder='Aradığınız ürün, kategori veya markayı yazınız']");
+        sendKeysElementTPath(searchBoxLocator, true, productName);
+        log("Entered '" + productName + "' in the search box.");
+
+        try {
+            WebElement searchBox = driver.findElement(By.xpath("//input[@placeholder='Aradığınız ürün, kategori veya markayı yazınız']"));
+            searchBox.sendKeys(Keys.ENTER);
+            log("Pressed Enter key.");
+        } catch (NoSuchElementException e) {
+            LOGGER.log(Level.SEVERE, "Search box not found: " + e.getMessage(), e);
+            Assert.fail("Search box not found: " + e.getMessage());
         }
     }
 
     private void selectProduct() {
+        By productLocator = By.xpath("//div[@class='p-card-wrppr with-campaign-view']//a");
         try {
-            Wait<WebDriver> wait = new FluentWait<>(driver)
-                    .withTimeout(Duration.ofSeconds(35))
-                    .pollingEvery(Duration.ofMillis(500))
-                    .ignoring(NoSuchElementException.class);
-
-            WebElement productLink = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.prdct-cntnr-wrppr > div:first-child > a")));
-            productLink.click();
-            logger.info("Selected a product from search results.");
+            clickWebElementForTpath(productLocator);
+            log("Clicked on a product from the search results.");
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to select product: " + e.getMessage(), e);
-            captureScreenshot(driver, "selectProduct_failure");
-            Assert.fail("Failed to select product: " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Could not click on product: " + e.getMessage(), e);
+            Assert.fail("Could not click on product: " + e.getMessage());
         }
     }
 
     private void selectSizeIfAvailable() {
         try {
-            Wait<WebDriver> wait = new FluentWait<>(driver)
-                    .withTimeout(Duration.ofSeconds(35))
-                    .pollingEvery(Duration.ofMillis(500))
-                    .ignoring(NoSuchElementException.class);
+            By sizeLocator = By.xpath("//div[@class='size-choose']/button[not(@disabled)]");
+            WebElement sizeElement = driver.findElement(By.xpath("//div[@class='size-choose']/button[not(@disabled)]"));
 
-            // Check if size selection is available
-            List<WebElement> sizeOptions = driver.findElements(By.cssSelector("div.size-choose > div > button"));
-            if (!sizeOptions.isEmpty()) {
-                WebElement firstAvailableSize = wait.until(ExpectedConditions.elementToBeClickable(sizeOptions.get(0)));
-                firstAvailableSize.click();
-                logger.info("Selected size: " + firstAvailableSize.getText());
+            if (sizeElement != null && sizeElement.isDisplayed()) {
+                clickWebElementForTpath(sizeLocator);
+                log("Selected available size.");
             } else {
-                logger.info("No size selection available for this product.");
+                log("No available size to select.");
             }
+        } catch (NoSuchElementException e) {
+            log("No size options found.");
         } catch (Exception e) {
-            logger.log(Level.WARNING, "Failed to select size (if available): " + e.getMessage(), e);
+            LOGGER.log(Level.WARNING, "Error selecting size: " + e.getMessage(), e);
         }
     }
 
     private void addToCart() {
+        By addToCartButtonLocator = By.xpath("//button[@class='add-to-basket']");
         try {
-            Wait<WebDriver> wait = new FluentWait<>(driver)
-                    .withTimeout(Duration.ofSeconds(35))
-                    .pollingEvery(Duration.ofMillis(500))
-                    .ignoring(NoSuchElementException.class);
-
-            WebElement addToCartButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button.add-to-bs-btn")));
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", addToCartButton);
-            Thread.sleep(500); // Small pause to ensure element is in view
-            addToCartButton.click();
-            logger.info("Clicked 'Add to Cart' button.");
-
-            // Verify item was successfully added (example: check for success message)
-            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.success-message-container")));
-            logger.info("Product added to cart successfully.");
-
+            clickWebElementForTpath(addToCartButtonLocator);
+            log("Clicked 'Add to Cart' button.");
+            // Wait for confirmation (e.g., a success message or cart count update)
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.id("basketBtn"))); // Example: wait for cart icon to be clickable
+            log("Item added to cart successfully.");
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to add to cart: " + e.getMessage(), e);
-            captureScreenshot(driver, "addToCart_failure");
-            Assert.fail("Failed to add to cart: " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Could not add to cart: " + e.getMessage(), e);
+            Assert.fail("Could not add to cart: " + e.getMessage());
         }
     }
 
     private void goToCart() {
+        By cartButtonLocator = By.xpath("//a[@class='link account-basket']");
         try {
-            Wait<WebDriver> wait = new FluentWait<>(driver)
-                    .withTimeout(Duration.ofSeconds(35))
-                    .pollingEvery(Duration.ofMillis(500))
-                    .ignoring(NoSuchElementException.class);
-
-            WebElement cartButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a.link.account-basket")));
-            cartButton.click();
-            logger.info("Navigated to cart page.");
+            clickWebElementForTpath(cartButtonLocator);
+            log("Clicked on the cart button.");
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.urlContains("/sepet"));
+            log("Navigated to the cart page.");
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to navigate to cart: " + e.getMessage(), e);
-            captureScreenshot(driver, "goToCart_failure");
-            Assert.fail("Failed to navigate to cart: " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Could not navigate to cart: " + e.getMessage(), e);
+            Assert.fail("Could not navigate to cart: " + e.getMessage());
         }
     }
 
     private void verifyCartDetails() {
         try {
-            Wait<WebDriver> wait = new FluentWait<>(driver)
-                    .withTimeout(Duration.ofSeconds(35))
-                    .pollingEvery(Duration.ofMillis(500))
-                    .ignoring(NoSuchElementException.class);
-
-            // Verify product details (example: product name)
-            WebElement productNameElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.ty-link.ty-link-primary")));
-            String productName = productNameElement.getText();
-            Assert.assertNotNull(productName, "Product name is not displayed.");
-            logger.info("Product name in cart: " + productName);
+            // Verify product details
+            WebElement productTitleElement = findElementByCssSelector(".pb-item-name");
+            String productTitle = productTitleElement.getText();
+            Assert.assertNotNull(productTitle, "Product title is missing in the cart.");
+            log("Product title in cart: " + productTitle);
 
             // Verify total amount
-            WebElement totalAmountElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.pb-summary-total")));
+            WebElement totalAmountElement = findElementByCssSelector(".total-price");
             String totalAmountText = totalAmountElement.getText();
-            Assert.assertNotNull(totalAmountText, "Total amount is not displayed.");
-            logger.info("Total amount in cart: " + totalAmountText);
+            Assert.assertNotNull(totalAmountText, "Total amount is missing in the cart.");
+            log("Total amount in cart: " + totalAmountText);
 
-            logger.info("Cart details verified successfully.");
-
+            log("Product details and total amount verified successfully.");
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to verify cart details: " + e.getMessage(), e);
-            captureScreenshot(driver, "verifyCartDetails_failure");
-            Assert.fail("Failed to verify cart details: " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Error verifying cart details: " + e.getMessage(), e);
+            Assert.fail("Error verifying cart details: " + e.getMessage());
         }
     }
 
-    private WebElement findElement(By id, By css, By xpath) {
+    // Element Locator Methods
+    private WebElement findElementById(String id) {
+        log("Finding element by ID: " + id);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
-            return driver.findElement(id);
-        } catch (NoSuchElementException e) {
-            logger.info("Element not found by ID, trying CSS selector...");
-        }
-
-        try {
-            return driver.findElement(css);
-        } catch (NoSuchElementException e) {
-            logger.info("Element not found by CSS, trying XPath...");
-        }
-
-        try {
-            return driver.findElement(xpath);
-        } catch (NoSuchElementException e) {
-            logger.warning("Element not found by XPath.");
-            throw new NoSuchElementException("Element not found using any locator.");
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.id(id)));
+            log("Element found by ID: " + id);
+            return element;
+        } catch (Exception e) {
+            String errorMessage = "Element with ID '" + id + "' not found: " + e.getMessage();
+            LOGGER.log(Level.SEVERE, errorMessage, e);
+            throw new NoSuchElementException(errorMessage);
         }
     }
 
-    private WebElement findLoginButton() {
+    private WebElement findElementByName(String name) {
+        log("Finding element by Name: " + name);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
-            return driver.findElement(By.cssSelector("div.link.account-user > p.link-text"));
-        } catch (NoSuchElementException e) {
-            logger.info("Login button not found by CSS, trying XPath 1...");
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.name(name)));
+            log("Element found by Name: " + name);
+            return element;
+        } catch (Exception e) {
+            String errorMessage = "Element with Name '" + name + "' not found: " + e.getMessage();
+            LOGGER.log(Level.SEVERE, errorMessage, e);
+            throw new NoSuchElementException(errorMessage);
         }
+    }
+
+    private WebElement findElementByCssSelector(String cssSelector) {
+        log("Finding element by CSS Selector: " + cssSelector);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        try {
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssSelector)));
+            log("Element found by CSS Selector: " + cssSelector);
+            return element;
+        } catch (Exception e) {
+            String errorMessage = "Element with CSS Selector '" + cssSelector + "' not found: " + e.getMessage();
+            LOGGER.log(Level.SEVERE, errorMessage, e);
+            throw new NoSuchElementException(errorMessage);
+        }
+    }
+
+    private WebElement findElementByXpath(String xpath) {
+        log("Finding element by XPath: " + xpath);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        try {
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+            log("Element found by XPath: " + xpath);
+            return element;
+        } catch (Exception e) {
+            String errorMessage = "Element with XPath '" + xpath + "' not found: " + e.getMessage();
+            LOGGER.log(Level.SEVERE, errorMessage, e);
+            throw new NoSuchElementException(errorMessage);
+        }
+    }
+
+    private WebElement findElementByLinkText(String linkText) {
+        log("Finding element by Link Text: " + linkText);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        try {
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText(linkText)));
+            log("Element found by Link Text: " + linkText);
+            return element;
+        } catch (Exception e) {
+            String errorMessage = "Element with Link Text '" + linkText + "' not found: " + e.getMessage();
+            LOGGER.log(Level.SEVERE, errorMessage, e);
+            throw new NoSuchElementException(errorMessage);
+        }
+    }
+
+    private WebElement findElementByPartialLinkText(String partialLinkText) {
+        log("Finding element by Partial Link Text: " + partialLinkText);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        try {
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(partialLinkText)));
+            log("Element found by Partial Link Text: " + partialLinkText);
+            return element;
+        } catch (Exception e) {
+            String errorMessage = "Element with Partial Link Text '" + partialLinkText + "' not found: " + e.getMessage();
+            LOGGER.log(Level.SEVERE, errorMessage, e);
+            throw new NoSuchElementException(errorMessage);
+        }
+    }
+
+    // Screenshot Capture Methods
+    private void captureScreenshotOnStep(String stepName) {
+        captureScreenshot(stepName, "step");
+    }
+
+    private void captureScreenshotOnFailure(String methodName) {
+        captureScreenshot(methodName, "failure");
+    }
+
+    private void captureScreenshot(String context, String type) {
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String filename = String.format("screenshot_%s_%s_%s.png", timestamp, context, type);
+        File screenshotFile = new File("screenshots/" + filename);
 
         try {
-            return driver.findElement(By.xpath("//p[contains(text(),'Giriş') and contains(@class,'link-text')]"));
-        } catch (NoSuchElementException e) {
-            logger.info("Login button not found by XPath 1, trying XPath 2...");
-        }
-
-        try {
-            return driver.findElement(By.xpath("//div[contains(@class,'account-nav')]//p[contains(text(),'Giriş')]"));
-        } catch (NoSuchElementException e) {
-            logger.warning("Login button not found by XPath 2. Trying JavaScript click...");
-            try {
-                WebElement loginButton = driver.findElement(By.cssSelector("div.link.account-user > p.link-text"));
-                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", loginButton);
-                return loginButton;
-            } catch (NoSuchElementException ex) {
-                logger.severe("Login button not found using any locator or JavaScript.");
-                throw new NoSuchElementException("Login button not found.");
+            Path screenshotsDir = Paths.get("screenshots");
+            if (!Files.exists(screenshotsDir)) {
+                Files.createDirectories(screenshotsDir);
             }
-        }
-    }
 
-    private void captureScreenshot(WebDriver driver, String testName) {
-        try {
-            File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String filePath = "screenshots/" + testName + "_" + timestamp + ".png";
-            File destFile = new File(filePath);
-            new File("screenshots").mkdirs(); // Ensure directory exists
-            Files.copy(screenshotFile.toPath(), destFile.toPath());
-            logger.info("Screenshot captured: " + filePath);
+            TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
+            File sourceFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
+            Files.copy(sourceFile.toPath(), screenshotFile.toPath());
+
+            log("Screenshot captured: " + screenshotFile.getAbsolutePath());
         } catch (IOException e) {
-            logger.severe("Failed to capture screenshot: " + e.getMessage());
+            LOGGER.log(Level.WARNING, "Error capturing screenshot: " + e.getMessage(), e);
         }
     }
 
-    @AfterClass
-    public void teardown() {
-        if (driver != null) {
-            driver.quit();
-            logger.info("WebDriver closed.");
-        }
+    // Logging Methods
+    private void log(String message) {
+        LOGGER.info(message);
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " - " + message); // Log to console as well
     }
 
-    public static class RetryAnalyzer implements IRetryAnalyzer {
-        private int retryCount = 0;
-        private static final int maxRetryCount = 3;
-
-        @Override
-        public boolean retry(ITestResult result) {
-            if (retryCount < maxRetryCount) {
-                retryCount++;
-                System.out.println("Retrying test " + result.getName() + " attempt " + retryCount + " of " + maxRetryCount);
-                return true;
-            }
-            return false;
-        }
+    private void logStep(String step) {
+        log("Step: " + step);
     }
 }

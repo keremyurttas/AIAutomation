@@ -6,33 +6,46 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-import org.testng.IRetryAnalyzer;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
+import static SmaClickUtilities.clickWebElementForTpath;
+import static SmaSendKeyUtilites.sendKeysElementTPath;
 
 public class GoogleSearchTest {
 
     private WebDriver driver;
     private WebDriverWait wait;
-    private final int EXPLICIT_WAIT_TIMEOUT = 15;
-    private final int RETRY_COUNT = 3;
-    private final String GOOGLE_HOMEPAGE_URL = "https://www.google.com";
-    private final String SEARCH_INPUT_ID = "APjFqb";
-    private final String SEARCH_BUTTON_NAME = "btnK";
-    private final String CAPTCHA_ELEMENT_ID = "captcha"; // Example ID, adjust as needed
-    private final String SEARCH_RESULTS_LOCATOR = "//div[@id='search']//a"; // Example XPath, adjust as needed
-    private final String SEARCH_INPUT_CSS = "textarea.gLFyf[title='Ara'][aria-label='Ara'][placeholder][autocomplete='off'][id='APjFqb'][name='q'][role='combobox']";
-    private final String SEARCH_BUTTON_CSS = "input.gNO89b[aria-label*='Google\\'da Ara'][name='btnK'][role='button'][type='submit']";
+    private static final Logger logger = Logger.getLogger(GoogleSearchTest.class.getName());
+    private static final String SCREENSHOTS_DIR = "screenshots";
 
-    private Logger logger = Logger.getLogger(GoogleSearchTest.class.getName());
+    @BeforeSuite
+    public void setupSuite() {
+        // Configure logger
+        configureLogger();
+
+        // Create screenshots directory if it doesn't exist
+        File dir = new File(SCREENSHOTS_DIR);
+        if (!dir.exists()) {
+            if (dir.mkdirs()) {
+                logger.info("Screenshots directory created: " + SCREENSHOTS_DIR);
+            } else {
+                logger.severe("Failed to create screenshots directory: " + SCREENSHOTS_DIR);
+            }
+        }
+    }
 
     @BeforeClass
     public void setupClass() {
@@ -41,159 +54,218 @@ public class GoogleSearchTest {
 
     @BeforeMethod
     public void setupTest() {
+        logTestStep("Starting test setup");
         driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(1920, 1080));
         driver.manage().deleteAllCookies();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(EXPLICIT_WAIT_TIMEOUT));
-        logger.setLevel(Level.INFO);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        logTestStep("Test setup complete");
+    }
+
+    @Test
+    public void googleSearchTest() {
+        try {
+            logTestStep("Opening Google homepage");
+            driver.get("https://www.google.com");
+            captureScreenshotOnStep("Google homepage opened");
+
+            logTestStep("Verifying search input field is visible");
+            WebElement searchInput = findElementByXpath("//textarea[@id='APjFqb']");
+            Assert.assertTrue(searchInput.isDisplayed(), "Search input field is not visible");
+            captureScreenshotOnStep("Search input field verified");
+
+            logTestStep("Typing 'automation testing' in the search box");
+            sendKeysElementTPath(By.xpath("//textarea[@id='APjFqb']"), false, "automation testing");
+            captureScreenshotOnStep("Typed 'automation testing' in the search box");
+
+            logTestStep("Clicking the search button");
+            clickWebElementForTpath(By.xpath("//input[@name='btnK']"));
+            captureScreenshotOnStep("Clicked the search button");
+
+            logTestStep("Verifying search results are displayed with relevant links");
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.id("search")));
+            Assert.assertTrue(driver.findElement(By.id("search")).isDisplayed(), "Search results are not displayed");
+            captureScreenshotOnStep("Search results verified");
+
+            logTestStep("Test completed successfully");
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Test failed: " + e.getMessage(), e);
+            captureScreenshotOnFailure("googleSearchTest");
+            Assert.fail("Test failed: " + e.getMessage());
+        }
     }
 
     @AfterMethod
     public void tearDown(ITestResult result) {
+        logTestStep("Starting test teardown");
         if (result.getStatus() == ITestResult.FAILURE) {
-            captureScreenshot(result.getName());
+            captureScreenshotOnFailure(result.getMethod().getMethodName());
         }
         if (driver != null) {
             driver.quit();
         }
+        logTestStep("Test teardown complete");
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class)
-    public void googleSearchTest() {
+    // Locator Methods
+    private WebElement findElementById(String id) {
+        logLocatorStrategy("findElementById", id);
         try {
-            // 1. Open Google homepage.
-            driver.get(GOOGLE_HOMEPAGE_URL);
-            logger.info("Opened Google homepage.");
-
-            // 2. Verify the search input field is visible.
-            WebElement searchInput = findElement(By.id(SEARCH_INPUT_ID), By.cssSelector(SEARCH_INPUT_CSS), null);
-            Assert.assertTrue(searchInput.isDisplayed(), "Search input field is not visible.");
-            logger.info("Verified the search input field is visible.");
-
-            // 3. Type "automation testing" in the search box.
-            searchInput.click(); // Simulate human behavior
-            searchInput.sendKeys("automation testing");
-            logger.info("Typed 'automation testing' in the search box.");
-
-            // 4. Press Enter or click the search button.
-            WebElement searchButton = findElement(By.name(SEARCH_BUTTON_NAME), By.cssSelector(SEARCH_BUTTON_CSS), null);
-            clickElementWithFallback(searchButton);
-            logger.info("Pressed Enter or clicked the search button.");
-
-            // 5. Verify search results are displayed with relevant links.
-            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(SEARCH_RESULTS_LOCATOR)));
-            List<WebElement> searchResults = driver.findElements(By.xpath(SEARCH_RESULTS_LOCATOR));
-            Assert.assertTrue(searchResults.size() > 0, "No search results displayed.");
-            logger.info("Verified search results are displayed with relevant links.");
-
-            // Additional verification: Check if at least one result contains "automation testing"
-            boolean foundRelevantResult = false;
-            for (WebElement result : searchResults) {
-                if (result.getText().toLowerCase().contains("automation testing")) {
-                    foundRelevantResult = true;
-                    break;
-                }
-            }
-            Assert.assertTrue(foundRelevantResult, "No relevant search results found.");
-            logger.info("Verified at least one search result contains 'automation testing'.");
-
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.id(id)));
+            logger.info("Element found with id: " + id);
+            return element;
         } catch (Exception e) {
-            logger.severe("Test failed: " + e.getMessage());
-            throw e; // Re-throw the exception to mark the test as failed.
+            String errorMessage = "Element with id '" + id + "' not found: " + e.getMessage();
+            logger.log(Level.SEVERE, errorMessage, e);
+            throw new NoSuchElementException(errorMessage);
         }
     }
 
-    private WebElement findElement(By byId, By byCss, By byXpath) {
-        WebElement element = null;
+    private WebElement findElementByName(String name) {
+        logLocatorStrategy("findElementByName", name);
         try {
-            if (byId != null) {
-                element = driver.findElement(byId);
-                return element;
-            }
-        } catch (NoSuchElementException ignored) {
-            // Try next locator
-        }
-
-        try {
-            if (byCss != null) {
-                element = driver.findElement(byCss);
-                return element;
-            }
-        } catch (NoSuchElementException ignored) {
-            // Try next locator
-        }
-
-        try {
-            if (byXpath != null) {
-                element = driver.findElement(byXpath);
-                return element;
-            }
-        } catch (NoSuchElementException ignored) {
-            // Element not found
-        }
-
-        throw new NoSuchElementException("Element not found using any of the provided locators: id=" + byId + ", css=" + byCss + ", xpath=" + byXpath);
-    }
-
-    private void clickElementWithFallback(WebElement element) {
-        try {
-            wait.until(ExpectedConditions.elementToBeClickable(element));
-            element.click();
-        } catch (ElementClickInterceptedException | StaleElementReferenceException e) {
-            logger.warning("Click failed, falling back to JavaScript click: " + e.getMessage());
-            JavascriptExecutor executor = (JavascriptExecutor) driver;
-            executor.executeScript("arguments[0].click();", element);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.name(name)));
+            logger.info("Element found with name: " + name);
+            return element;
+        } catch (Exception e) {
+            String errorMessage = "Element with name '" + name + "' not found: " + e.getMessage();
+            logger.log(Level.SEVERE, errorMessage, e);
+            throw new NoSuchElementException(errorMessage);
         }
     }
 
-    private void handleModalsAndOverlays() {
-        // Implement logic to check for and dismiss modals/overlays.
-        // This is a placeholder, as the specific implementation depends on the website.
-        // Example:
+    private WebElement findElementByCssSelector(String cssSelector) {
+        logLocatorStrategy("findElementByCssSelector", cssSelector);
         try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssSelector)));
+            logger.info("Element found with CSS selector: " + cssSelector);
+            return element;
+        } catch (Exception e) {
+            String errorMessage = "Element with CSS selector '" + cssSelector + "' not found: " + e.getMessage();
+            logger.log(Level.SEVERE, errorMessage, e);
+            throw new NoSuchElementException(errorMessage);
+        }
+    }
+
+    private WebElement findElementByXpath(String xpath) {
+        logLocatorStrategy("findElementByXpath", xpath);
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+            logger.info("Element found with xpath: " + xpath);
+            return element;
+        } catch (Exception e) {
+            String errorMessage = "Element with xpath '" + xpath + "' not found: " + e.getMessage();
+            logger.log(Level.SEVERE, errorMessage, e);
+            throw new NoSuchElementException(errorMessage);
+        }
+    }
+
+    private WebElement findElementByLinkText(String linkText) {
+        logLocatorStrategy("findElementByLinkText", linkText);
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText(linkText)));
+            logger.info("Element found with link text: " + linkText);
+            return element;
+        } catch (Exception e) {
+            String errorMessage = "Element with link text '" + linkText + "' not found: " + e.getMessage();
+            logger.log(Level.SEVERE, errorMessage, e);
+            throw new NoSuchElementException(errorMessage);
+        }
+    }
+
+    private WebElement findElementByPartialLinkText(String partialLinkText) {
+        logLocatorStrategy("findElementByPartialLinkText", partialLinkText);
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(partialLinkText)));
+            logger.info("Element found with partial link text: " + partialLinkText);
+            return element;
+        } catch (Exception e) {
+            String errorMessage = "Element with partial link text '" + partialLinkText + "' not found: " + e.getMessage();
+            logger.log(Level.SEVERE, errorMessage, e);
+            throw new NoSuchElementException(errorMessage);
+        }
+    }
+
+    // Screenshot Methods
+    private void captureScreenshotOnStep(String stepName) {
+        captureScreenshot(stepName, "Step");
+    }
+
+    private void captureScreenshotOnFailure(String methodName) {
+        captureScreenshot(methodName, "Failure");
+    }
+
+    private void captureFullPageScreenshot() {
+        captureScreenshot("FullPage", "FullPage");
+    }
+
+    private void captureScreenshot(String context, String type) {
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String filename = SCREENSHOTS_DIR + "/" + type + "_" + context + "_" + timestamp + ".png";
+
+        try {
+            TakesScreenshot ts = (TakesScreenshot) driver;
+            File source = ts.getScreenshotAs(OutputType.FILE);
+            Path destination = Paths.get(filename);
+            Files.copy(source.toPath(), destination);
+            logger.info("Screenshot captured: " + filename);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Failed to capture screenshot: " + e.getMessage(), e);
+        }
+    }
+
+    // Logging Methods
+    private void logTestStep(String message) {
+        logger.info(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " - " + message);
+    }
+
+    private void logLocatorStrategy(String strategy, String locator) {
+        logger.info("Using locator strategy: " + strategy + " with locator: " + locator);
+    }
+
+    private void configureLogger() {
+        // Set logger level
+        logger.setLevel(Level.INFO);
+
+        // Console handler
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setLevel(Level.INFO);
+        logger.addHandler(consoleHandler);
+
+        // File handler
+        try {
+            FileHandler fileHandler = new FileHandler("test.log", true);
+            fileHandler.setFormatter(new SimpleFormatter());
+            fileHandler.setLevel(Level.INFO);
+            logger.addHandler(fileHandler);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Failed to create log file handler: " + e.getMessage(), e);
+        }
+
+        // Disable parent handlers
+        logger.setUseParentHandlers(false);
+    }
+
+    // Modal and Overlay Handling (Example - Adapt to your specific needs)
+    private void handleModal() {
+        try {
+            // Example: Check for a modal and close it
             WebElement modalCloseButton = driver.findElement(By.cssSelector(".modal-close-button"));
             if (modalCloseButton.isDisplayed()) {
+                logTestStep("Modal detected. Closing modal.");
                 modalCloseButton.click();
-                wait.until(ExpectedConditions.invisibilityOf(modalCloseButton));
-                Thread.sleep(2000); // Wait for 2 seconds
+                captureScreenshotOnStep("Modal closed");
             }
-        } catch (NoSuchElementException | InterruptedException e) {
-            // Modal not present or handling failed, continue.
-        }
-    }
-
-    private boolean isCaptchaPresent() {
-        try {
-            driver.findElement(By.id(CAPTCHA_ELEMENT_ID));
-            return true;
         } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
-    private void captureScreenshot(String testName) {
-        try {
-            File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-            File destinationFile = new File("screenshots/" + testName + "_" + timestamp + ".png");
-            Files.createDirectories(destinationFile.getParentFile().toPath());
-            Files.copy(scrFile.toPath(), destinationFile.toPath());
-            logger.info("Screenshot saved to: " + destinationFile.getAbsolutePath());
-        } catch (IOException e) {
-            logger.severe("Failed to capture screenshot: " + e.getMessage());
-        }
-    }
-
-    public static class RetryAnalyzer implements IRetryAnalyzer {
-        private int retryCount = 0;
-
-        @Override
-        public boolean retry(ITestResult result) {
-            if (retryCount < 3) {
-                retryCount++;
-                return true;
-            }
-            return false;
+            // No modal found
+            logger.info("No modal found.");
         }
     }
 }

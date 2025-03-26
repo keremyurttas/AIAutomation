@@ -70,7 +70,7 @@ Common action sequences:
 Your responses must be always JSON with the specified format.
 
  HumanMessage 
-Your ultimate task is: """Perform the following case: Verifies sign-in functionality. Steps:['IMPORTANT INSTRUCTIONS: As a human user interacting with the website, I will:\n    1) Perform each action as naturally as possible, mimicking real user behavior\n    2) If a modal or popup appears, handle every modal\n    3) Ignore any advertisements or promotional content\n    4) Wait for pages to fully load before taking any action\n    5) Use scrolling to find elements that are not immediately visible\n    6) Interact with elements exactly as a human would:\n       - If I need to type, first click on the input field\n       - If a button is not immediately clickable, move the mouse over it, then click\n       - Use tab navigation if needed\n       - Scroll smoothly before interacting with elements\n    7) Take actions deliberately and carefully\n    8) Pause briefly between actions to simulate human timing\n    9) Always verify my actions have the expected result before proceeding', 'Open Google homepage. Click on the "Sign in" button in the top-right corner. Verify you are redirected to the Google sign-in page. Enter a test email address. Click Next. Verify the password field appears. ']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
+Your ultimate task is: """Perform the following case: Adds items to cart and verifies checkout flow. Steps:['IMPORTANT INSTRUCTIONS: As a human user interacting with the website, I will:\n    1) Perform each action as naturally as possible, mimicking real user behavior\n    2) If a modal or popup appears, handle every modal\n    3) Ignore any advertisements or promotional content\n    4) Wait for pages to fully load before taking any action\n    5) Use scrolling to find elements that are not immediately visible\n    6) Interact with elements exactly as a human would:\n       - If I need to type, first click on the input field\n       - If a button is not immediately clickable, move the mouse over it, then click\n       - Use tab navigation if needed\n       - Scroll smoothly before interacting with elements\n    7) Take actions deliberately and carefully\n    8) Pause briefly between actions to simulate human timing\n    9) Always verify my actions have the expected result before proceeding', 'Close the gender selection modal if present by clicking the X button or using ESC key. Modal do not present every time only in initial executions. If there is no modal proceed the next step.', "Search for 'tshirt' by typing in the search box and pressing Enter.", 'Verify search results appear by confirming product listings are visible.', 'Select a product by clicking on any item from the search results.', 'If a size selection is presented, select an available size. If there are color options as well, select both color and size options that are available.', "Click the 'Sepete Ekle' (Add to Cart) button and wait for confirmation.", 'Verify the item was successfully added by checking for a success message or cart count indicator.', "Click on the cart icon or 'Sepetim' button to proceed to checkout.", 'On the cart page, verify the product details and total amount are displayed correctly.']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
 
  HumanMessage 
 Example output:
@@ -85,7 +85,7 @@ Browser started
 [Your task history memory starts here]
 
  HumanMessage 
-Action result: 🔗  Opened new tab with https://www.google.com
+Action result: 🔗  Opened new tab with https://www.trendyol.com
 
  AIMessage 
 
@@ -94,7 +94,7 @@ Action result: 🔗  Opened new tab with https://www.google.com
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 3: Oturum açın
+Action result: 🖱️  Clicked button with index 0:
 
  AIMessage 
 
@@ -103,7 +103,7 @@ Action result: 🖱️  Clicked button with index 3: Oturum açın
 
 
  HumanMessage 
-Action result: ⌨️  Input test@example.com into index 2
+Action result: ⌨️  Input tshirt into index 7
 
  AIMessage 
 
@@ -112,7 +112,7 @@ Action result: ⌨️  Input test@example.com into index 2
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 4: Sonraki
+Action result: ⌨️  Sent keys:
 
  AIMessage 
 
@@ -121,7 +121,12 @@ Action result: 🖱️  Clicked button with index 4: Sonraki
 
 
  HumanMessage 
-Action result: 🕒  Waiting for 5 seconds
+Action result: 📄  Extracted from page
+: ```json
+{
+  "search_results_verification": "Search results for \"tshirt\" are displayed, with over 100,000 results listed. This confirms that product listings are visible after the search."
+}
+```
 
  AIMessage 
 
@@ -130,7 +135,7 @@ Action result: 🕒  Waiting for 5 seconds
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 5: Başka bir yöntem dene
+Action result: 🖱️  Clicked button with index 129:
 
  AIMessage 
 
@@ -139,7 +144,7 @@ Action result: 🖱️  Clicked button with index 5: Başka bir yöntem dene
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 3:
+Action result: 🖱️  Clicked button with index 53: M
 
  AIMessage 
 
@@ -148,7 +153,7 @@ Action result: 🖱️  Clicked button with index 3:
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 3: Sonraki
+Action result: 🖱️  Clicked button with index 7: Anladım
 
  AIMessage 
 
@@ -157,44 +162,237 @@ Action result: 🖱️  Clicked button with index 3: Sonraki
 
 
  HumanMessage 
-Action error: Error executing action click_element: Element with index 3 does not exist - retry or use alternative actions
+Action result: 🖱️  Clicked button with index 61: Sepete Ekle
+Sepete Eklendi
 
  HumanMessage 
 [Task history memory ends]
 [Current state starts here]
 The following is one-time information - if you need to remember it write it to memory:
-Current url: https://accounts.google.com/v3/signin/challenge/recaptcha?TL=ADBLaQD8H9euPLtX6E3iOLTTplsLARexffdriLz0i_1KT10cBL_BXDmtMvHtmOT4&checkConnection=youtube%3A106&checkedDomains=youtube&cid=1&continue=https%3A%2F%2Fwww.google.com%2F&dsh=S1345342029%3A1742892737622528&ec=futura_ctr_og_so_72776761_p&flowEntry=ServiceLogin&flowName=GlifWebSignIn&hl=tr&ifkv=AXH0vVvziNCMTIw6todLCw-h5ywS6eGYTO_rvIDXbxDfN1-LYtLqfIkdIJxgMh-ojrjoYzx8qpOQiw&pstMsg=1
+Current url: https://www.trendyol.com/benisengiydir/kadin-beyaz-cift-kurdele-baskili-bisiklet-yaka-tshirt-p-899173230?merchantId=445411&boutiqueId=61&v=m
 Available tabs:
-[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://accounts.google.com/v3/signin/challenge/recaptcha?TL=ADBLaQD8H9euPLtX6E3iOLTTplsLARexffdriLz0i_1KT10cBL_BXDmtMvHtmOT4&checkConnection=youtube%3A106&checkedDomains=youtube&cid=1&continue=https%3A%2F%2Fwww.google.com%2F&dsh=S1345342029%3A1742892737622528&ec=futura_ctr_og_so_72776761_p&flowEntry=ServiceLogin&flowName=GlifWebSignIn&hl=tr&ifkv=AXH0vVvziNCMTIw6todLCw-h5ywS6eGYTO_rvIDXbxDfN1-LYtLqfIkdIJxgMh-ojrjoYzx8qpOQiw&pstMsg=1', title='Oturum açın - Google Hesapları')]
+[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://www.trendyol.com/sr?q=tshirt&qt=tshirt&st=tshirt&os=1', title='tshirt Modelleri, Fiyatları - Trendyol'), TabInfo(page_id=2, url='https://www.trendyol.com/benisengiydir/kadin-beyaz-cift-kurdele-baskili-bisiklet-yaka-tshirt-p-899173230?merchantId=445411&boutiqueId=61&v=m', title='Kadın Beyaz Çift Kurdele Baskılı Bisiklet Yaka Tshirt Benisengiydir | Trendyol')]
 Interactive elements from top layer of the current page inside the viewport:
-[Start of page]
-Kimliğinizi doğrulayın
-Google, hesabınızın güvenliğini korumak için oturum açmaya çalışan kişinin gerçekten siz olduğunuzdan emin olmak istiyor
-Daha fazla bilgi
-test@example.com
-Bir robot olmadığınızı doğrulayın
-Sonraki
-Başka bir yöntem dene
-Türkçe
-Yardım
-Gizlilik
-Şartlar
-Kimliğinizi doğrulayın Google, hesabınızın güvenliğini korumak için oturum açmaya çalışan kişinin gerçekten siz olduğunuzdan emin olmak istiyor Daha fazla bilgi
-[End of page]
-Current step: 9/100Current date and time: 2025-03-25 11:52
+... 52 pixels above - scroll or extract content to see more ...
+[0]<a İndirim Kuponlarım/>
+[1]<a Trendyol'da Satış Yap/>
+[2]<a Hakkımızda/>
+[3]<a Yardım & Destek/>
+[4]<a trendyol/>
+[5]<img />
+[6]<div />
+[7]<input text;Aradığınız ürün, kategori veya markayı yazınız/>
+[8]<i />
+[9]<div Giriş Yap/>
+[10]<a Favorilerim/>
+[11]<a Sepetim
+1/>
+[12]<div TÜM KATEGORİLER
+Yeni/>
+[13]<a Kadın/>
+[14]<a Erkek/>
+[15]<a Anne & Çocuk/>
+[16]<a Ev & Yaşam/>
+[17]<a Süpermarket/>
+[18]<a Kozmetik/>
+[19]<a Ayakkabı & Çanta/>
+[20]<a Elektronik/>
+[21]<a Çok Satanlar
+Yeni/>
+[22]<a Flaş Ürünler
+Yeni/>
+[23]<a Trendyol/>
+[24]<a Kadın/>
+[25]<a Kadın Giyim/>
+[26]<a Kadın T-Shirt/>
+[27]<a Benisengiydir Kadın T-Shirt/>
+[28]<div Benzer Ürünleri Keşfet
+Benisengiydir
+Kadın Beyaz Çift Kurdele Baskılı Bisiklet Yaka Tshirt
+Etek
+Hızlı Teslimat/>
+[29]<span />
+[30]<span />
+[31]<div />
+[32]<img />
+[33]<img />
+[34]<div Ürünleri İncele/>
+[35]<img />
+[36]<img />
+[37]<img />
+[38]<img />
+[39]<div 3
+Kadın
+T-Shirt kategorisinde
+en çok ziyaret edilen 3. ürün/>
+[40]<a Benisengiydir/>
+Kadın Beyaz Çift Kurdele Baskılı Bisiklet Yaka Tshirt
+3.9
+[41]<div />
+[42]<a 16
+Değerlendirme/>
+[43]<img />
+[44]<a 30
+Soru & Cevap/>
+2005 kişinin
+sepetinde, tükenmeden al!
+[45]<img />
+Sevilen ürün!
+9922 kişi
+favoriledi!
+Popüler ürün! Son 24 saatte
+9923 kişi
+görüntüledi!
+2005 kişinin
+sepetinde, tükenmeden al!
+[46]<div Son 30 Günün En Düşük Fiyatı!
+259,80 TL
+213,20 TL/>
+Renk
+:
+Beyaz
+[47]<a Beyaz>Popüler/>
+[48]<img />
+[49]<a Kahverengi/>
+[50]<img />
+[51]<a Siyah/>
+[52]<img />
+[53]<a Bej/>
+[54]<img />
+Beden
+:
+M
+[55]<span Beden Tablosu/>
+[56]<div S/>
+[57]<div M/>
+[58]<div L/>
+[59]<div XL/>
+[60]<a Şimdi Al/>
+[61]<button Sepete Ekle
+Sepete Eklendi/>
+[62]<div />
+[63]<button />
+13 saat 31 dakika
+içinde sipariş verirsen
+en geç yarın
+kargoda!
+Tahmini Teslim:
+Adresini seç ne zaman teslim edileceğini öğren!
+[64]<div />
+[65]<button Konum Seçin/>
+Ödeme Seçenekleri:
+[66]<img />
+12
+Aya Varan Taksit Fırsatı
+Aylık 22,92 TL'den başlayan 12 aya varan taksit fırsatı
+Kuponlar
+Tükeniyor!
+50 TL
+[67]<div Kazan/>
+Alt Limit
+750 TL
+Son 1 gün
+[68]<a Kuponun Ürünleri/>
+Tükeniyor!
+15 TL
+[69]<div Kazan/>
+Alt Limit
+325 TL
+Son 10 gün
+[70]<a Kuponun Ürünleri/>
+Öne Çıkan Özellikler:
+Bu ürün
+Benisengiydir
+tarafından gönderilecektir.
+Kampanya fiyatından satılmak üzere 100 adetten fazla stok sunulmuştur.
+İncelemiş olduğunuz ürünün satış fiyatını satıcı belirlemektedir.
+Bir ürün, birden fazla satıcı tarafından satılabilir. Birden fazla satıcı tarafından satışa sunulan ürünlerin satıcıları ürün için belirledikleri fiyata, satıcı puanlarına, teslimat statülerine, ürünlerdeki promosyonlara, kargonun bedava olup olmamasına ve ürünlerin hızlı teslimat ile teslim edilip edilememesine, ürünlerin stok ve kategorileri bilgilerine göre sıralanmaktadır.
+Bu üründen en fazla 10 adet sipariş verilebilir. 10 adedin üzerindeki siparişleri Trendyol iptal etme hakkını saklı tutar. Belirlenen bu limit kurumsal siparişlerde geçerli olmayıp, kurumsal siparişler için farklı limitler belirlenebilmektedir.
+15 gün içinde ücretsiz iade.
+Detaylı bilgi için
+[71]<a tıklayın/>
+.
+Kadın Beyaz Çift Kurdele Baskılı Bisiklet Yaka Tshirt
+[72]<a ÜRÜNÜN TÜM ÖZELLİKLERİ/>
+Kupon Fırsatı!
+[73]<button Kazan/>
+ÜRÜNÜN KAMPANYALARI
+[74]<div />
+[75]<a 250 TL ve Üzeri Kargo Bedava (Satıcı Karşılar)/>
+[76]<div />
+[77]<a 550 TL'ye 50 TL İndirim/>
+[78]<a Benisengiydir/>
+8.7
+162,5B
+Takipçi
+[79]<img />
+[80]<div Takip Et Kazan/>
+[81]<a Satıcı Soruları (30)/>
+[82]<div Mağazaya Git/>
+ÖNE ÇIKAN YORUM
+[83]<div />
+[84]<div Bekledimden çok daha iyi geldi gerçeten, kumaşı ve baskı kalitesi çok güzel./>
+[85]<div />
+[86]<div />
+[87]<div />
+[88]<div Z** D**
+26 Mart 2025/>
+[89]<div DAHA FAZLA YORUM/>
+[90]<div Koleksiyona Ekle/>
+[91]<img />
+Benzer Ürünler
+[92]<div />
+[93]<div />
+[94]<button />
+[95]<a />
+[96]<img />
+[97]<button />
+[98]<a />
+[99]<img />
+[100]<button />
+[101]<a />
+[102]<img />
+[103]<button />
+[104]<a />
+[105]<img />
+[106]<button />
+[107]<a />
+[108]<img />
+[109]<button />
+[110]<a />
+[111]<img />
+[112]<button />
+[113]<a />
+[114]<img />
+[115]<button />
+[116]<a />
+[117]<img />
+[118]<button />
+[119]<a />
+[120]<img />
+[121]<button />
+[122]<a />
+[123]<img />
+[124]<button />
+[125]<a />
+[126]<img />
+[127]<button />
+[128]<div />
+[129]<button />
+... 6355 pixels below - scroll or extract content to see more ...
+Current step: 9/100Current date and time: 2025-03-26 10:29
 
  RESPONSE
 {
   "current_state": {
-    "evaluation_previous_goal": "Failed - I am stuck on a captcha page.",
-    "memory": "Starting with the new task. I have completed 2/5 steps",
-    "next_goal": "Solve the captcha."
+    "evaluation_previous_goal": "Success - Added item to cart",
+    "memory": "Starting with the new task. I have completed 7/10 steps",
+    "next_goal": "Verify the item was successfully added by checking for a success message or cart count indicator."
   },
   "action": [
     {
-      "done": {
-        "text": "I was able to open Google homepage, click on the Sign in button, enter a test email address, and click Next. However, I am stuck on a captcha page and unable to proceed further.",
-        "success": false
+      "click_element": {
+        "index": 11
       }
     }
   ]

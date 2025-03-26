@@ -70,7 +70,7 @@ Common action sequences:
 Your responses must be always JSON with the specified format.
 
  HumanMessage 
-Your ultimate task is: """Perform the following case: Verifies image search functionality. Steps:['IMPORTANT INSTRUCTIONS: As a human user interacting with the website, I will:\n    1) Perform each action as naturally as possible, mimicking real user behavior\n    2) If a modal or popup appears, handle every modal\n    3) Ignore any advertisements or promotional content\n    4) Wait for pages to fully load before taking any action\n    5) Use scrolling to find elements that are not immediately visible\n    6) Interact with elements exactly as a human would:\n       - If I need to type, first click on the input field\n       - If a button is not immediately clickable, move the mouse over it, then click\n       - Use tab navigation if needed\n       - Scroll smoothly before interacting with elements\n    7) Take actions deliberately and carefully\n    8) Pause briefly between actions to simulate human timing\n    9) Always verify my actions have the expected result before proceeding', 'Open Google homepage. Click on "Images" link in the navigation. Verify you are on the Google Images page. Type "mountain landscape" in the search box. Press Enter or click the search button. Verify image results titles are relevant. Consider the first images that presents on the google search doesnt have a content on their alt tag. They are just category indicators.']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
+Your ultimate task is: """Perform the following case: Adds items to cart and verifies checkout flow. Steps:['IMPORTANT INSTRUCTIONS: As a human user interacting with the website, I will:\n    1) Perform each action as naturally as possible, mimicking real user behavior\n    2) If a modal or popup appears, handle every modal\n    3) Ignore any advertisements or promotional content\n    4) Wait for pages to fully load before taking any action\n    5) Use scrolling to find elements that are not immediately visible\n    6) Interact with elements exactly as a human would:\n       - If I need to type, first click on the input field\n       - If a button is not immediately clickable, move the mouse over it, then click\n       - Use tab navigation if needed\n       - Scroll smoothly before interacting with elements\n    7) Take actions deliberately and carefully\n    8) Pause briefly between actions to simulate human timing\n    9) Always verify my actions have the expected result before proceeding', 'Close the gender selection modal if present by clicking the X button or using ESC key. Modal do not present every time only in initial executions. If there is no modal proceed the next step.', "Search for 'tshirt' by typing in the search box and pressing Enter.", 'Verify search results appear by confirming product listings are visible.', 'Select a product by clicking on any item from the search results.', 'If a size selection is presented, select an available size. If there are color options as well, select both color and size options that are available.', "Click the 'Sepete Ekle' (Add to Cart) button and wait for confirmation.", 'Verify the item was successfully added by checking for a success message or cart count indicator.', "Click on the cart icon or 'Sepetim' button to proceed to checkout.", 'On the cart page, verify the product details and total amount are displayed correctly.']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
 
  HumanMessage 
 Example output:
@@ -85,7 +85,7 @@ Browser started
 [Your task history memory starts here]
 
  HumanMessage 
-Action result: 🔗  Opened new tab with https://www.google.com
+Action result: 🔗  Opened new tab with https://www.trendyol.com
 
  AIMessage 
 
@@ -94,7 +94,7 @@ Action result: 🔗  Opened new tab with https://www.google.com
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 1: Görseller
+Action result: 🖱️  Clicked button with index 0:
 
  AIMessage 
 
@@ -103,7 +103,7 @@ Action result: 🖱️  Clicked button with index 1: Görseller
 
 
  HumanMessage 
-Action result: ⌨️  Input mountain landscape into index 3
+Action result: ⌨️  Input tshirt into index 7
 
  AIMessage 
 
@@ -112,220 +112,420 @@ Action result: ⌨️  Input mountain landscape into index 3
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 20:
+Action result: ⌨️  Sent keys:
 
  HumanMessage 
 [Task history memory ends]
 [Current state starts here]
 The following is one-time information - if you need to remember it write it to memory:
-Current url: https://www.google.com/search?q=mountain+landscape&sca_esv=4b72b19f7242e570&hl=tr&source=hp&biw=1280&bih=1100&ei=DpPiZ8OcO6CFxc8Pgsj0sQs&iflsig=ACkRmUkAAAAAZ-KhHscWK4SccpUrmpbX7ONBZzFBStNW&ved=0ahUKEwjD27yDkKWMAxWgQvEDHQIkPbYQ4dUDCA0&oq=mountain+landscape&gs_lp=EgNpbWciEm1vdW50YWluIGxhbmRzY2FwZTIFEAAYgAQyBBAAGB4yBBAAGB4yBBAAGB4yBBAAGB4yBhAAGAoYHjIGEAAYChgeMgQQABgeMgQQABgeMgYQABgKGB5IixFQAFgAcAB4AJABAJgBdaABdaoBAzAuMbgBDMgBAPgBAYoCC2d3cy13aXotaW1nmAIBoAJ5mAMAkgcDMC4xoAfIBbIHAzAuMbgHeQ&sclient=img&udm=2
+Current url: https://www.trendyol.com/sr?q=tshirt&qt=tshirt&st=tshirt&os=1
 Available tabs:
-[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://www.google.com/search?q=mountain+landscape&sca_esv=4b72b19f7242e570&hl=tr&source=hp&biw=1280&bih=1100&ei=DpPiZ8OcO6CFxc8Pgsj0sQs&iflsig=ACkRmUkAAAAAZ-KhHscWK4SccpUrmpbX7ONBZzFBStNW&ved=0ahUKEwjD27yDkKWMAxWgQvEDHQIkPbYQ4dUDCA0&oq=mountain+landscape&gs_lp=EgNpbWciEm1vdW50YWluIGxhbmRzY2FwZTIFEAAYgAQyBBAAGB4yBBAAGB4yBBAAGB4yBBAAGB4yBhAAGAoYHjIGEAAYChgeMgQQABgeMgQQABgeMgYQABgKGB5IixFQAFgAcAB4AJABAJgBdaABdaoBAzAuMbgBDMgBAPgBAYoCC2d3cy13aXotaW1nmAIBoAJ5mAMAkgcDMC4xoAfIBbIHAzAuMbgHeQ&sclient=img&udm=2', title="mountain landscape - Google'da Ara")]
+[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://www.trendyol.com/sr?q=tshirt&qt=tshirt&st=tshirt&os=1', title='tshirt Modelleri, Fiyatları - Trendyol')]
 Interactive elements from top layer of the current page inside the viewport:
 [Start of page]
-Erişilebilirlik Bağlantıları
-Ana içeriğe geç
-Sürekli kaydırmayı kapat
-Erişilebilirlik yardımı
-Erişilebilirlikle ilgili geri bildirim
-[0]<a Google Anasayfası'na Git/>
-[1]<textarea ;q;false;Ara;combobox>mountain landscape/>
-[2]<div Temizle;button/>
-[3]<div Harf çevirme aracı;button/>
-[4]<div Sesle arama yapın;button/>
-[5]<div Görselle arama;button/>
-[6]<button submit;Ara/>
-[7]<div Ayarlar;button>Hızlı Ayarlar/>
-[8]<a Google uygulamaları;false;button/>
-[9]<a Oturum açın/>
-Filtreler ve Konular
-[10]<a link>Tümü/>
-[11]<a link>Görseller/>
-[12]<a link>Alışveriş/>
-[13]<a link>Videolar/>
-[14]<a link>Haberler/>
-[15]<a link>Kitaplar/>
-[16]<a link>Uçuş Arama/>
-[17]<div false;button>Daha fazla/>
-[18]<div false;button>Araçlar/>
-[19]<a Photography ekle;link>Photography/>
-[20]<a link;Beautiful scenery ekle>Beautiful scenery/>
-[21]<a link;Mountain river ekle>Mountain river/>
-[22]<a link;Beautiful view ekle>Beautiful view/>
-[23]<a link;Sunset ekle>Sunset/>
-[24]<a Beautiful nature ekle;link>Beautiful nature/>
-[25]<a link;Lake ekle>Lake/>
-Landscape painting
-[26]<a link;Wallpaper ekle>Wallpaper/>
-[27]<img />
-[28]<a link;Manzara ekle>Manzara/>
-[29]<img />
-[30]<button />
-Arama Sonuçları
-[31]<a />
-[32]<div button/>
-[33]<img />
-[34]<a iStock
-7,804,900+ Mountain Landscape Stock Photos, Pictures & Royalty-Free Images  - iStock | Mountain, Mountain peak, Mountain range/>
-[35]<img />
-[36]<a />
-[37]<div button/>
-[38]<img />
-[39]<a iStock
-7,804,900+ Mountain Landscape Stock Photos, Pictures & Royalty-Free Images  - iStock | Mountain, Mountain peak, Mountain range/>
-[40]<img />
-[41]<a />
-[42]<div button/>
-[43]<img />
-[44]<a Pexels
-Mountain Landscape with Forests and a Stream · Free Stock Photo/>
-[45]<img />
-[46]<a />
-[47]<div button/>
-[48]<img />
-[49]<a Chrome Web Store - Google
-Mountain Landscape - Chrome Web Mağazası/>
-[50]<img />
-[51]<a />
-[52]<div button/>
-[53]<img />
-[54]<a iStock
-Mountain Landscape Stok Fotoğraflar & Manzara'nin Daha Fazla Resimleri -  Manzara, Dağ, Güneş batışı - iStock/>
-[55]<img />
-[56]<a />
-[57]<div button/>
-[58]<img />
-[59]<a Dreamstime.com
-6,481,352 Mountain Landscape Stock Photos - Free & Royalty-Free Stock  Photos from Dreamstime/>
-[60]<img />
-[61]<a />
-[62]<div button/>
-[63]<img />
-[64]<a Posters
-Stunning landscape of a serene mountain lake at sunrise,with the  calm,reflective waters mirroring the snow-capped peaks and lush pine  forests surrounding the tranquil scene, Downloads Wall Mural | Buy online  at UKposters/>
-[65]<img />
-[66]<a />
-[67]<div button/>
-[68]<img />
-[69]<a Pexels
-Winter Scenic Mountain Landscape · Free Stock Photo/>
-[70]<img />
-[71]<a />
-[72]<div button/>
+[0]<a İndirim Kuponlarım/>
+[1]<a Trendyol'da Satış Yap/>
+[2]<a Hakkımızda/>
+[3]<a Yardım & Destek/>
+[4]<a trendyol/>
+[5]<img />
+Giriş Yap
+[6]<a Favorilerim/>
+[7]<a Sepetim
+0/>
+TÜM KATEGORİLER
+Tüm Kategoriler
+[8]<div grid/>
+[9]<a T-Shirt/>
+[10]<a Büyük Beden T-shirt/>
+[11]<a Spor T-shirt/>
+[12]<a Hamile T-Shirt/>
+[13]<a Tesettür T-Shirt/>
+Marka
+[14]<input text;Marka ara/>
+[15]<div grid>Jack & Jones
+LC Waikiki
+adidas
+Lufian
+Avva
+Calvin Klein
+Nike
+Tommy Hilfiger
+Puma
+Levi's
+Lacoste
+Colin’s
+Addax
+Ltb
+AC&Co / Altınyıldız Classics
+hummel
+Z zepplin
+Angemiel
+Pisa Art
+Lord T-Shirt
+Fizello
+Presmono
+BENROMA
+fame-stoned
+Alfa Tshirt/>
+[16]<a Mavi/>
+[17]<a Pull & Bear/>
+[18]<a Bershka/>
+[19]<a Defacto/>
+[20]<a Koton/>
+[21]<a U.S. Polo Assn./>
+[22]<a Stradivarius/>
+[23]<a MANGO/>
+[24]<a Darkia/>
+[25]<a FANBOX SHOP/>
+[26]<a Kio Tasarım/>
+[27]<a JDM/>
+[28]<a Tshirthane/>
+[29]<a Mounte Bianca/>
+[30]<a Toontoy/>
+[31]<a NEWSHİNE/>
+[32]<a remonz/>
+[33]<a ADABEBEK/>
+[34]<a Mayoral/>
+[35]<a uyguntarz/>
+[36]<a Madmext/>
+[37]<a Jose Clothing/>
+[38]<a MokaShopin/>
+[39]<a Loft/>
+[40]<a TOMMY LIFE/>
+[41]<a Lumberjack/>
+[42]<a Bad Bear/>
+[43]<a United Colors of Benetton/>
+[44]<a karikatürstore/>
+[45]<a Guess/>
+[46]<a Modayakamoz/>
+Beden
+[47]<input text;Beden ara/>
+[48]<div grid>4XL
+5XL
+6XL
+7XL
+S-M
+M-L
+L-XL
+XL-2XL
+1-2 Yaş
+3-4 Yaş
+4 Yaş
+4-5 Yaş
+5 Yaş/>
+[49]<a 2XS/>
+[50]<a XS/>
+[51]<a S/>
+[52]<a M/>
+[53]<a L/>
+[54]<a XL/>
+[55]<a 2XL/>
+[56]<a 3XL/>
+[57]<a 5-6 Yaş/>
+[58]<a 6 Yaş/>
+[59]<a 6-7 Yaş/>
+[60]<a 7 Yaş/>
+[61]<a 7-8 Yaş/>
+[62]<a 8 Yaş/>
+[63]<a 8-9 Yaş/>
+[64]<a 9 Yaş/>
+[65]<a 9-10 Yaş/>
+[66]<a 10 Yaş/>
+[67]<a 10-11 Yaş/>
+[68]<a 11-12 Yaş/>
+[69]<a 12 Yaş/>
+[70]<a 12-13 Yaş/>
+[71]<a 13-14 Yaş/>
+Avantajlı Ürünler
+Cinsiyet
+Renk
+Kalıp
+Yaka Tipi
+Fiyat
+Materyal
+Kol Boyu
+Desen
+Kol Tipi
+Boy
+Paket İçeriği
+Ortam
+Kumaş Tipi
+Siluet
+Sezon
+Materyal Bileşeni
+[72]<a />
 [73]<img />
-[74]<a Unsplash
-500+ Stunning Mountain Landscape Pictures | Download Free Images on Unsplash/>
-[75]<img />
-[76]<a />
-[77]<div button/>
-[78]<img />
-[79]<a Vecteezy
-Mountain Landscape Stock Photos, Images and Backgrounds for Free Download/>
-[80]<img />
-[81]<a />
-[82]<div button/>
+[74]<a Madmext/>
+9.1
+[75]<a Mağazaya Git/>
+Sponsorlu
+[76]<a Madmext
+Siyah Polo Yaka Erkek Tişört 9281
+421,99
+TL/>
+[77]<img />
+[78]<a Madmext
+Erkek Beyaz Tişört 5684
+387,99
+TL/>
+[79]<img />
+[80]<a Madmext
+Beyaz Polo Yaka Erkek Tişört 9281
+424,99
+TL/>
+[81]<img />
+[82]<a Madmext
+Erkek Slim Fit Tişört 4951 Beyaz
+199,99
+TL/>
 [83]<img />
-[84]<a Public Domain Pictures
-Mountain Landscape Free Stock Photo - Public Domain Pictures/>
+[84]<a Hızlı Teslimat
+En Çok Ziyaret Edilen 3. Ürün/>
 [85]<img />
-[86]<a />
-[87]<div button/>
+[86]<a Benisengiydir
+Kadın Beyaz
+Çift Kurdele Baskılı Bisiklet Yaka Tshirt
+Son 3 günde
+250+ ürün
+satıldı!
+9922 kişi
+favoriledi!
+24 saatte
+9923 kişi
+inceledi!
+3 günde
+2005 kişi
+ekledi!
+Son 3 günde
+250+ ürün
+satıldı!
+3.9
+(
+16
+)/>
+[87]<img />
 [88]<img />
-[89]<a Pixers
-·
-Stokta
-Sticker Mountain landscape - PIXERS.US/>
+Son 30 Günün En Düşük Fiyatı!
+259,80
+TL
+213,20
+TL
+[89]<a Kupon Fırsatı
+Çok Al Az Öde/>
 [90]<img />
-[91]<a />
-[92]<div button/>
+[91]<img />
+[92]<a En Çok Satan 1. Ürün/>
 [93]<img />
-[94]<a PhotoPXL
-Western Mountain Landscape Photography – PhotoPXL/>
+[94]<a CLAYES
+Leisure Future Parçalı
+Süprem T-Shirt - Lacivert Beyaz Oversize Bisiklet Yaka Kısa Kol Tişört
+Son 3 günde
+1500+ ürün
+satıldı!
+103B kişi
+favoriledi!
+24 saatte
+8623 kişi
+inceledi!
+3 günde
+16883 kişi
+ekledi!
+Son 3 günde
+1500+ ürün
+satıldı!
+4.1
+(
+872
+)/>
 [95]<img />
-[96]<a />
-[97]<div button/>
+[96]<img />
+169,10
+TL
+[97]<a Kupon Fırsatı
+3 Adede %5/>
 [98]<img />
-[99]<a Photowall
-·
-Stokta
-Azores Mountain Landscape - Affordable Poster - Photowall/>
-[100]<img />
-[101]<a />
-[102]<div button/>
+[99]<img />
+[100]<a Kargo Bedava/>
+[101]<a Setre
+Lacivert Yaka Ve Çizgi
+Detaylı T-Shirt
+366 kişi
+favoriledi!
+366 kişi
+favoriledi!
+4.0
+(
+1
+)/>
+[102]<img />
 [103]<img />
-[104]<a Pexels
-Mountain Landscape Photos, Download The BEST Free Mountain Landscape Stock  Photos & HD Images/>
+900 TL'ye %10 İndirim
+Sepette
+1.349,10
+TL
+1.499
+TL
+[104]<a Başarılı Satıcı
+50 TL Kupon/>
 [105]<img />
-[106]<a />
-[107]<div button/>
+[106]<img />
+[107]<a Kargo Bedava
+En Çok Değerlendirilen 1. Ürün/>
 [108]<img />
-[109]<a StockCake
-Free Mountainous River Landscape Image | Download at StockCake/>
+[109]<a Mavi
+Miav Baskılı Beyaz
+Tişört Regular Fit / Normal Kesim 1610622-620
+Son 3 günde
+500+ ürün
+satıldı!
+406B kişi
+favoriledi!
+24 saatte
+8775 kişi
+inceledi!
+3 günde
+7660 kişi
+ekledi!
+Son 3 günde
+500+ ürün
+satıldı!
+4.7
+(
+15537
+)/>
 [110]<img />
-[111]<a />
-[112]<div button/>
+[111]<img />
+319
+TL
+[112]<a />
 [113]<img />
-[114]<a Unsplash
-500+ Stunning Mountain Landscape Pictures | Download Free Images on Unsplash/>
+En Çok Ziyaret Edilen 1. Ürün
+[114]<a Bershka
+Kısa kollu bisiklet
+yaka t-shirt
+Son 3 günde
+1000+ ürün
+satıldı!
+115B kişi
+favoriledi!
+24 saatte
+13349 kişi
+inceledi!
+3 günde
+18619 kişi
+ekledi!
+Son 3 günde
+1000+ ürün
+satıldı!
+4.5
+(
+612
+)/>
 [115]<img />
-[116]<a />
-[117]<div button/>
+[116]<img />
+[117]<img />
 [118]<img />
-[119]<a Hundredrooms
-The most beautiful mountain landscapes in the world – Hundredrooms.co.uk/>
+[119]<img />
 [120]<img />
-[121]<a />
-[122]<div button/>
+340
+TL
+[121]<a 2 Adede %5/>
+[122]<img />
 [123]<img />
-[124]<a Vecteezy
-Grass Mountain Landscape Stock Photos, Images and Backgrounds for Free  Download/>
-[125]<img />
-[126]<a />
-[127]<div button/>
+[124]<a Medinenur
+CHERRY BASKILI
+BASİC T-SHİRT/>
+Son 14 Günün En Düşük Fiyatı!
+149,90
+TL
+[125]<a Kupon Fırsatı
+2. Ürün %5/>
+[126]<img />
+[127]<img />
 [128]<img />
-[129]<a Samuel Earp
-How to Paint a Mountain Landscape - A Step by Step Guide/>
+En Çok Ziyaret Edilen 4. Ürün
+[129]<a Sweetline
+Fantastıc Süprem
+T-Shirt - Lacivert Baskılı Oversize Bisiklet Yaka Tişört
+Son 3 günde
+500+ ürün
+satıldı!
+66.2B kişi
+favoriledi!
+24 saatte
+4265 kişi
+inceledi!
+3 günde
+6525 kişi
+ekledi!
+Son 3 günde
+500+ ürün
+satıldı!
+4.3
+(
+858
+)/>
 [130]<img />
-[131]<a />
-[132]<div button/>
+[131]<img />
+[132]<img />
 [133]<img />
-[134]<a integran.co.jp
-Mountain Landscape with Mountains Graphic by saydurf/>
+[134]<img />
 [135]<img />
-[136]<a />
-[137]<div button/>
+149,90
+TL
+[136]<a Kupon Fırsatı
+2 Adede %8/>
+[137]<img />
 [138]<img />
-[139]<a />
-[140]<div button/>
+[139]<a Medinenur
+LEOPAR DESENLİ
+KURDELE DETAYLI BASİC T-SHİRT
+Son 3 günde
+100+ ürün
+satıldı!
+1479 kişi
+favoriledi!
+Son 3 günde
+100+ ürün
+satıldı!
+5.0
+(
+1
+)/>
+[140]<img />
 [141]<img />
-[142]<a />
-[143]<div button/>
+[142]<img />
+Son 14 Günün En Düşük Fiyatı!
+149,90
+TL
+[143]<a Kupon Fırsatı
+2. Ürün %5/>
 [144]<img />
-İlgili aramalar
-[145]<a nature
-mountain landscape/>
-[146]<img />
-[147]<a nature
-landscape/>
+[145]<img />
+[146]<a />
+[147]<img />
 [148]<img />
-[149]<a />
-[150]<div button/>
-[151]<img />
-... 5146 pixels below - scroll or extract content to see more ...
-Current step: 4/100Current date and time: 2025-03-25 14:27
+[149]<a Hızlı Teslimat/>
+[150]<img />
+[151]<a />
+[152]<img />
+[153]<a Hızlı Teslimat/>
+[154]<img />
+... 4127 pixels below - scroll or extract content to see more ...
+Current step: 4/100Current date and time: 2025-03-26 10:29
 
  RESPONSE
 {
   "current_state": {
-    "evaluation_previous_goal": "Success - Pressed Enter or clicked the search button.",
-    "memory": "Starting with the new task. I have completed 4/6 steps",
-    "next_goal": "Verify image results titles are relevant."
+    "evaluation_previous_goal": "Success - Pressed enter in search box",
+    "memory": "Starting with the new task. I have completed 3/10 steps",
+    "next_goal": "Verify search results appear by confirming product listings are visible."
   },
   "action": [
     {
-      "done": {
-        "text": "Verified image results titles are relevant to \"mountain landscape\". The first images that presents on the google search doesnt have a content on their alt tag. They are just category indicators.",
-        "success": true
+      "extract_content": {
+        "goal": "Verify search results appear by confirming product listings are visible."
       }
     }
   ]
