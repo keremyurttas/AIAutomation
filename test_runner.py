@@ -27,7 +27,7 @@ async def run_test_and_generate_code(test_case):
     with open(json_file_path, "w", encoding="utf-8") as json_file:
         json.dump(formatted_output, json_file, indent=4, ensure_ascii=False, default=str)  # Convert unknown objects to strings
 
-    print(f"{test_case.name}.json file successfully written in {results_dir}/.")
+    print(f"{test_case.name}.json file successfully written in {results_dir}.")
 
     # Generate Java code using the same agent instance (which has the current_test_case set)
     try:

@@ -59,12 +59,12 @@ class JavaCodeGenerator:
 
             # Generate Java code (Assuming you have an LLM function that processes the prompt)
             java_test_code = self.generate_code_from_data(prompt,test_case)
-
+            generated_codes_dir='generated_codes'
             if isinstance(java_test_code, str) and java_test_code:
                 formatted_name = "".join(word.capitalize() for word in test_case.name.split()) + ".java"
-
+                os.makedirs(generated_codes_dir, exist_ok=True)
                 # Save the generated Java test file
-                with open(f"generated_codes/{formatted_name}", "w", encoding='utf-8') as test_file:
+                with open(f"{generated_codes_dir}/{formatted_name}", "w", encoding='utf-8') as test_file:
                     test_file.write(java_test_code)
 
                 print(f"Java test generated successfully and saved to generated_codes/{formatted_name}")
