@@ -1,13 +1,14 @@
 import asyncio
 from ai_agent import AI_TestAgent
 from browser_actions import controller
-from test_cases.test_cases import GOOGLE_TEST_CASES
+from test_cases.test_cases import test_cases_list
 from result_validator import validate_result
 import json
 import os
 
 async def run_test_and_generate_code(test_case):
     """Run a single test, save results in the results folder, and generate Java code"""
+    print(f"current test case is{test_case}")
     agent = AI_TestAgent(controller)
     
     # Run the test
@@ -18,7 +19,7 @@ async def run_test_and_generate_code(test_case):
     print(actual_result.action_names())
 
     # Ensure the "results" folder exists
-    results_dir = "case_actions"
+    results_dir = "results"
     os.makedirs(results_dir, exist_ok=True)
     
     json_file_path = os.path.join(results_dir, f"{test_case.name}.json")
@@ -27,7 +28,7 @@ async def run_test_and_generate_code(test_case):
     with open(json_file_path, "w", encoding="utf-8") as json_file:
         json.dump(formatted_output, json_file, indent=4, ensure_ascii=False, default=str)  # Convert unknown objects to strings
 
-    print(f"{test_case.name}.json file successfully written in {results_dir}.")
+    print(f"{test_case.name}.json file successfully written in {results_dir}/.")
 
     # Generate Java code using the same agent instance (which has the current_test_case set)
     try:
@@ -40,7 +41,7 @@ async def run_test_and_generate_code(test_case):
 
 async def run_tests():
     """Run tests concurrently"""
-    tasks = [run_test_and_generate_code(test) for test in GOOGLE_TEST_CASES]
+    tasks = [run_test_and_generate_code(test) for test in test_cases_list[:3]]
     results = await asyncio.gather(*tasks)
     
     print("\nAll tests executed. Here are the results:\n")

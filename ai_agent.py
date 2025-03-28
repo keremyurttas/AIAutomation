@@ -4,7 +4,6 @@ from browser_use import Agent, Controller
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 from pydantic import SecretStr
-from test_cases.test_cases import initial_actions
 from java_code_generator import JavaCodeGenerator
 
 load_dotenv()
@@ -58,7 +57,7 @@ class AI_TestAgent:
         self.current_test_case = test_case
         
         task = f"Perform the following case: {test_case.description}. Steps:{test_case.steps}"    
-        agent = Agent(task, self.llm, controller=self.controller, use_vision=True, initial_actions=initial_actions, save_conversation_path='logs/conversation')
+        agent = Agent(task, self.llm, controller=self.controller, use_vision=True, save_conversation_path='logs/conversation')
         history = await agent.run()
         
         return history
