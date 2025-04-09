@@ -11,8 +11,11 @@ class TestCase(BaseModel):
 with open("test_cases.json", "r", encoding="utf-8") as file:
     data = json.load(file)
 
-# Parse JSON into Pydantic models
-test_cases_list = [TestCase(**item) for item in data]    
+def load_test_cases(filename: str = "test_cases.json") -> List[TestCase]:
+    """Load test cases from a JSON file dynamically."""
+    with open(filename, "r", encoding="utf-8") as file:
+        data = json.load(file)
+    return [TestCase(**item) for item in data]
 # initial_actions=[
 #     {'open_tab': {'url': 'https://www.google.com'}}
 # ]

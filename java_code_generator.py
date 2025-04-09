@@ -59,6 +59,7 @@ class JavaCodeGenerator:
 
             # Generate Java code (Assuming you have an LLM function that processes the prompt)
             java_test_code = self.generate_code_from_data(prompt,test_case)
+            print(f"java test code is{java_test_code}")
             generated_codes_dir='generated_codes'
             if isinstance(java_test_code, str) and java_test_code:
                 formatted_name = "".join(word.capitalize() for word in test_case.name.split()) + ".java"
@@ -100,12 +101,13 @@ class JavaCodeGenerator:
         )
         
         # Enhanced prompt with more detailed element handling and screenshot capture
-        prompt = f"""
+        promptWCustomMethods = f"""
     Generate a single complete Java file named `{formatted_class_name}.java` implementing a Selenium TestNG test based on this JSON test data:
 
     {json.dumps(test_data, indent=4, ensure_ascii=False)}
     ## Important Instructions:
     ### ⚠ Mandatory Usage of Utility Methods
+    Do not add any explanation, just give me the java code
     Instead of 'element.click' always use clickWebElementForTpath(By locator)
     Instead of 'element.sendKeys(value)' always use sendKeysElementTPath(By locator, boolean clearInput, String value)
     
@@ -119,82 +121,247 @@ class JavaCodeGenerator:
     
     DO NOT use element.click() or element.sendKeys() directly. Instead, replace them with the corresponding method calls from SmaClickUtilities and SmaSendKeyUtilites.
 
-    Requirements:
-    1. Comprehensive Element Locator Methods:
-    - Create multiple specialized element locator methods:
-        a) findElementById(String id)
-        b) findElementByName(String name)
-        c) findElementByCssSelector(String cssSelector)
-        d) findElementByXpath(String xpath)
-        e) findElementByLinkText(String linkText)
-        f) findElementByPartialLinkText(String partialLinkText)
+    1. Smart & Reliable Element Locator Methods:
+   - Create a dedicated ElementFinder utility class with specialized locator methods following this priority:
+     a) findElementById(String id)
+     b) findElementByXpath(String xpath)
+     c) findElementByCssSelector(String cssSelector)
+     d) findElementByName(String name)
+     e) findElementByLinkText(String linkText)
+     f) findElementByPartialLinkText(String partialLinkText)
+     g) findElementByCustomStrategy(Map<String, String> attributes)
 
-    Each method should:
-    - Log the locator strategy being used
-    - Implement explicit waits with detailed logging
-    - Include error handling with specific exception messages
-    - Return the WebElement if found
-    - Throw a custom, informative exception if element not found
+   Each method must:
+   - Use WebDriverWait with custom timeout + ExpectedConditions
+   - Log the locator strategy with clear identification
+   - Implement smart selector fallback (try id first, then name, etc.)
+   - Return WebElement if found, with highlighted element in screenshots
+   - Throw ElementNotFoundException with detailed context if not found
+   - Include JavaScript fallback execution capabilities
+   - Handle all common exceptions (StaleElementReferenceException, etc.)
 
-    2. Screenshot Capture Methods:
-    - Create methods to capture screenshots at different stages:
-        a) captureScreenshotOnStep(String stepName)
-        b) captureScreenshotOnFailure(String methodName)
-        c) captureFullPageScreenshot()
+2. Comprehensive Screenshot System:
+   - Implement methods:
+     * captureScreenshotOnStep(String stepName)
+     * captureScreenshotOnFailure(String methodName, Throwable error)
+     * captureFullPageScreenshot()
+     * captureElementScreenshot(WebElement element, String elementName)
+   
+   Features:
+   - Structured folders by test class/date/run
+   - Unique filenames with timestamp + test context
+   - Automatic directory creation and cleanup
+   - Screenshot inclusion in test reports
+   - Option to highlight interacted elements
 
-    Each screenshot method should:
-    - Generate unique filename with timestamp
-    - Include step or failure context in filename
-    - Log the screenshot location
-    - Create a screenshots directory if it doesn't exist
+3. Advanced WebDriver Configuration:
+   - WebDriverManager with browser version control
+   - Cross-browser support (Chrome, Firefox, Edge)
+   - Custom ChromeOptions/FirefoxOptions for performance
+   - Window size presets (desktop, mobile, tablet)
+   - Network throttling simulation
+   - Cookie and cache management between tests
+   - User-agent configuration
+   - Network request monitoring
+   - Manual captcha intervention handling with wait
 
-    3. Enhanced Browser and Test Setup:
-    - Use WebDriverManager for Chrome initialization
-    - Set browser window size to 1920x1080
-    - Clear cookies before test
-    - Implement comprehensive logging
-    - Create a method to log each test step with timestamp
+4. Comprehensive Modal & Overlay Handling:
+   - Multi-strategy popup dismissal:
+     * Close button detection by common attributes
+     * Escape key simulation
+     * Overlay click-away detection
+     * Wait for animation completion
+   - Shadow DOM penetration capabilities
+   - iFrame context switching automation
+   - Cookie consent handler
 
-    These methods should:
-    - Log the action being performed
-    - Use JavaScript click/scroll as fallback
-    - Handle StaleElementReferenceException
-    - Capture screenshot after successful interaction
+5. Enterprise-Grade Resilience:
+   - Custom TestNG RetryAnalyzer with configurable attempts
+   - Circuit breaker pattern for repetitive failures
+   - Conditional waits with progressive timeouts
+   - Element staleness detection and refresh
+   - DOM mutation observation for dynamic content
+   - Network instability compensation
 
-    5. Modal and Overlay Handling:
-    - Create comprehensive modal dismissal methods
-    - Log modal interaction details
-    - Capture screenshot after modal dismissal
-    - Implement multiple strategies for modal closure
+6. Advanced Logging & Reporting:
+   - SLF4J with custom MDC context
+   - Structured JSON logging for machine parsing
+   - Test context enrichment in logs
+   - Visual execution timeline
+   - Element interaction history
+   - HTTP request/response capture
 
-    6. Error Handling and Logging:
-    - Implement detailed logging for every action
-    - Use java.util.logging or SLF4J
-    - Log method entry, exit, and any exceptions
-    - Create a custom logger method that:
-        * Logs to console
-        * Optionally writes to a log file
-        * Includes timestamp and context
+7. Enhanced Page Object Architecture:
+   - BasePage with common interactions
+   - Fluent interface pattern (method chaining)
+   - Lazy element initialization
+   - Component-based design for reusable UI elements
+   - State validation methods
+   - Page transition handling
+   - Pre/post-condition verification
 
-    7. Retry and Resilience:
-    - Implement TestNG retry analyzer
-    - Add methods to handle dynamic content
-    - Create fallback strategies for element interactions
+8. Internationalization & Accessibility:
+   - Language-independent selectors
+   - ARIA attribute support
+   - RTL layout handling
+   - Visual/text content verification
+   - Automated contrast checking
+   - Keyboard navigation support
 
-    8. Page Object Model Integration:
-    - Organize methods into logical page classes
-    - Implement methods for each page/component
-    - Use consistent naming conventions
+9. Comprehensive Assertions Framework:
+   - Multi-level verification:
+     * Element presence/visibility assertions
+     * Content validation (text, attributes, CSS properties)
+     * State verification (enabled, selected, etc.)
+     * Visual comparison with baseline
+     * Error message inspection
+     * Response code validation
+     * Performance threshold verification
+   - Soft assertions for multiple checks
+   - Custom assertion messages with context
+   - Data-driven validation using test parameters
+   - API response correlation with UI state
 
-    Additional Specific Instructions:
-    - Capture a screenshot after EVERY successful step
-    - Log detailed information about each interaction
-    - Provide meaningful error messages
-    - Ensure test is language and locale independent
+10. Test Data Management:
+    - Dynamic test data generation
+    - Database state verification
+    - Test data cleanup
+    - API-based test data seeding
 
+IMPORTANT: When using element locators from the JSON data:
+1. ALWAYS use the EXACT xpath values from the "interacted_element" fields in the JSON
+2. For any element with an "interacted_element" value, extract the full xpath from the "xpath" field in that object
+3. DO NOT simplify, modify, or create alternative XPaths - use the complete paths exactly as provided
+4. Example: If JSON contains `"xpath": 'html/body/ytd-app/div/div[2]/ytd-masthead/div[4]/div[2]/yt-searchbox/div/form/input'`, use exactly that string in your findElementByXpath() method
+5. Do not attempt to optimize or shorten the XPaths as they're specifically designed for the application structure
+
+For elements where "interacted_element" is null, use appropriate locator strategies based on context.
     Test Case Steps Implementation:
     """
         
+        
+        prompt=f"""
+    Generate a single complete Java file named `{formatted_class_name}.java` implementing a Selenium TestNG test based on this JSON test data:
+
+    {json.dumps(test_data, indent=4, ensure_ascii=False)}
+    
+
+Requirements:
+
+1. Smart & Reliable Element Locator Methods:
+   - Create a dedicated ElementFinder utility class with specialized locator methods following this priority:
+     a) findElementByXpath(String xpath)
+     b) findElementById(String id)
+     c) findElementByCssSelector(String cssSelector)
+     d) findElementByName(String name)
+     e) findElementByLinkText(String linkText)
+     f) findElementByPartialLinkText(String partialLinkText)
+     g) findElementByCustomStrategy(Map<String, String> attributes)
+
+   Each method must:
+   - Use WebDriverWait with custom timeout + ExpectedConditions
+   - Log the locator strategy with clear identification
+   - Implement smart selector fallback (try id first, then name, etc.)
+   - Return WebElement if found, with highlighted element in screenshots
+   - Throw ElementNotFoundException with detailed context if not found
+   - Include JavaScript fallback execution capabilities
+   - Handle all common exceptions (StaleElementReferenceException, etc.)
+
+2. Comprehensive Screenshot System:
+   - Implement methods:
+     * captureScreenshotOnStep(String stepName)
+     * captureScreenshotOnFailure(String methodName, Throwable error)
+     * captureFullPageScreenshot()
+     * captureElementScreenshot(WebElement element, String elementName)
+   
+   Features:
+   - Structured folders by test class/date/run
+   - Unique filenames with timestamp + test context
+   - Automatic directory creation and cleanup
+   - Screenshot inclusion in test reports
+   - Option to highlight interacted elements
+
+3. Advanced WebDriver Configuration:
+   - WebDriverManager with browser version control
+   - Cross-browser support (Chrome, Firefox, Edge)
+   - Custom ChromeOptions/FirefoxOptions for performance
+   - Window size presets (desktop, mobile, tablet)
+   - Network throttling simulation
+   - Cookie and cache management between tests
+   - User-agent configuration
+   - Network request monitoring
+   - Manual captcha intervention handling with wait
+
+4. Comprehensive Modal & Overlay Handling:
+   - Multi-strategy popup dismissal:
+     * Close button detection by common attributes
+     * Escape key simulation
+     * Overlay click-away detection
+     * Wait for animation completion
+   - Shadow DOM penetration capabilities
+   - iFrame context switching automation
+   - Cookie consent handler
+
+5. Enterprise-Grade Resilience:
+   - Custom TestNG RetryAnalyzer with configurable attempts
+   - Circuit breaker pattern for repetitive failures
+   - Conditional waits with progressive timeouts
+   - Element staleness detection and refresh
+   - DOM mutation observation for dynamic content
+   - Network instability compensation
+
+6. Advanced Logging & Reporting:
+   - SLF4J with custom MDC context
+   - Structured JSON logging for machine parsing
+   - Test context enrichment in logs
+   - Visual execution timeline
+   - Element interaction history
+   - HTTP request/response capture
+
+7. Enhanced Page Object Architecture:
+   - BasePage with common interactions
+   - Fluent interface pattern (method chaining)
+   - Lazy element initialization
+   - Component-based design for reusable UI elements
+   - State validation methods
+   - Page transition handling
+   - Pre/post-condition verification
+
+8. Internationalization & Accessibility:
+   - Language-independent selectors
+   - ARIA attribute support
+   - RTL layout handling
+   - Visual/text content verification
+   - Automated contrast checking
+   - Keyboard navigation support
+
+9. Comprehensive Assertions Framework:
+   - Multi-level verification:
+     * Element presence/visibility assertions
+     * Content validation (text, attributes, CSS properties)
+     * State verification (enabled, selected, etc.)
+     * Visual comparison with baseline
+     * Error message inspection
+     * Response code validation
+     * Performance threshold verification
+   - Soft assertions for multiple checks
+   - Custom assertion messages with context
+   - Data-driven validation using test parameters
+   - API response correlation with UI state
+
+10. Test Data Management:
+    - Dynamic test data generation
+    - Database state verification
+    - Test data cleanup
+    - API-based test data seeding
+
+
+
+Use "interacted elements" xpaths. For elements where "interacted_element" is null, use appropriate locator strategies based on other datas on the given JSON.
+Do not add any explanation, just give me the java code
+    
+    Test Case Steps:
+    """
         # Add test steps if provided
         if test_case and hasattr(test_case, 'steps') and test_case.steps:
             prompt += "\nImplement these specific steps with detailed logging and screenshot capture:\n" + \

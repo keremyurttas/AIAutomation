@@ -17,7 +17,7 @@ class CaseGenerator:
             self.llm = ChatGoogleGenerativeAI(
                 model="gemini-2.0-flash-exp",
                 temperature=0.2,
-                api_key='AIzaSyBj2ERhNURny5-CQ6r9hx_49J9zKiqXwjA'
+                api_key=SecretStr(os.getenv("GEMINI_API_KEY"))
             )
     def send_request_to_llm(self, prompt: str):
         """Send a request to the LLM and return the response"""
@@ -85,48 +85,70 @@ def save_output_as_json(output, filename):
  
 
 def get_case_generator_prompt(website_url, brief):
-      prompt = f"""
-    I am tasked with generating all possible test cases for a website. 
-    The user will provide the website URL and a brief description of the tests they want to focus on (e.g., functionality, usability, performance, security, compatibility, or a combination). 
-    Using this information, create a detailed list of test cases that cover the specified areas comprehensively.
+    prompt = f"""
+    I am tasked with generating comprehensive test cases for a website. 
+    The user provides the website URL and a brief description of the test focus areas (e.g., functionality, usability, performance, security, compatibility). 
+    Using this input, generate **detailed test cases** that cover these areas thoroughly.
 
     **Test Case Format:**
     - **Test Case ID**: A unique identifier (e.g., TC001).
-    - **Test Objective**: What the test aims to verify.
-    - **Preconditions**: Any setup or conditions required before testing.
-    - **Test Steps**: Clear, step-by-step instructions to execute the test.
-    - **Expected Result**: The anticipated outcome if the website functions correctly.
-
-    **Considerations:**
-    - Analyze the website’s purpose and features based on the URL and brief.
-    - Include positive tests (valid inputs), negative tests (invalid inputs), and edge cases.
-    - Cover common website elements like navigation, forms, links, media, responsiveness, and load times.
-    - If specific tools or expertise are needed (e.g., security scanning tools), note them as part of the preconditions.
-    - If the brief is vague, assume a broad scope and include a mix of functional, non-functional, and exploratory tests.
-
+    - **Test Name**: Descriptive title of the test case.
+    - **Description**: The purpose of the test.
+    - **Preconditions**: Any setup or requirements before execution.
+    - **Test Steps**: Step-by-step instructions with precise actions, including interactions with the given URL.
+    - **Expected Result**: The expected behavior of the system if it functions correctly.
     
-    **Example JSON Format:**
+    **Test Case Guidelines:**
+    - Each test case must **start with navigating to the URL**: "{website_url}".
+    - Include **positive, negative, and edge cases** for thorough validation.
+    - Cover elements such as **navigation, forms, buttons, links, media, responsiveness, and performance**.
+    - If security or performance tests are required, note any special tools needed.
+    - Do not use special characters like './-_' on case names.
+    - Use **clear, structured JSON format** for output.
+
+    **Example JSON Output:**
     ```json
     [
         {{
             "test_case_id": "TC001",
-            "name":"Login Verify Test"
-            "description": "Verify login functionality",
-            "preconditions": "User must be registered",
-            "steps": ["Go to login page", "Enter valid credentials", "Click login button"],
-            "expected_result": "User is successfully logged in"
-            "url":{website_url}
+            "name": "Login Functionality Test",
+            "description": "Verify that a registered user can log in successfully.",
+            "preconditions": "User must be registered and have valid login credentials.",
+            "steps": [
+                "1. Open the browser and go to '{website_url}'",
+                "2. Click on the 'Login' button in the top-right corner.",
+                "3. Enter a valid email and password in the respective fields.",
+                "4. Click the 'Login' button.",
+                "5. Verify that the user is redirected to the dashboard page."
+            ],
+            "expected_result": "User is successfully logged in and redirected to the dashboard.",
+            "url": "{website_url}"
+        }},
+        {{
+            "test_case_id": "TC002",
+            "name": "Invalid Login Attempt",
+            "description": "Check behavior when logging in with incorrect credentials.",
+            "preconditions": "User account must exist but use incorrect credentials.",
+            "steps": [
+                "1. Open the browser and go to '{website_url}'",
+                "2. Click on the 'Login' button.",
+                "3. Enter an invalid email or password.",
+                "4. Click the 'Login' button.",
+                "5. Verify that an error message appears, indicating incorrect login details."
+            ],
+            "expected_result": "An error message is displayed, preventing login with invalid credentials.",
+            "url": "{website_url}"
         }}
     ]
     ```
+
     **User Input:**
     - Website URL: {website_url}
     - Test Case Focus: {brief}
 
-    Generate the test cases in a **structured JSON format**.
-    """ 
-
-      return prompt           
-
+    Generate test cases in **structured JSON format**.
+    """
+    return prompt
+     
 if __name__=="__main__":
         asyncio.run(get_case_details_from_user())    

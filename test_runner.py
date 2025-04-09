@@ -1,7 +1,7 @@
 import asyncio
 from ai_agent import AI_TestAgent
 from browser_actions import controller
-from test_cases.test_cases import test_cases_list
+from test_cases.test_cases import load_test_cases
 from result_validator import validate_result
 import json
 import os
@@ -41,6 +41,7 @@ async def run_test_and_generate_code(test_case):
 
 async def run_tests():
     """Run tests concurrently"""
+    test_cases_list= load_test_cases()
     tasks = [run_test_and_generate_code(test) for test in test_cases_list[:3]]
     results = await asyncio.gather(*tasks)
     
