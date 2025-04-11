@@ -43,10 +43,14 @@ async def run_test_and_generate_code(test_case):
 async def run_tests():
     """Run tests concurrently"""
     test_cases_list= load_test_cases()
-    tasks = [run_test_and_generate_code(test) for test in test_cases_list[:3]]
-    results = await asyncio.gather(*tasks)
+    if test_cases_list:
+        tasks = [run_test_and_generate_code(test) for test in test_cases_list[:3]]
+        results = await asyncio.gather(*tasks)
+        print("\nAll tests executed. Here are the results:\n")
+    else:
+        print("[WARNING] No test cases found. Please run the case_generator to generate test cases.")    
     
-    print("\nAll tests executed. Here are the results:\n")
+    
     print("=" * 50)    
     
     # Additional reporting or processing of results can be done here
