@@ -6,6 +6,7 @@ from result_validator import validate_result
 import json
 import os
 
+
 async def run_test_and_generate_code(test_case):
     """Run a single test, save results in the results folder, and generate Java code"""
     print(f"current test case is{test_case}")

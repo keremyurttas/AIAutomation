@@ -1,8 +1,9 @@
 import os
+os.environ["ANONYMIZED_TELEMETRY"] = "false"
 from dotenv import load_dotenv
 from pydantic import SecretStr
 
-from browser_use import Agent, Controller
+from browser_use import Agent, Browser, Controller, BrowserConfig
 from langchain_google_genai import ChatGoogleGenerativeAI
 from SystemPrompt import MySystemPrompt
 from java_code_generator import JavaCodeGenerator
@@ -11,7 +12,9 @@ load_dotenv()
 
 
 class AI_TestAgent:
+    
     def __init__(self, controller: Controller):
+        
         self.controller = controller
         self._llm = ChatGoogleGenerativeAI(
             model="gemini-2.0-flash-exp",
@@ -77,13 +80,25 @@ class AI_TestAgent:
             f"Steps: {test_case.steps}"
         )
 
+        browser = Browser(
+            config=BrowserConfig(
+                headless=False,
+                disable_security=False,
+            )
+        )
+
         agent = Agent(
             task=task_description,
             llm=self._llm,
             controller=self.controller,
             use_vision=True,
             save_conversation_path='logs/conversation',
-            system_prompt_class=MySystemPrompt
+            system_prompt_class=MySystemPrompt,
+            browser=browser
         )
 
-        return await agent.run()
+        try:
+            return await agent.run()
+        finally:
+            # Gracefully shut down the browser to avoid lingering processes
+            await browser.close()
