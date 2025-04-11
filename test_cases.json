@@ -1,0 +1,155 @@
+[
+    {
+        "test_case_id": "TC001",
+        "name": "Navigate to Faturasiz Hat Paketleri Section",
+        "description": "Verify that the user can successfully navigate to the 'Faturasiz Hat Paketleri' section from the homepage.",
+        "preconditions": "None",
+        "steps": [
+            "1. Open the browser and go to 'https://www.turkcell.com.tr/'",
+            "2. Locate the main navigation menu.",
+            "3. Identify and click on the 'Faturasiz Hat' option.",
+            "4. Verify that the page redirects to the 'Faturasiz Hat Paketleri' section."
+        ],
+        "expected_result": "The user is redirected to the 'Faturasiz Hat Paketleri' section of the website.",
+        "url": "https://www.turkcell.com.tr/"
+    },
+    {
+        "test_case_id": "TC002",
+        "name": "Check Faturasiz Hat Paketleri Display",
+        "description": "Verify that the available 'Faturasiz Hat Paketleri' are displayed correctly with all relevant information.",
+        "preconditions": "User is on the 'Faturasiz Hat Paketleri' page.",
+        "steps": [
+            "1. Open the browser and go to 'https://www.turkcell.com.tr/'",
+            "2. Navigate to the 'Faturasiz Hat Paketleri' section (as per TC001).",
+            "3. Examine the displayed list of packages.",
+            "4. Verify that each package displays its name, price, data allowance, talk time, SMS allowance, and validity period.",
+            "5. Verify that all package details are accurate and consistent."
+        ],
+        "expected_result": "All 'Faturasiz Hat Paketleri' are displayed correctly with accurate and complete information.",
+        "url": "https://www.turkcell.com.tr/"
+    },
+    {
+        "test_case_id": "TC003",
+        "name": "Faturasiz Hat Paketleri Purchase Functionality",
+        "description": "Verify that the user can initiate the purchase process for a 'Faturasiz Hat Paketleri'.",
+        "preconditions": "User is on the 'Faturasiz Hat Paketleri' page.",
+        "steps": [
+            "1. Open the browser and go to 'https://www.turkcell.com.tr/'",
+            "2. Navigate to the 'Faturasiz Hat Paketleri' section (as per TC001).",
+            "3. Select a specific 'Faturasiz Hat Paketleri' from the list.",
+            "4. Locate and click on the 'Satin Al' (Buy) or similar button associated with the selected package.",
+            "5. Verify that the user is redirected to the purchase page or a modal window appears.",
+            "6. Verify that the selected package details are correctly displayed on the purchase page."
+        ],
+        "expected_result": "The user is redirected to the purchase page or a modal window appears, displaying the selected package details.",
+        "url": "https://www.turkcell.com.tr/"
+    },
+    {
+        "test_case_id": "TC004",
+        "name": "Faturasiz Hat Paketleri Filter Functionality",
+        "description": "Verify that the filter options on the 'Faturasiz Hat Paketleri' page function correctly.",
+        "preconditions": "User is on the 'Faturasiz Hat Paketleri' page.",
+        "steps": [
+            "1. Open the browser and go to 'https://www.turkcell.com.tr/'",
+            "2. Navigate to the 'Faturasiz Hat Paketleri' section (as per TC001).",
+            "3. Locate the filter options (e.g., price range, data allowance, validity period).",
+            "4. Apply a specific filter (e.g., price range under 50 TL).",
+            "5. Verify that the displayed packages are filtered according to the selected criteria.",
+            "6. Clear the filter and verify that all packages are displayed again.",
+            "7. Test multiple filter combinations."
+        ],
+        "expected_result": "The displayed packages are filtered correctly based on the selected criteria. Clearing the filter resets the display to show all packages.",
+        "url": "https://www.turkcell.com.tr/"
+    },
+    {
+        "test_case_id": "TC005",
+        "name": "Faturasiz Hat Paketleri Search Functionality",
+        "description": "Verify that the search functionality on the 'Faturasiz Hat Paketleri' page functions correctly.",
+        "preconditions": "User is on the 'Faturasiz Hat Paketleri' page.",
+        "steps": [
+            "1. Open the browser and go to 'https://www.turkcell.com.tr/'",
+            "2. Navigate to the 'Faturasiz Hat Paketleri' section (as per TC001).",
+            "3. Locate the search bar.",
+            "4. Enter a search term related to a specific package (e.g., '5GB').",
+            "5. Click the search button or press Enter.",
+            "6. Verify that the search results display packages that match the search term.",
+            "7. Enter a non-existent search term and verify that no results or an appropriate message is displayed."
+        ],
+        "expected_result": "The search results display packages that match the search term. If no matches are found, an appropriate message is displayed.",
+        "url": "https://www.turkcell.com.tr/"
+    },
+    {
+        "test_case_id": "TC006",
+        "name": "Faturasiz Hat Paketleri Page Responsiveness",
+        "description": "Verify that the 'Faturasiz Hat Paketleri' page is responsive and displays correctly on different screen sizes.",
+        "preconditions": "User is on the 'Faturasiz Hat Paketleri' page.",
+        "steps": [
+            "1. Open the browser and go to 'https://www.turkcell.com.tr/'",
+            "2. Navigate to the 'Faturasiz Hat Paketleri' section (as per TC001).",
+            "3. Resize the browser window to different screen sizes (e.g., mobile, tablet, desktop).",
+            "4. Verify that the page elements (text, images, buttons, etc.) are displayed correctly and do not overlap or break.",
+            "5. Verify that the navigation menu adapts appropriately to smaller screen sizes (e.g., hamburger menu)."
+        ],
+        "expected_result": "The 'Faturasiz Hat Paketleri' page is responsive and displays correctly on different screen sizes.",
+        "url": "https://www.turkcell.com.tr/"
+    },
+    {
+        "test_case_id": "TC007",
+        "name": "Faturasiz Hat Paketleri Page Performance",
+        "description": "Verify the loading time of the 'Faturasiz Hat Paketleri' page.",
+        "preconditions": "None",
+        "steps": [
+            "1. Open the browser and go to 'https://www.turkcell.com.tr/'",
+            "2. Navigate to the 'Faturasiz Hat Paketleri' section (as per TC001).",
+            "3. Use browser developer tools (Network tab) to measure the page loading time.",
+            "4. Repeat the test multiple times to get an average loading time.",
+            "5. Compare the loading time with acceptable performance standards."
+        ],
+        "expected_result": "The 'Faturasiz Hat Paketleri' page loads within an acceptable timeframe (e.g., under 3 seconds).",
+        "url": "https://www.turkcell.com.tr/"
+    },
+    {
+        "test_case_id": "TC008",
+        "name": "Check Broken Links on Faturasiz Hat Paketleri Page",
+        "description": "Verify that all links on the 'Faturasiz Hat Paketleri' page are working correctly.",
+        "preconditions": "User is on the 'Faturasiz Hat Paketleri' page.",
+        "steps": [
+            "1. Open the browser and go to 'https://www.turkcell.com.tr/'",
+            "2. Navigate to the 'Faturasiz Hat Paketleri' section (as per TC001).",
+            "3. Manually click on each link on the page.",
+            "4. Verify that each link redirects to the correct destination and does not result in a 404 error or other error page.",
+            "5. Use a link checker tool to automatically scan the page for broken links (optional)."
+        ],
+        "expected_result": "All links on the 'Faturasiz Hat Paketleri' page are working correctly and redirect to the correct destination.",
+        "url": "https://www.turkcell.com.tr/"
+    },
+    {
+        "test_case_id": "TC009",
+        "name": "Check Image Loading on Faturasiz Hat Paketleri Page",
+        "description": "Verify that all images on the 'Faturasiz Hat Paketleri' page are loading correctly.",
+        "preconditions": "User is on the 'Faturasiz Hat Paketleri' page.",
+        "steps": [
+            "1. Open the browser and go to 'https://www.turkcell.com.tr/'",
+            "2. Navigate to the 'Faturasiz Hat Paketleri' section (as per TC001).",
+            "3. Visually inspect the page to ensure that all images are loading correctly and are not broken or missing.",
+            "4. Use browser developer tools (Network tab) to check for any image loading errors (e.g., 404 errors)."
+        ],
+        "expected_result": "All images on the 'Faturasiz Hat Paketleri' page are loading correctly.",
+        "url": "https://www.turkcell.com.tr/"
+    },
+    {
+        "test_case_id": "TC010",
+        "name": "Faturasiz Hat Paketleri Page Accessibility",
+        "description": "Verify the accessibility of the 'Faturasiz Hat Paketleri' page for users with disabilities.",
+        "preconditions": "User is on the 'Faturasiz Hat Paketleri' page.",
+        "steps": [
+            "1. Open the browser and go to 'https://www.turkcell.com.tr/'",
+            "2. Navigate to the 'Faturasiz Hat Paketleri' section (as per TC001).",
+            "3. Use accessibility testing tools (e.g., WAVE, Axe) to scan the page for accessibility issues.",
+            "4. Manually test the page using a screen reader to ensure that content is accessible and understandable.",
+            "5. Verify that the page meets WCAG (Web Content Accessibility Guidelines) standards."
+        ],
+        "expected_result": "The 'Faturasiz Hat Paketleri' page is accessible to users with disabilities and meets WCAG standards.",
+        "url": "https://www.turkcell.com.tr/"
+    }
+]
