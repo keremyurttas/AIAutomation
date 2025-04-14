@@ -1,12 +1,17 @@
 import asyncio
+from LLM.custom_llm_client import CustomAPILLM
 from ai_agent import AI_TestAgent
 from browser_actions import controller
 from test_cases.test_cases import load_test_cases
 from result_validator import validate_result
+from langchain_core.messages import HumanMessage
+import logging
+
 import json
 import os
 
-
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("CustomAPILLM_Test")
 async def run_test_and_generate_code(test_case):
     """Run a single test, save results in the results folder, and generate Java code"""
     print(f"current test case is{test_case}")
@@ -42,6 +47,22 @@ async def run_test_and_generate_code(test_case):
 
 async def run_tests():
     """Run tests concurrently"""
+    # ####
+    # customLLM=CustomAPILLM(
+    #         api_url="https://hgqtpcr4-3000.euw.devtunnels.ms/gpt",
+    #         model = "Claude 3.7",
+    #     )
+    # test_msg="What is Javascript and how is it used for web testing?"
+    # messages = [HumanMessage(content=test_msg)]
+    # response = customLLM._generate(messages)
+    # if response and "generations" in response and len(response["generations"]) > 0:
+    #         content = response["generations"][0]["text"]
+    #         logger.info(f"Successfully received response: {content[:100]}...")
+    #         return True
+    # else:
+    #         logger.error("Invalid response format")
+    #         return False
+    # ####
     test_cases_list= load_test_cases()
     if test_cases_list:
         tasks = [run_test_and_generate_code(test) for test in test_cases_list[:3]]

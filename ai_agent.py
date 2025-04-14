@@ -1,4 +1,6 @@
 import os
+
+from LLM.custom_llm_client import CustomAPILLM
 os.environ["ANONYMIZED_TELEMETRY"] = "false"
 from dotenv import load_dotenv
 from pydantic import SecretStr
@@ -16,10 +18,14 @@ class AI_TestAgent:
     def __init__(self, controller: Controller):
         
         self.controller = controller
-        self._llm = ChatGoogleGenerativeAI(
-            model="gemini-2.0-flash-exp",
-            temperature=0.2,
-            api_key=SecretStr(os.getenv("GEMINI_API_KEY"))
+        # self._llm = ChatGoogleGenerativeAI(
+        #     model="gemini-2.0-flash-exp",
+        #     temperature=0.2,
+        #     api_key=SecretStr(os.getenv("GEMINI_API_KEY"))
+        # )
+        self._llm= CustomAPILLM(
+            api_url="https://hgqtpcr4-3000.euw.devtunnels.ms/gpt",
+            model = "Claude 3.7",
         )
         self.code_generator = JavaCodeGenerator(self._llm)
         self.current_test_case = None
