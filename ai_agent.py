@@ -1,4 +1,6 @@
 import os
+
+from langchain_openai import AzureChatOpenAI
 os.environ["ANONYMIZED_TELEMETRY"] = "false"
 from dotenv import load_dotenv
 from pydantic import SecretStr
@@ -16,11 +18,12 @@ class AI_TestAgent:
     def __init__(self, controller: Controller):
         
         self.controller = controller
-        self._llm = ChatGoogleGenerativeAI(
-            model="gemini-2.0-flash-exp",
-            temperature=0.2,
-            api_key=SecretStr(os.getenv("GEMINI_API_KEY"))
-        )
+        self._llm = AzureChatOpenAI(
+            model="gpt-4o-mini-3",
+            api_version='2025-01-01-preview',
+            azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT', ''),
+            api_key=SecretStr(os.getenv('AZURE_OPENAI_KEY', '')),
+)
         self.code_generator = JavaCodeGenerator(self._llm)
         self.current_test_case = None
 
