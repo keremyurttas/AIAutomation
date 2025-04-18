@@ -1,9 +1,5 @@
 import os
 
-<<<<<<< HEAD
-# from LLM.custom_llm_client import CustomAPILLM
-=======
->>>>>>> c50d9d48d9b0ded89f90866981475745e54fa94a
 os.environ["ANONYMIZED_TELEMETRY"] = "false"
 from dotenv import load_dotenv
 from pydantic import SecretStr
