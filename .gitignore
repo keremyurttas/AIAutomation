@@ -4,3 +4,4 @@ logs/
 generated_codes/
 case_actions/
 test_cases.json
+.env
