@@ -23,6 +23,11 @@ class AI_TestAgent:
             temperature=0.2,
             api_key=SecretStr(os.getenv("GEMINI_API_KEY"))
         )
+        self._planner_llm=ChatGoogleGenerativeAI(
+            model="gemini-2.0-flash-exp",
+            temperature=0.2,
+            api_key=SecretStr(os.getenv("GEMINI_API_KEY"))
+        )
         # self._llm= CustomAPILLM(
         #     api_url="https://hgqtpcr4-3000.euw.devtunnels.ms/gpt",
         #     model = "Claude 3.7",
@@ -80,7 +85,7 @@ class AI_TestAgent:
             list: History of messages or interactions from the agent.
         """
         self.current_test_case = test_case
-
+        print('stesppp',test_case.steps)
         task_description = (
             f"Perform the following case: {test_case.description}. "
             f"Steps: {test_case.steps}"
@@ -100,7 +105,11 @@ class AI_TestAgent:
             use_vision=True,
             save_conversation_path='logs/conversation',
             system_prompt_class=MySystemPrompt,
-            browser=browser
+            browser=browser,
+            max_actions_per_step=30,
+            max_failures=10,
+            planner_llm=self._planner_llm
+            
         )
 
         try:
