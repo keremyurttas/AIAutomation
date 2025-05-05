@@ -98,7 +98,7 @@ def get_case_generator_prompt(website_url, brief, number_of_cases=1):
     - Each step must directly contribute to testing the requirement in the brief
     - DO NOT generate general or unrelated test cases - focus solely on testing "{brief}"
     - Create {number_of_cases} test case(s) that would be executed by a QA tester to verify this specific requirement works correctly
-    
+    - If the prompt provides any directions, follow them in your response
     Test case JSON format:
     ```json
     [

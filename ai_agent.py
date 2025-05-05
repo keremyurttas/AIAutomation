@@ -1,5 +1,7 @@
 import os
 
+import httpx
+
 os.environ["ANONYMIZED_TELEMETRY"] = "false"
 from dotenv import load_dotenv
 from pydantic import SecretStr
@@ -8,7 +10,7 @@ from browser_use import Agent, Browser, Controller, BrowserConfig
 from langchain_google_genai import ChatGoogleGenerativeAI
 from SystemPrompt import MySystemPrompt
 from java_code_generator import JavaCodeGenerator
-from langchain_openai import ChatOpenAI
+from langchain_openai import AzureChatOpenAI, ChatOpenAI
 
 load_dotenv()
 
@@ -16,12 +18,15 @@ load_dotenv()
 class AI_TestAgent:
     
     def __init__(self, controller: Controller):
-        
+        api_key = os.environ.get("AZURE_OPENAI_API_KEY", "1BhxdGZnIWFKI0dcbzt3XS9szA1OqLW6IMUYlqQDX6DAX0z4FUiGJQQJ99BDACHYHv6XJ3w3AAAAACOGXxQ0")
+
         self.controller = controller
-        self._llm = ChatGoogleGenerativeAI(
-            model="gemini-2.0-flash-exp",
-            temperature=0.2,
-            api_key=SecretStr(os.getenv("GEMINI_API_KEY"))
+        self._llm = AzureChatOpenAI(
+            model="o4-mini",
+            api_version="2024-12-01-preview",
+            azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+            api_key=os.getenv("AZURE_OPENAI_KEY"),
+            http_async_client=httpx.AsyncClient(verify=False), 
         )
         self._planner_llm=ChatGoogleGenerativeAI(
             model="gemini-2.0-flash-exp",
