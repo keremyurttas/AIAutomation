@@ -20,17 +20,25 @@ class AI_TestAgent:
     def __init__(self, controller: Controller):
         self.controller = controller
         self._llm = AzureChatOpenAI(
-            model="o4-mini",
+            model="gpt-4o",
             api_version="2024-12-01-preview",
             azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
             api_key=os.getenv("AZURE_OPENAI_KEY"),
             http_async_client=httpx.AsyncClient(verify=False), 
         )
-        self._planner_llm=ChatGoogleGenerativeAI(
-            model="gemini-2.0-flash-exp",
-            temperature=0.2,
-            api_key=SecretStr(os.getenv("GEMINI_API_KEY"))
+        # self._llm=ChatGoogleGenerativeAI(
+        #     model="gemini-2.0-flash-exp",
+        #     temperature=0.2,
+        #     api_key=SecretStr(os.getenv("GEMINI_API_KEY"))
+        # )
+        self._planner_llm=AzureChatOpenAI(
+            model="gpt-4o",
+            api_version="2024-12-01-preview",
+            azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+            api_key=os.getenv("AZURE_OPENAI_KEY"),
+            http_async_client=httpx.AsyncClient(verify=False), 
         )
+        
        
         self.code_generator = JavaCodeGenerator(self._llm)
         self.current_test_case = None
@@ -107,6 +115,7 @@ class AI_TestAgent:
             browser=browser,
             max_actions_per_step=30,
             max_failures=10,
+            # save_playwright_script_path='playwright/'
             # planner_llm=self._planner_llm,
             
             

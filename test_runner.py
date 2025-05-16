@@ -9,15 +9,12 @@ import os
 
 async def run_test_and_generate_code(test_case):
     """Run a single test, save results in the results folder, and generate Java code"""
-    print(f"current test case is{test_case}")
     agent = AI_TestAgent(controller)
     
     # Run the test
     actual_result = await agent.run_test(test_case)
     
-    # Save the test results to a JSON file inside the results folder
-    formatted_output = actual_result.model_actions()  # This should be a dictionary or list
-    print(actual_result.action_names())
+    formatted_output = actual_result.model_actions()  # Ensure this method returns the correct data structure
 
     # Ensure the "results" folder exists
     results_dir = "results"
@@ -39,7 +36,6 @@ async def run_test_and_generate_code(test_case):
         print(f"Error generating test from JSON: {e}")
     
     return actual_result  # or validated_result if validation is needed
-
 async def run_tests():
     """Run tests concurrently"""
     test_cases_list= load_test_cases()
