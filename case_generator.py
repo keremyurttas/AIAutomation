@@ -1,6 +1,8 @@
 import json
 import os
+import httpx
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import AzureOpenAI
 from pydantic import SecretStr
 from test_runner import run_tests
 import asyncio
@@ -14,11 +16,13 @@ class CaseGenerator:
         self.llm = llm
         if not llm:
             # Create a default LLM if none is provided
-            self.llm = ChatGoogleGenerativeAI(
-                model="gemini-2.0-flash-exp",
-                temperature=0.2,
-                api_key=SecretStr(os.getenv("GEMINI_API_KEY"))
-            )
+            self.llm = AzureOpenAI(
+            api_version="2024-12-01-preview",
+            azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+            api_key=os.getenv("AZURE_OPENAI_KEY"),
+            http_client=httpx.Client(verify=False),
+            
+        )
     def send_request_to_llm(self, prompt: str):
         """Send a request to the LLM and return the response"""
         try:
